@@ -39,8 +39,9 @@ A modern, fully responsive professional portfolio website for a **Full-Stack Dev
 ---
 
 ## Screenshot
-
+## Dark Mode
 ![Portfolio Screenshot](https://github.com/MAHABUB122003/ProtFolio_Mahabub/blob/main/images/mahabub.png?raw=true)
+## Ligh Mode
 ![Portfolio Screenshot](https://github.com/MAHABUB122003/ProtFolio_Mahabub/blob/main/images/mahabub1.png?raw=true)
 ---
 
