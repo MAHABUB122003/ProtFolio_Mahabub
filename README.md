@@ -56,7 +56,7 @@ A modern, fully responsive professional portfolio website for a **Full-Stack Dev
 | AOS | Scroll animations |
 
 ---
-
+```
 ## 📁 Project Structure
 ProtFolio_Mahabub/
 ├── public/
@@ -82,65 +82,7 @@ ProtFolio_Mahabub/
 ├── README.md
 ├── tailwind.config.js
 └── vite.config.js
-
-text
+```
 
 ---
 
-## 🚀 Installation
-
-### Prerequisites
-- Node.js (v16 or later)
-- npm or yarn
-
-### Steps
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/MAHABUB122003/ProtFolio_Mahabub.git
-cd ProtFolio_Mahabub
-
-# 2. Install dependencies
-npm install
-
-# 3. Start development server
-npm run dev
-
-# 4. Open browser at http://localhost:5173
-🔧 Customization
-Section	File Location	What to Change
-Personal Info	src/App.jsx	Name, title, email, phone, social links
-Projects	src/components/Projects.jsx	Add/modify projects in the projects array
-Skills	src/components/Skills.jsx	Update skills and proficiency levels
-Resume	src/assets/mahabub.pdf	Replace with your CV file
-Profile Image	src/assets/mahabub.png	Replace with your photo
-Colors	tailwind.config.js	Modify gradient and theme colors
-📦 Building for Production
-bash
-# Create optimized production build
-npm run build
-
-# Preview the build locally
-npm run preview
-The build output will be in the dist/ folder, ready for deployment to Netlify, Vercel, or GitHub Pages.
-
-🤝 Connect with Me
-GitHub: @MAHABUB122003
-
-LinkedIn: MD MAHABUBUR RAHMAN
-
-Email: rahmanmdmahabubur666@gmail.com
-
-Phone: +880 1715044575
-
-📄 License
-This project is open source and available under the MIT License.
-
-⭐ Show Your Support
-If you find this project helpful, please give it a star on GitHub!
-
-Built with ❤️ using React & Tailwind CSS
-
-text
-
-This is the complete README file ready to copy and paste into your GitHub repository. Just update the live demo URL when you deploy your portfolio!
