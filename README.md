@@ -7,7 +7,7 @@
 
 A modern, fully responsive professional portfolio website for a **Full-Stack Developer & Cybersecurity Specialist**. Built with React, Tailwind CSS, and Framer Motion, featuring a sleek light/dark mode.
 
-🔗 **Live Demo:** [View Portfolio](https://your-deployed-url.com)
+🔗 **Live Demo:** [View Portfolio](https://mahabubur-rahman.vercel.app/)
 
 ---
 
