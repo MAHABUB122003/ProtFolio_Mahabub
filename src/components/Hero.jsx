@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     FaGithub,
@@ -18,6 +18,8 @@ import myCV from '../assets/mahabub.pdf';
 
 function Hero({ darkMode }) {
     const heroData = getSection('hero');
+    const cardRef = useRef(null);
+    const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
     const socialIconMap = { github: FaGithub, linkedin: FaLinkedinIn, facebook: FaFacebookF, instagram: FaInstagram };
     const socialIcons = heroData.socials.map(s => ({
@@ -26,22 +28,28 @@ function Hero({ darkMode }) {
         platform: s.platform
     }));
 
+    const handleMouseMove = (e) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        setTilt({ x: y * -8, y: x * 8 });
+    };
+
+    const handleMouseLeave = () => setTilt({ x: 0, y: 0 });
+
     const theme = {
         bgGradient: darkMode ? 'from-gray-950 via-gray-900 to-gray-950' : 'from-slate-50 via-white to-slate-100',
         textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        textSecondary: darkMode ? 'text-gray-300' : 'text-gray-700',
-        textMuted: darkMode ? 'text-gray-400' : 'text-gray-500',
+        textSecondary: darkMode ? 'text-gray-300' : 'text-gray-600',
+        textMuted: darkMode ? 'text-gray-500' : 'text-gray-400',
         cardBg: darkMode
-            ? 'bg-gray-900/40 backdrop-blur-xl border-gray-800/60 text-white'
-            : 'bg-white/80 backdrop-blur-xl border-gray-200/80 text-gray-900 shadow-xl shadow-gray-200/50',
-        border: darkMode ? 'border-gray-800/80' : 'border-gray-200',
-        socialIconBg: darkMode ? 'bg-gray-900/60 border-gray-800 text-gray-400 hover:text-emerald-400 hover:border-emerald-500/30' : 'bg-white border-gray-200 text-gray-700 hover:text-emerald-600 shadow-sm',
-        downloadCvBtn: darkMode
-            ? 'bg-gray-900/60 border-gray-800 hover:border-gray-700 text-gray-200'
-            : 'bg-white border-gray-300 hover:border-gray-400 text-gray-800 shadow-sm hover:bg-gray-50',
-        floatingBadgeBg: darkMode
-            ? 'bg-gray-950/80 border-gray-800/80 text-white'
-            : 'bg-white/95 border-gray-200/80 text-gray-900 shadow-xl',
+            ? 'bg-gray-900/50 backdrop-blur-xl border-gray-800/60'
+            : 'bg-white/80 backdrop-blur-xl border-gray-200/80 shadow-xl shadow-gray-200/50',
+        border: darkMode ? 'border-gray-800' : 'border-gray-200',
+        socialIconBg: darkMode
+            ? 'bg-gray-900/60 border-gray-800 text-gray-400 hover:text-orange-400 hover:border-orange-500/30'
+            : 'bg-white border-gray-200 text-gray-600 hover:text-purple-600 shadow-sm',
     };
 
     const roles = heroData.roles || [
@@ -82,16 +90,14 @@ function Hero({ darkMode }) {
     return (
         <section id="home" className={`relative min-h-screen flex items-center pt-24 sm:pt-28 pb-16 px-4 sm:px-6 overflow-hidden bg-gradient-to-br ${theme.bgGradient}`}>
 
-            {/* Ambient Background Glows - Ultra-subtle, premium, dark */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                <div className="absolute top-1/4 left-10 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-emerald-500/5 via-teal-500/3 to-transparent blur-[140px]" />
-                <div className="absolute bottom-10 right-10 w-[550px] h-[550px] rounded-full bg-gradient-to-tl from-slate-500/5 via-blue-500/3 to-transparent blur-[150px]" />
+                <div className="absolute top-1/4 left-10 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-orange-500/4 via-purple-500/2 to-transparent blur-[140px]" />
+                <div className="absolute bottom-10 right-10 w-[550px] h-[550px] rounded-full bg-gradient-to-tl from-purple-500/4 via-orange-500/2 to-transparent blur-[150px]" />
             </div>
 
             <div className="container mx-auto max-w-7xl relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
-                    {/* Left Column: Bio & Intro Text */}
                     <motion.div
                         initial={{ opacity: 0, x: -40 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -99,25 +105,19 @@ function Hero({ darkMode }) {
                         className="lg:col-span-7 text-center lg:text-left space-y-6"
                     >
 
-                        {/* Availability Radar Badge - Emerald theme */}
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs sm:text-sm font-semibold">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                            </span>
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md border border-orange-500/15 bg-orange-500/5 text-orange-400 text-xs sm:text-sm font-medium tracking-wide">
+                            <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
                             <span>{heroData.availableText || "Available for Freelance & Full-time Roles"}</span>
                         </div>
 
-                        {/* Main Name Heading - Platinum Silver Gradient */}
-                        <div className="space-y-2">
-                            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight ${theme.textPrimary}`}>
+                        <div className="space-y-3">
+                            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight ${theme.textPrimary}`}>
                                 Hi, I'm{" "}
-                                <span className="bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent block sm:inline">
+                                <span className="bg-gradient-to-r from-orange-300 via-purple-400 to-violet-300 bg-clip-text text-transparent block sm:inline">
                                     {heroData.name}
                                 </span>
                             </h1>
 
-                            {/* Rotating Role Titles */}
                             <div className="h-10 sm:h-12 flex items-center justify-center lg:justify-start">
                                 <AnimatePresence mode="wait">
                                     <motion.span
@@ -126,7 +126,7 @@ function Hero({ darkMode }) {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -15 }}
                                         transition={{ duration: 0.4 }}
-                                        className="text-lg sm:text-xl md:text-2xl font-bold text-emerald-400 dark:text-emerald-400"
+                                        className="text-lg sm:text-xl md:text-2xl font-semibold bg-gradient-to-r from-orange-400 to-purple-400 bg-clip-text text-transparent"
                                     >
                                         {roles[roleIndex]}
                                     </motion.span>
@@ -134,32 +134,29 @@ function Hero({ darkMode }) {
                             </div>
                         </div>
 
-                        {/* Description */}
                         <p className={`${theme.textSecondary} text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed mx-auto lg:mx-0`}>
                             {heroData.description}
                         </p>
 
-                        {/* Call To Action Buttons */}
                         <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
                             <button
                                 onClick={() => scrollToSection('contact')}
-                                className="px-7 py-3.5 rounded-2xl text-xs sm:text-sm font-bold bg-white text-black hover:bg-slate-100 shadow-lg shadow-black/20 flex items-center gap-2 hover:scale-105 transition-all"
+                                className="px-7 py-3.5 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 hover:-translate-y-0.5 transition-all"
                             >
-                                <FaEnvelope className="text-xs text-black" />
+                                <FaEnvelope className="text-xs inline mr-2" />
                                 <span>Contact Me</span>
-                                <FaArrowRight className="text-xs text-black" />
+                                <FaArrowRight className="text-xs inline ml-2" />
                             </button>
 
                             <button
                                 onClick={handleDownloadCV}
-                                className={`px-7 py-3.5 rounded-2xl text-xs sm:text-sm font-bold border flex items-center gap-2 hover:scale-105 transition-all ${theme.downloadCvBtn}`}
+                                className={`px-7 py-3.5 rounded-xl text-xs sm:text-sm font-semibold border flex items-center gap-2 hover:-translate-y-0.5 transition-all ${theme.downloadCvBtn || 'bg-transparent border-gray-700 text-gray-300 hover:border-gray-500'}`}
                             >
-                                <FaDownload className="text-xs text-emerald-400" />
+                                <FaDownload className="text-xs text-purple-400" />
                                 <span>Download CV</span>
                             </button>
                         </div>
 
-                        {/* Social Links Bar */}
                         <div className="flex items-center justify-center lg:justify-start gap-3 pt-4">
                             {socialIcons.map((social, idx) => {
                                 const IconComponent = social.icon;
@@ -169,7 +166,7 @@ function Hero({ darkMode }) {
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className={`w-10 h-10 rounded-2xl border flex items-center justify-center text-base transition-all hover:scale-110 ${theme.socialIconBg}`}
+                                        className={`w-10 h-10 rounded-xl border flex items-center justify-center text-base transition-all hover:-translate-y-0.5 ${theme.socialIconBg}`}
                                         aria-label={social.platform}
                                     >
                                         <IconComponent />
@@ -178,73 +175,83 @@ function Hero({ darkMode }) {
                             })}
                         </div>
 
-                        {/* Hero Stats Grid */}
                         <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-6 max-w-lg mx-auto lg:mx-0">
                             {heroData.stats.map((stat, idx) => (
                                 <div
                                     key={idx}
-                                    className={`p-3 sm:p-4 rounded-2xl border ${theme.border} ${theme.cardBg} text-center`}
+                                    className={`p-3 sm:p-4 rounded-xl border ${theme.border} ${theme.cardBg} text-center`}
                                 >
-                                    <div className="text-xl sm:text-2xl font-black text-white dark:text-white">
+                                    <div className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                                         {stat.value}
                                     </div>
-                                    <div className={`text-[11px] font-semibold ${theme.textMuted} mt-0.5`}>{stat.label}</div>
+                                    <div className={`text-[11px] font-medium ${theme.textMuted} mt-0.5 uppercase tracking-wider`}>{stat.label}</div>
                                 </div>
                             ))}
                         </div>
                     </motion.div>
 
-                    {/* Right Column: Profile Showcase & Floating Badges */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
-                        className="lg:col-span-5 flex justify-center relative"
+                        className="lg:col-span-5 flex justify-center relative perspective-1000"
                     >
-                        <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96">
+                        <div
+                            ref={cardRef}
+                            onMouseMove={handleMouseMove}
+                            onMouseLeave={handleMouseLeave}
+                            className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96"
+                            style={{
+                                transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+                                transition: 'transform 0.2s ease-out'
+                            }}
+                        >
+                            <div className="absolute -inset-6 rounded-full bg-gradient-to-r from-orange-500/6 via-purple-500/4 to-transparent blur-3xl" />
 
-                            {/* Dual Glow Rings */}
-                            <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-slate-500/5 opacity-20 blur-2xl animate-pulse" />
-                            <div className="absolute inset-0 rounded-full border-2 border-slate-800/60 animate-spin-slow" />
+                            <div className="absolute -inset-4 rounded-full border border-orange-500/8" style={{ animation: 'spin 12s linear infinite' }} />
 
-                            {/* Profile Image Container */}
-                            <div className="w-full h-full rounded-full p-2 bg-gradient-to-tr from-slate-800 via-gray-900 to-slate-800 shadow-2xl relative overflow-hidden">
-                                <div className="w-full h-full rounded-full bg-gray-950 dark:bg-gray-950 overflow-hidden flex items-center justify-center">
-                                    <img
-                                        src={myImage}
-                                        alt="MD MAHABUBUR RAHMAN"
-                                        className="w-full h-full object-cover"
-                                        onError={(e) => {
-                                            e.target.style.display = 'none';
-                                            e.target.parentElement.innerHTML = `
-                                                <div class="text-center p-6 space-y-2">
-                                                    <div class="w-16 h-16 mx-auto bg-gradient-to-br from-slate-700 to-slate-900 rounded-full flex items-center justify-center text-white text-2xl font-bold">M</div>
-                                                    <h3 class="text-sm font-bold text-white">MD MAHABUBUR RAHMAN</h3>
-                                                    <p class="text-xs text-emerald-400 font-mono">Full-Stack & Security</p>
-                                                </div>
-                                            `;
-                                        }}
-                                    />
+                            <div className="relative w-full h-full preserve-3d" style={{ transform: 'translateZ(20px)' }}>
+                                <div className="absolute inset-3 rounded-full bg-black/25 blur-2xl translate-y-2" />
+
+                                <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-orange-500/70 via-purple-400/50 to-violet-400/30 shadow-2xl relative overflow-hidden">
+                                    <div className="w-full h-full rounded-full bg-gray-950 overflow-hidden flex items-center justify-center">
+                                        <img
+                                            src={myImage}
+                                            alt="MD MAHABUBUR RAHMAN"
+                                            className="w-full h-full object-cover"
+                                            onError={(e) => {
+                                                e.target.style.display = 'none';
+                                                e.target.parentElement.innerHTML = `
+                                                    <div class="text-center p-6 space-y-2">
+                                                        <div class="w-16 h-16 mx-auto bg-gradient-to-br from-slate-700 to-slate-900 rounded-full flex items-center justify-center text-white text-2xl font-bold">M</div>
+                                                        <h3 class="text-sm font-bold text-white">MD MAHABUBUR RAHMAN</h3>
+                                                        <p class="text-xs text-purple-400 font-mono">Full-Stack & Security</p>
+                                                    </div>
+                                                `;
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* Floating Tech Badges */}
                             <motion.div
-                                animate={{ y: [0, -8, 0] }}
-                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                                className={`absolute -top-2 -right-2 sm:top-2 sm:right-0 px-3.5 py-1.5 rounded-2xl border backdrop-blur-xl flex items-center gap-2 ${theme.floatingBadgeBg}`}
+                                animate={{ y: [0, -6, 0] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute -top-1 right-0 sm:top-3 sm:right-2 px-3.5 py-1.5 rounded-xl border backdrop-blur-xl flex items-center gap-2 bg-gray-950/80 border-gray-800/80 text-white shadow-xl"
+                                style={{ transform: 'translateZ(40px)' }}
                             >
-                                <FaShieldAlt className="text-emerald-400 text-xs sm:text-sm" />
-                                <span className="text-xs font-bold font-mono">Security Expert</span>
+                                <FaShieldAlt className="text-purple-400 text-xs sm:text-sm" />
+                                <span className="text-xs font-medium font-mono">Security Expert</span>
                             </motion.div>
 
                             <motion.div
-                                animate={{ y: [0, 8, 0] }}
-                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                                className={`absolute -bottom-2 -left-2 sm:bottom-2 sm:left-0 px-3.5 py-1.5 rounded-2xl border backdrop-blur-xl flex items-center gap-2 ${theme.floatingBadgeBg}`}
+                                animate={{ y: [0, 6, 0] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                                className="absolute -bottom-1 left-0 sm:bottom-3 sm:left-2 px-3.5 py-1.5 rounded-xl border backdrop-blur-xl flex items-center gap-2 bg-gray-950/80 border-gray-800/80 text-white shadow-xl"
+                                style={{ transform: 'translateZ(40px)' }}
                             >
-                                <FaCode className="text-emerald-400 text-xs sm:text-sm" />
-                                <span className="text-xs font-bold font-mono">Full-Stack Dev</span>
+                                <FaCode className="text-orange-400 text-xs sm:text-sm" />
+                                <span className="text-xs font-medium font-mono">Full-Stack Dev</span>
                             </motion.div>
                         </div>
                     </motion.div>

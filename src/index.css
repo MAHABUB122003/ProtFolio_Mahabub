@@ -78,20 +78,6 @@ html {
   75% { transform: translateY(-12px) rotateX(1deg) rotateY(-1deg); }
 }
 
-@keyframes shimmer3d {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
 .animate-float-3d {
   animation: float3d 6s ease-in-out infinite;
-}
-
-.shimmer-text {
-  background: linear-gradient(90deg, #f97316, #a855f7, #06b6d4, #f97316);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer3d 4s linear infinite;
 }

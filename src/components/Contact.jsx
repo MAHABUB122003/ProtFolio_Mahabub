@@ -110,10 +110,10 @@ function Contact({ darkMode }) {
     ];
 
     const quickResponses = [
-        { label: "Project Inquiry", value: "Project Inquiry - Need a custom web application solution" },
-        { label: "Job Opportunity", value: "Job Opportunity - Interested in hiring for a role" },
-        { label: "ML Solution", value: "ML Solution - Need machine learning model implementation" },
-        { label: "Security Audit", value: "Security Audit - Need cybersecurity vulnerability assessment" }
+        { label: "Project Inquiry", value: "Project Inquiry" },
+        { label: "Job Opportunity", value: "Job Opportunity" },
+        { label: "ML Solution", value: "ML Solution" },
+        { label: "Security Audit", value: "Security Audit" }
     ];
 
     return (
@@ -144,13 +144,13 @@ function Contact({ darkMode }) {
                         }}
                     >
                         <FaPaperPlane className="text-orange-500 text-xs sm:text-sm animate-pulse" />
-                        <span className="text-xs sm:text-sm font-semibold tracking-wider uppercase bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 bg-clip-text text-transparent">
-                            LET'S CONNECT & COLLABORATE
+                                                <span className="text-xs sm:text-sm font-semibold tracking-wider uppercase bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 bg-clip-text text-transparent">
+                            CONTACT
                         </span>
                     </motion.div>
 
                     <h2 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight ${theme.textPrimary} mb-4`}>
-                        Get In <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 bg-clip-text text-transparent">Touch</span>
+                        Let's Work <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 bg-clip-text text-transparent">Together</span>
                     </h2>
 
                     <p className={`${theme.textSecondary} max-w-3xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed`}>
@@ -254,8 +254,8 @@ function Contact({ darkMode }) {
                         <div className={`p-6 sm:p-8 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-2xl relative overflow-hidden`}>
 
                             <div className="mb-6">
-                                <h3 className={`text-xl sm:text-2xl font-bold ${theme.textPrimary} mb-1`}>Send a Direct Message</h3>
-                                <p className={`text-xs sm:text-sm ${theme.textMuted}`}>Fill in the details below and I will get back to you within 24 hours.</p>
+                                                    <h3 className={`text-xl sm:text-2xl font-bold ${theme.textPrimary} mb-1`}>Send a Message</h3>
+                                <p className={`text-xs sm:text-sm ${theme.textMuted}`}>Fill in the form below and I will get back to you within 24 hours.</p>
                             </div>
 
                             {/* Quick Response Inquiry Pills */}
@@ -264,14 +264,10 @@ function Contact({ darkMode }) {
                                     <button
                                         key={idx}
                                         type="button"
-                                        onClick={() => {
-                                            setFormData({
-                                                ...formData,
-                                                title: res.label,
-                                                message: res.value
-                                            });
-                                            setSubmitStatus(null);
-                                        }}
+                                                    onClick={() => {
+                                                        setFormData({ ...formData, title: res.label });
+                                                        setSubmitStatus(null);
+                                                    }}
                                         className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
                                             darkMode
                                                 ? 'bg-gray-800/80 hover:bg-orange-500/20 text-gray-300 hover:text-orange-400 border-gray-700/60'
@@ -295,7 +291,7 @@ function Contact({ darkMode }) {
                                             onFocus={() => setFocusedField('name')}
                                             onBlur={() => setFocusedField(null)}
                                             required
-                                            placeholder="John Doe"
+                                                    placeholder="Your full name"
                                             className={`w-full px-4 py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.inputBg}`}
                                         />
                                     </div>
@@ -310,7 +306,7 @@ function Contact({ darkMode }) {
                                             onFocus={() => setFocusedField('email')}
                                             onBlur={() => setFocusedField(null)}
                                             required
-                                            placeholder="john@example.com"
+                                                    placeholder="you@example.com"
                                             className={`w-full px-4 py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.inputBg}`}
                                         />
                                     </div>
@@ -325,7 +321,7 @@ function Contact({ darkMode }) {
                                         onChange={handleChange}
                                         onFocus={() => setFocusedField('title')}
                                         onBlur={() => setFocusedField(null)}
-                                        placeholder="Project Inquiry, Pentest, ML Model, etc."
+                                                        placeholder="e.g., Project Inquiry, Security Audit, ML Model"
                                         className={`w-full px-4 py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.inputBg}`}
                                     />
                                 </div>
@@ -340,7 +336,7 @@ function Contact({ darkMode }) {
                                         onBlur={() => setFocusedField(null)}
                                         required
                                         rows="5"
-                                        placeholder="Tell me about your project scope, requirements, or goals..."
+                                                        placeholder="Describe your project, requirements, or goals..."
                                         className={`w-full px-4 py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 resize-none ${theme.inputBg}`}
                                     />
                                 </div>
