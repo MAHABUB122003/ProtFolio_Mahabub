@@ -1,17 +1,27 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-body {
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
-}
+/* ===========================
+   GOOGLE FONTS
+=========================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
-.dark {
-  color-scheme: dark;
-}
-
+/* ===========================
+   BASE STYLES
+=========================== */
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
 * {
@@ -19,6 +29,41 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.dark {
+  color-scheme: dark;
+}
+
+/* ===========================
+   CUSTOM SCROLLBAR
+=========================== */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0e1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f97316, #9333ea);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #fb923c, #a855f7);
+}
+
+/* ===========================
+   SELECTION
+=========================== */
+::selection {
+  background: rgba(249, 115, 22, 0.3);
+  color: #fff;
+}
+
+/* ===========================
+   3D PERSPECTIVE UTILITIES
+=========================== */
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -31,6 +76,9 @@ html {
   backface-visibility: hidden;
 }
 
+/* ===========================
+   GLASSMORPHISM
+=========================== */
 .glass-3d {
   background: rgba(17, 24, 39, 0.6);
   backdrop-filter: blur(20px);
@@ -49,6 +97,9 @@ html {
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
+/* ===========================
+   NEON GLOW EFFECTS
+=========================== */
 .neon-glow-orange {
   box-shadow:
     0 0 15px rgba(249, 115, 22, 0.3),
@@ -71,6 +122,82 @@ html {
   text-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.2);
 }
 
+/* ===========================
+   GRADIENT BORDER UTILITY
+=========================== */
+.gradient-border {
+  position: relative;
+  border-radius: inherit;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(249,115,22,0.6), rgba(168,85,247,0.6));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ===========================
+   DOT GRID PATTERN
+=========================== */
+.dot-grid-dark {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.dot-grid-light {
+  background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ===========================
+   SHIMMER ANIMATION
+=========================== */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ===========================
+   ANIMATED GRADIENT TEXT
+=========================== */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animated-gradient-text {
+  background: linear-gradient(135deg, #f97316, #ec4899, #a855f7, #f97316);
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* ===========================
+   FLOAT 3D ANIMATION
+=========================== */
 @keyframes float3d {
   0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
   25% { transform: translateY(-10px) rotateX(2deg) rotateY(-3deg); }
@@ -81,3 +208,161 @@ html {
 .animate-float-3d {
   animation: float3d 6s ease-in-out infinite;
 }
+
+/* ===========================
+   TYPING CURSOR
+=========================== */
+@keyframes blink-cursor {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.typing-cursor::after {
+  content: '|';
+  display: inline-block;
+  animation: blink-cursor 1s infinite;
+  color: #f97316;
+  margin-left: 2px;
+  font-weight: 300;
+}
+
+/* ===========================
+   SCROLL PROGRESS BAR
+=========================== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(to right, #f97316, #ec4899, #a855f7);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(249, 115, 22, 0.6);
+}
+
+/* ===========================
+   CARD HOVER GLOW
+=========================== */
+.card-hover-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+.card-hover-glow:hover {
+  box-shadow:
+    0 0 20px rgba(249, 115, 22, 0.12),
+    0 0 40px rgba(249, 115, 22, 0.06),
+    0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* ===========================
+   SKILL PROGRESS BAR
+=========================== */
+@keyframes fill-bar {
+  from { width: 0%; }
+  to { width: var(--skill-level); }
+}
+
+.skill-bar-fill {
+  animation: fill-bar 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ===========================
+   ANIMATED COUNTER
+=========================== */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.counter-animate {
+  animation: count-up 0.6s ease forwards;
+}
+
+/* ===========================
+   PULSE RING
+=========================== */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* ===========================
+   HERO DOT GRID SPECIFIC
+=========================== */
+.hero-grid-overlay {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+/* ===========================
+   TAG CLOUD HOVER
+=========================== */
+.tag-pill {
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.tag-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+}
+
+/* ===========================
+   FORM GLOW FOCUS
+=========================== */
+.input-glow:focus {
+  outline: none;
+  border-color: rgba(249, 115, 22, 0.6) !important;
+  box-shadow:
+    0 0 0 3px rgba(249, 115, 22, 0.12),
+    0 0 20px rgba(249, 115, 22, 0.08);
+}
+
+/* ===========================
+   SECTION DIVIDER
+=========================== */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(249,115,22,0.3), rgba(168,85,247,0.3), transparent);
+}
+
+/* ===========================
+   FEATURED BADGE
+=========================== */
+@keyframes featured-shine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.featured-badge {
+  background: linear-gradient(90deg, #f97316, #ec4899, #a855f7, #f97316);
+  background-size: 200% auto;
+  animation: featured-shine 3s linear infinite;
+}
+
+/* ===========================
+   SCROLL INDICATOR
+=========================== */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.5; }
+}
+
+.scroll-indicator {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+/* ===========================
+   STAGGER CHILDREN
+=========================== */
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 500ms; }

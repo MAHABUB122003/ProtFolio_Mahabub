@@ -9,7 +9,7 @@ const defaultData = {
         available: true,
         availableText: 'Available for opportunities',
         stats: [
-            { value: '5+', label: 'Projects' },
+            { value: '8+', label: 'Projects' },
             { value: '20+', label: 'Reports' },
             { value: '3+', label: 'Years Exp' }
         ],
@@ -50,7 +50,7 @@ const defaultData = {
             { name: 'CTF Competitor: Web, Binary, Forensics', issuer: 'CTF Security', year: '2024', level: 'Active' }
         ],
         stats: [
-            { number: '5+', label: 'Projects Completed', description: 'Full-stack & Security' },
+            { number: '8+', label: 'Projects Completed', description: 'Full-stack & Security' },
             { number: '20+', label: 'Security Reports', description: 'Vulnerabilities Found' },
             { number: '3+', label: 'Years Experience', description: 'Learning & Growing' },
             { number: '100%', label: 'Commitment', description: 'Quality Assurance' }

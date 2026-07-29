@@ -1,5 +1,5 @@
-const PROJECTS_KEY = 'portfolio_projects_v2';
-const ORDER_KEY = 'portfolio_project_order_v2';
+const PROJECTS_KEY = 'portfolio_projects_v3';
+const ORDER_KEY = 'portfolio_project_order_v3';
 
 export const defaultProjects = [
     {
@@ -31,7 +31,7 @@ export const defaultProjects = [
         image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
         description: "Developed and benchmarked classification models for malware and phishing URL detection.",
         fullDescription: "Developed and benchmarked classification models including XGBoost, CatBoost, LightGBM, Random Forest, SVM, and Logistic Regression for malware and phishing detection. Applied TF-IDF vectorization and feature engineering for malicious URL/text classification. Conducted EDA using Pandas, NumPy, and Matplotlib; optimized models via GridSearchCV and cross-validation.",
-        tech: ["Python", "XGBoost", "CatBoost", "LightGBM", "Random Forest", "SVM", "Logistic Regression", "Scikit-learn", "TF-IDF", "Pandas", "NumPy", "Matplotlib"],
+        tech: ["Python", "XGBoost", "CatBoost", "LightGBM", "Random Forest", "Scikit-learn", "TF-IDF", "Pandas", "NumPy"],
         features: [
             "Malware & Phishing Classification",
             "TF-IDF URL Classification",
@@ -108,6 +108,72 @@ export const defaultProjects = [
         date: "2024",
         status: "Active",
         order: 5
+    },
+    {
+        id: 6,
+        title: "Phishing Simulation & Awareness Platform",
+        category: "security",
+        image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=800&q=80",
+        description: "Built a phishing simulation platform to train and test employees against social engineering attacks.",
+        fullDescription: "Developed a full phishing simulation and security awareness platform. The system allows creating realistic phishing email campaigns, tracking click-through rates, and generating detailed reports. Integrated with SMTP for email delivery and included an awareness training module triggered upon clicking a simulated phishing link.",
+        tech: ["Python", "Flask", "React.js", "MongoDB", "SMTP", "JWT", "Docker", "Tailwind CSS"],
+        features: [
+            "Phishing Campaign Builder",
+            "Real-Time Click Tracking",
+            "Automated Awareness Training",
+            "Detailed Analytics Dashboard",
+            "Email Template Library",
+            "Role-Based Access Control"
+        ],
+        github: "https://github.com/MAHABUB122003",
+        demo: "#",
+        date: "2024",
+        status: "Completed",
+        order: 6
+    },
+    {
+        id: 7,
+        title: "Portfolio CMS with Admin Panel",
+        category: "web",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+        description: "Dynamic developer portfolio with a full-featured admin dashboard for content management.",
+        fullDescription: "Built a self-managed dynamic portfolio website with a React frontend and a secure admin panel. The admin panel includes sections for managing hero content, skills, projects, and contact settings. Project data is stored with full CRUD support. The site features dark/light mode, Framer Motion animations, AOS scroll effects, and a Three.js particle background.",
+        tech: ["React.js", "Vite", "Tailwind CSS", "Framer Motion", "Three.js", "EmailJS", "AOS"],
+        features: [
+            "Dynamic Content Management",
+            "Secure Admin Authentication",
+            "Full CRUD for Projects",
+            "Dark / Light Mode Toggle",
+            "Three.js Particle Background",
+            "EmailJS Contact Integration"
+        ],
+        github: "https://github.com/MAHABUB122003",
+        demo: "#",
+        date: "2025",
+        status: "Active",
+        order: 7
+    },
+    {
+        id: 8,
+        title: "Network Intrusion Detection System (NIDS)",
+        category: "ml",
+        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80",
+        description: "ML-based network intrusion detection system using the NSL-KDD dataset with ensemble classifiers.",
+        fullDescription: "Developed a machine learning-powered Network Intrusion Detection System using the NSL-KDD dataset. Trained and evaluated multiple classifiers including Random Forest, XGBoost, and LightGBM. Performed extensive feature engineering, dimensionality reduction with PCA, and hyperparameter tuning via GridSearchCV. Achieved high accuracy in detecting DoS, Probe, R2L, and U2R attack categories. Deployed as a FastAPI microservice with real-time packet feature input.",
+        tech: ["Python", "XGBoost", "LightGBM", "Random Forest", "Scikit-learn", "PCA", "FastAPI", "Pandas", "Matplotlib"],
+        features: [
+            "Multi-Class Intrusion Detection",
+            "NSL-KDD Dataset Preprocessing",
+            "PCA Dimensionality Reduction",
+            "XGBoost & LightGBM Ensemble",
+            "GridSearchCV Hyperparameter Tuning",
+            "FastAPI Real-Time Inference"
+        ],
+        github: "https://github.com/MAHABUB122003",
+        demo: "#",
+        date: "2024",
+        status: "Completed",
+        order: 8
     }
 ];
 
