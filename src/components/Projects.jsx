@@ -1,647 +1,392 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import reconBanner from '../assets/Banner.png';
-import { 
-    FaShoppingCart, 
-    FaShieldAlt, 
-    FaBug, 
-    FaCrosshairs, 
-    FaGithub, 
+import {
+    FaGithub,
     FaExternalLinkAlt,
+    FaTerminal,
     FaTimes,
-    FaTools,
-    FaStar,
-    FaCodeBranch,
-    FaRocket,
-    FaArrowRight,
     FaCheckCircle,
-    FaClock,
-    FaCalendarAlt
+    FaCalendarAlt,
+    FaShieldAlt,
+    FaBrain,
+    FaLaptopCode,
+    FaSearch,
+    FaFolderOpen,
+    FaArrowRight
 } from 'react-icons/fa';
 
-function Projects({ darkMode }) {
-    const [selectedProject, setSelectedProject] = useState(null);
-    const [filter, setFilter] = useState('all');
-    const [hoveredCard, setHoveredCard] = useState(null);
-    const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+import { getProjects } from '../utils/projectStorage';
 
-    // Track window width for responsive design
+function Projects({ darkMode }) {
+    const [projects, setProjects] = useState([]);
+    const [activeCategory, setActiveCategory] = useState('all');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedProject, setSelectedProject] = useState(null);
+
     useEffect(() => {
-        const handleResize = () => setWindowWidth(window.innerWidth);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        const loadedProjects = getProjects();
+        setProjects(loadedProjects);
     }, []);
 
-    const isMobile = windowWidth < 768;
-    const isTablet = windowWidth >= 768 && windowWidth < 1024;
-
-    // ============================================
-    // MY PROJECTS
-    // ============================================
-    const projects = [
-        {
-            id: 1,
-            title: "Secure Full-Stack E-Commerce Application",
-            category: "web",
-            description: "Feature-rich e-commerce platform with integrated security headers and secure data models.",
-            fullDescription: "Developed a complete e-commerce solution using React, Node.js, and MongoDB with integrated security headers and secure data models. Implemented Bcrypt for password hashing and JWT for session management. Performed manual security audits using Burp Suite and engineered the system to withstand OWASP Top 10 attack vectors.",
-            icon: <FaShoppingCart />,
-            tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "Bcrypt"],
-            features: [
-                "Secure JWT Authentication",
-                "Bcrypt Password Encryption",
-                "Security Headers Implementation",
-                "OWASP Top 10 Protection",
-                "Burp Suite Security Audits",
-                "Production-Ready Security"
-            ],
-            github: "https://github.com/MAHABUB122003",
-            demo: "#",
-            image: null,
-            imageAlt: "E-commerce Project Banner",
-            date: "2024",
-            status: "Completed"
-        },
-        {
-            id: 2,
-            title: "MAHABUB Recon Tool",
-            category: "security",
-            description: "Automated reconnaissance framework for bug bounty hunters and penetration testers with 25+ integrated security tools.",
-            fullDescription: "Developed a powerful reconnaissance automation framework that integrates 25+ industry-standard security tools for subdomain enumeration, URL discovery, vulnerability assessment, visual reconnaissance, technology fingerprinting, and reporting. The tool streamlines bug bounty and penetration testing workflows by automating reconnaissance tasks, generating professional reports, and identifying potential attack surfaces efficiently.",
-            icon: <FaTools />,
-            tech: [
-                "Bash", "Linux", "Subfinder", "Amass", "Assetfinder",
-                "HTTPx", "Nuclei", "Naabu", "Katana", "Gowitness"
-            ],
-            features: [
-                "15+ Subdomain Enumeration Tools",
-                "Automated URL & Endpoint Discovery",
-                "XSS, SQLi, LFI & SSRF Detection",
-                "Visual Recon with Screenshot Capture",
-                "Port Scanning & Service Enumeration",
-                "Technology Fingerprinting",
-                "Professional HTML Reports",
-                "Multi-threaded High-Speed Scanning",
-                "Smart URL Filtering & Deduplication",
-                "Bug Bounty Automation Workflow"
-            ],
-            github: "https://github.com/MAHABUB122003/mahabub-recon-tool",
-            demo: "https://github.com/MAHABUB122003/mahabub-recon-tool#readme",
-            image: reconBanner,
-            imageAlt: "MAHABUB Recon Tool Banner",
-            date: "2024",
-            status: "Active"
-        },
-        {
-            id: 3,
-            title: "Enterprise Red Team vs Blue Team Simulation",
-            category: "security",
-            description: "Complete security simulation with Windows Server AD and Wazuh/Splunk SIEM stack.",
-            fullDescription: "Developed an end-to-end security simulation featuring a Windows Server Active Directory domain and a Wazuh/Splunk SIEM stack. Conducted full-chain attacks including initial access via phishing, lateral movement using pivoting techniques, and domain takeover. Implemented real-time detection rules and conducted post-incident forensic investigations using Autopsy.",
-            icon: <FaShieldAlt />,
-            tech: ["Active Directory", "Splunk", "Wazuh", "Kali Linux", "Metasploit", "Autopsy"],
-            features: [
-                "Full-Chain Attack Simulation",
-                "Phishing Attack Vectors",
-                "Lateral Movement Techniques",
-                "Domain Takeover Scenarios",
-                "Real-Time SIEM Monitoring",
-                "Forensic Investigation"
-            ],
-            github: "https://github.com/MAHABUB122003",
-            demo: "#",
-            image: null,
-            imageAlt: "Red Team Simulation Banner",
-            date: "2023",
-            status: "Completed"
-        },
-        {
-            id: 4,
-            title: "Malware Analysis & Detection Engineering",
-            category: "security",
-            description: "Custom sandbox environment for analyzing RATs and keyloggers with YARA rules.",
-            fullDescription: "Analyzed custom Remote Access Trojans (RATs) and Keyloggers in an isolated sandbox environment to identify command-and-control (C2) patterns. Authored custom YARA and Snort signatures to detect malicious traffic and unauthorized credential exfiltration. Developed automated detection rules for real-time threat hunting.",
-            icon: <FaBug />,
-            tech: ["Python", "YARA", "Snort", "Wireshark", "Sandbox", "C2 Analysis"],
-            features: [
-                "Malware Behavior Analysis",
-                "C2 Pattern Identification",
-                "YARA Rule Creation",
-                "Snort Signature Development",
-                "Network Traffic Analysis",
-                "Threat Detection Automation"
-            ],
-            github: "https://github.com/MAHABUB122003",
-            demo: "#",
-            image: null,
-            imageAlt: "Malware Analysis Banner",
-            date: "2024",
-            status: "In Progress"
-        },
-        {
-            id: 5,
-            title: "Bug Bounty & Security Research",
-            category: "security",
-            description: "Active bug bounty hunting and CTF participation for vulnerability discovery.",
-            fullDescription: "Active bug bounty hunter on multiple platforms, discovering and responsibly disclosing security vulnerabilities. Regular participant in Capture The Flag (CTF) competitions, specializing in web application security, reverse engineering, and privilege escalation challenges. Consistently ranked in top positions across various security platforms.",
-            icon: <FaCrosshairs />,
-            tech: ["Burp Suite", "Nmap", "Metasploit", "OWASP Tools", "SQLmap", "Nuclei"],
-            features: [
-                "Active Bug Bounty Hunting",
-                "Vulnerability Disclosure",
-                "CTF Competition Participant",
-                "Web Security Testing",
-                "Privilege Escalation",
-                "Reverse Engineering"
-            ],
-            github: "https://github.com/MAHABUB122003",
-            demo: "#",
-            image: null,
-            imageAlt: "Bug Bounty Banner",
-            date: "2024",
-            status: "Active"
-        }
-    ];
+    const theme = {
+        bg: darkMode ? 'bg-gray-950' : 'bg-slate-50',
+        textPrimary: darkMode ? 'text-white' : 'text-gray-900',
+        textSecondary: darkMode ? 'text-gray-300' : 'text-gray-700',
+        textMuted: darkMode ? 'text-gray-400' : 'text-gray-500',
+        cardBg: darkMode
+            ? 'bg-gray-900/70 backdrop-blur-xl border-gray-800/80 text-white shadow-xl shadow-black/40 hover:border-orange-500/40'
+            : 'bg-white/90 backdrop-blur-xl border-gray-200/90 text-gray-900 shadow-lg shadow-gray-200/50 hover:border-orange-500/40',
+        pillBg: darkMode
+            ? 'bg-gray-900/80 border-gray-800 text-gray-300 hover:text-white'
+            : 'bg-white border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm',
+        pillActive: 'bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-md shadow-orange-500/25 border-transparent font-bold',
+        badgeBg: darkMode ? 'bg-gray-950/60 text-gray-300 border-gray-800' : 'bg-gray-100 text-gray-700 border-gray-200',
+        modalBg: darkMode ? 'bg-gray-900 border-gray-800 text-white' : 'bg-white border-gray-200 text-gray-900',
+        searchBg: darkMode ? 'bg-gray-900/90 border-gray-800 text-white placeholder-gray-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 shadow-sm',
+    };
 
     const categories = [
-        { id: 'all', name: 'All Projects', icon: 'all' },
-        { id: 'web', name: 'Web Development', icon: 'web' },
-        { id: 'security', name: 'Security Tools', icon: 'security' }
+        { id: 'all', label: 'All Work' },
+        { id: 'security', label: 'Cybersecurity' },
+        { id: 'ml', label: 'Machine Learning' },
+        { id: 'web', label: 'Full-Stack Web' },
     ];
 
-    const filteredProjects = filter === 'all' ? projects : projects.filter(p => p.category === filter);
-
-    const theme = {
-        textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        textSecondary: darkMode ? 'text-gray-300' : 'text-gray-600',
-        textMuted: darkMode ? 'text-gray-400' : 'text-gray-500',
-        cardBg: darkMode ? 'bg-gray-800/50' : 'bg-white/50',
-        border: darkMode ? 'border-gray-700' : 'border-gray-200',
-        glassBg: darkMode ? 'bg-gray-900/80' : 'bg-white/80',
+    const normalizeCategory = (cat) => {
+        if (!cat) return 'web';
+        const lower = cat.toLowerCase();
+        if (lower.includes('ml') || lower.includes('machine') || lower.includes('ai')) return 'ml';
+        if (lower.includes('security') || lower.includes('cyber') || lower.includes('threat')) return 'security';
+        return 'web';
     };
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-        }
-    };
+    const filteredProjects = projects.filter(project => {
+        const normCat = normalizeCategory(project.category);
+        const matchesCategory = activeCategory === 'all' || normCat === activeCategory;
+        const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                              project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                              (project.tech && project.tech.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())));
+        return matchesCategory && matchesSearch;
+    });
 
-    const cardVariants = {
-        hidden: { opacity: 0, y: 50 },
-        visible: { 
-            opacity: 1, 
-            y: 0,
-            transition: { type: "spring", stiffness: 100, damping: 15 }
-        },
-        hover: {
-            y: -8,
-            scale: 1.02,
-            transition: { type: "spring", stiffness: 400, damping: 10 }
-        }
-    };
-
-    const modalVariants = {
-        hidden: { opacity: 0, scale: 0.9, y: 50 },
-        visible: { 
-            opacity: 1, 
-            scale: 1, 
-            y: 0,
-            transition: { type: "spring", stiffness: 300, damping: 25 }
-        },
-        exit: { 
-            opacity: 0, 
-            scale: 0.9, 
-            y: 50,
-            transition: { duration: 0.2 }
-        }
-    };
-
-    // Get status color
-    const getStatusColor = (status) => {
-        switch(status) {
-            case 'Active': return 'bg-green-500/20 text-green-500';
-            case 'Completed': return 'bg-blue-500/20 text-blue-500';
-            case 'In Progress': return 'bg-yellow-500/20 text-yellow-500';
-            default: return 'bg-gray-500/20 text-gray-500';
-        }
-    };
-
-    // Get category display text
-    const getCategoryDisplay = (category) => {
-        return category === 'security' ? 'Cybersecurity' : 'Web Development';
+    const getCategoryIcon = (category) => {
+        const norm = normalizeCategory(category);
+        if (norm === 'security') return <FaShieldAlt className="text-orange-500" />;
+        if (norm === 'ml') return <FaBrain className="text-purple-500" />;
+        return <FaLaptopCode className="text-cyan-500" />;
     };
 
     return (
-        <section id="projects" className="py-16 sm:py-20 md:py-24 px-3 sm:px-4 relative overflow-hidden">
-            {/* Animated Background */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <motion.div
-                    animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="absolute -top-40 -right-40 w-60 h-60 sm:w-80 sm:h-80 bg-gradient-to-r from-orange-500/10 to-purple-500/10 rounded-full blur-3xl"
-                />
-                <motion.div
-                    animate={{ scale: [1, 1.3, 1], rotate: [360, 180, 0] }}
-                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                    className="absolute -bottom-40 -left-40 w-72 h-72 sm:w-96 sm:h-96 bg-gradient-to-r from-purple-500/10 to-orange-500/10 rounded-full blur-3xl"
-                />
+        <section id="projects" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 relative overflow-hidden">
+            {/* Ambient Background Lights */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                <div className="absolute top-1/4 -right-40 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-orange-500/10 via-pink-500/10 to-transparent blur-[140px]" />
+                <div className="absolute bottom-10 -left-40 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-purple-500/10 via-cyan-500/10 to-transparent blur-[150px]" />
             </div>
 
             <div className="container mx-auto max-w-7xl relative z-10">
-                {/* Header */}
+
+                {/* Section Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: -30 }}
+                    initial={{ opacity: 0, y: -20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-center mb-8 sm:mb-12 md:mb-16"
+                    className="text-center mb-10 sm:mb-12"
                 >
-                    <motion.div 
-                        className="inline-block mb-3 sm:mb-4"
-                        whileHover={{ scale: 1.05 }}
-                    >
-                        <div className="px-2 py-1 sm:px-3 sm:py-1.5 bg-gradient-to-r from-orange-500/10 to-purple-500/10 rounded-full backdrop-blur-sm">
-                            <span className="text-xs sm:text-sm font-semibold text-orange-500">
-                                {isMobile ? 'PORTFOLIO' : 'SECURITY RESEARCH & DEVELOPMENT'}
-                            </span>
-                        </div>
-                    </motion.div>
-                    
-                    <motion.h2 
-                        className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 ${theme.textPrimary} px-4`}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                    >
-                        Featured <span className="bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent">
-                            {isMobile ? 'Work' : 'Projects'}
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full backdrop-blur-md mb-3 border border-orange-500/30 bg-orange-500/10">
+                        <FaFolderOpen className="text-orange-500 text-xs animate-pulse" />
+                        <span className="text-xs font-semibold tracking-wider uppercase bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 bg-clip-text text-transparent">
+                            FEATURED PORTFOLIO
                         </span>
-                    </motion.h2>
-                    
-                    <motion.div 
-                        className="w-16 sm:w-20 h-1 bg-gradient-to-r from-orange-500 to-purple-500 mx-auto rounded-full mb-4 sm:mb-6"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: isMobile ? 64 : 80 }}
-                        transition={{ delay: 0.4, duration: 0.8 }}
-                    />
-                    
-                    <motion.p 
-                        className={`${theme.textSecondary} max-w-2xl mx-auto text-xs sm:text-sm md:text-base px-4`}
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ delay: 0.6 }}
-                    >
-                        {isMobile 
-                            ? 'Cybersecurity tools and web applications'
-                            : 'Cybersecurity tools, web applications, and security research projects'
-                        }
-                    </motion.p>
+                    </div>
+
+                    <h2 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight ${theme.textPrimary} mb-3`}>
+                        Featured <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 bg-clip-text text-transparent">Projects & Solutions</span>
+                    </h2>
+
+                    <p className={`${theme.textSecondary} max-w-2xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed`}>
+                        Production-grade applications combining AI threat classification, WordPress malware detection, active pentesting labs, and responsive full-stack architectures.
+                    </p>
                 </motion.div>
 
-                {/* Filter Buttons - Responsive */}
-                <motion.div 
-                    className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 px-2"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 }}
-                >
-                    {categories.map((cat, idx) => (
-                        <motion.button
-                            key={cat.id}
-                            onClick={() => setFilter(cat.id)}
-                            whileHover={{ scale: 1.05, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.1 }}
-                            className={`px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs sm:text-sm md:text-base font-medium transition-all duration-300 ${
-                                filter === cat.id
-                                    ? 'bg-gradient-to-r from-orange-500 to-purple-500 text-white shadow-lg'
-                                    : `${darkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`
-                            }`}
-                        >
-                            {isMobile && cat.id !== 'all' ? cat.name.split(' ')[0] : cat.name}
-                        </motion.button>
-                    ))}
-                </motion.div>
-
-                {/* Projects Grid - Responsive */}
-                <motion.div 
-                    className={`grid gap-4 sm:gap-5 md:gap-6 ${
-                        isMobile ? 'grid-cols-1' : isTablet ? 'grid-cols-2' : 'grid-cols-2 lg:grid-cols-2'
-                    }`}
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.1 }}
-                >
-                    <AnimatePresence mode="wait">
-                        {filteredProjects.map((project, idx) => (
-                            <motion.div
-                                key={project.id}
-                                variants={cardVariants}
-                                whileHover="hover"
-                                onHoverStart={() => setHoveredCard(project.id)}
-                                onHoverEnd={() => setHoveredCard(null)}
-                                className={`rounded-xl sm:rounded-2xl overflow-hidden shadow-lg border ${theme.border} ${theme.cardBg} backdrop-blur-sm transition-all duration-300 cursor-pointer relative`}
-                                onClick={() => setSelectedProject(project)}
-                                layout
+                {/* Category Filters & Search Input */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-8">
+                    <div className="flex flex-wrap items-center justify-center gap-2">
+                        {categories.map((cat) => (
+                            <button
+                                key={cat.id}
+                                onClick={() => setActiveCategory(cat.id)}
+                                className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 ${
+                                    activeCategory === cat.id ? theme.pillActive : theme.pillBg
+                                }`}
                             >
-                                {/* Hover Glow */}
-                                <motion.div 
-                                    className="absolute inset-0 bg-gradient-to-r from-orange-500/0 to-purple-500/0 rounded-xl sm:rounded-2xl pointer-events-none"
-                                    animate={{ opacity: hoveredCard === project.id ? 0.1 : 0 }}
-                                    transition={{ duration: 0.3 }}
-                                />
-                                
-                                {/* Project Banner */}
-                                <motion.div 
-                                    className="relative h-32 sm:h-40 md:h-48 overflow-hidden bg-gradient-to-r from-orange-500/20 to-purple-500/20"
-                                    whileHover={{ scale: 1.05 }}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    {project.image ? (
-                                        <motion.img 
-                                            src={project.image} 
-                                            alt={project.imageAlt || project.title}
-                                            className="w-full h-full object-cover"
-                                            whileHover={{ scale: 1.1 }}
-                                            transition={{ duration: 0.5 }}
-                                            onError={(e) => {
-                                                e.target.style.display = 'none';
-                                                const parent = e.target.parentElement;
-                                                if (parent) {
-                                                    parent.classList.add('flex', 'items-center', 'justify-center');
-                                                }
-                                            }}
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center">
-                                            <motion.span 
-                                                className="text-4xl sm:text-5xl md:text-6xl"
-                                                animate={{ rotate: [0, 360], scale: [1, 1.1, 1] }}
-                                                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                                            >
-                                                {project.icon}
-                                            </motion.span>
-                                        </div>
-                                    )}
-                                    
-                                    {/* Badges */}
-                                    <div className="absolute top-2 right-2 flex gap-1 sm:gap-2">
-                                        <motion.div 
-                                            className="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-black/50 backdrop-blur-sm rounded-lg"
-                                            initial={{ x: 20, opacity: 0 }}
-                                            animate={{ x: 0, opacity: 1 }}
-                                        >
-                                            <span className="text-white text-xs font-medium capitalize">
-                                                {project.category === 'security' ? 'Security' : 'Web'}
-                                            </span>
-                                        </motion.div>
-                                        <motion.div 
-                                            className={`px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-lg text-xs font-medium ${getStatusColor(project.status)}`}
-                                            initial={{ x: 20, opacity: 0 }}
-                                            animate={{ x: 0, opacity: 1 }}
-                                            transition={{ delay: 0.1 }}
-                                        >
-                                            {project.status}
-                                        </motion.div>
-                                    </div>
-                                </motion.div>
-
-                                {/* Content */}
-                                <div className="p-4 sm:p-5 md:p-6">
-                                    <div className="flex items-start justify-between mb-2 sm:mb-3">
-                                        <div className="flex-1 min-w-0">
-                                            <motion.h3 
-                                                className={`text-sm sm:text-base md:text-lg lg:text-xl font-bold ${theme.textPrimary} mb-1 truncate`}
-                                            >
-                                                {project.title}
-                                            </motion.h3>
-                                            <div className="flex items-center gap-2">
-                                                <p className={`text-xs ${theme.textMuted} capitalize`}>
-                                                    {getCategoryDisplay(project.category)}
-                                                </p>
-                                                <span className={`text-xs ${theme.textMuted}`}>•</span>
-                                                <p className={`text-xs ${theme.textMuted}`}>
-                                                    <FaCalendarAlt className="inline mr-1 text-xs" />
-                                                    {project.date}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <motion.p 
-                                        className={`${theme.textSecondary} text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed line-clamp-2`}
-                                    >
-                                        {project.description}
-                                    </motion.p>
-                                    
-                                    {/* Tech Stack */}
-                                    <motion.div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-4">
-                                        {project.tech.slice(0, isMobile ? 3 : 4).map((tech, i) => (
-                                            <motion.span
-                                                key={i}
-                                                whileHover={{ scale: 1.05, y: -2 }}
-                                                className={`px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-lg text-[10px] sm:text-xs font-medium ${
-                                                    darkMode ? 'bg-gray-700/70 text-gray-300' : 'bg-gray-100/70 text-gray-600'
-                                                }`}
-                                            >
-                                                {tech}
-                                            </motion.span>
-                                        ))}
-                                        {project.tech.length > (isMobile ? 3 : 4) && (
-                                            <span className={`px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-lg text-[10px] sm:text-xs font-medium ${
-                                                darkMode ? 'bg-gray-700/70 text-gray-300' : 'bg-gray-100/70 text-gray-600'
-                                            }`}>
-                                                +{project.tech.length - (isMobile ? 3 : 4)}
-                                            </span>
-                                        )}
-                                    </motion.div>
-
-                                    {/* View Details Button */}
-                                    <motion.button
-                                        className={`w-full py-1.5 sm:py-2 rounded-lg font-medium text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
-                                            darkMode
-                                                ? 'bg-gray-700/50 text-gray-300 hover:bg-gradient-to-r hover:from-orange-500 hover:to-purple-500 hover:text-white'
-                                                : 'bg-gray-100/50 text-gray-700 hover:bg-gradient-to-r hover:from-orange-500 hover:to-purple-500 hover:text-white'
-                                        }`}
-                                        whileHover={{ scale: 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                        View Details 
-                                        <FaArrowRight className="text-xs" />
-                                    </motion.button>
-                                </div>
-                            </motion.div>
+                                {cat.label}
+                            </button>
                         ))}
-                    </AnimatePresence>
-                </motion.div>
-            </div>
+                    </div>
 
-            {/* Modal - Full Screen on Mobile, Large on Desktop */}
-            <AnimatePresence>
-                {selectedProject && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md"
-                        onClick={() => setSelectedProject(null)}
-                    >
+                    {/* Compact Search Bar */}
+                    <div className="relative w-full md:w-64">
+                        <FaSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs" />
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="Search project or tech..."
+                            className={`w-full pl-9 pr-3 py-2 rounded-xl border text-xs outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.searchBg}`}
+                        />
+                    </div>
+                </div>
+
+                {/* Compact Projects Showcase Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                    {filteredProjects.map((project, idx) => (
                         <motion.div
-                            variants={modalVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            className={`w-full ${isMobile ? 'max-w-full h-full rounded-none' : 'max-w-4xl max-h-[90vh] rounded-2xl'} 
-                                ${darkMode ? 'bg-gray-900' : 'bg-white'} shadow-2xl overflow-hidden flex flex-col`}
-                            onClick={(e) => e.stopPropagation()}
+                            key={project.id || idx}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: idx * 0.04 }}
+                            viewport={{ once: true }}
+                            className={`rounded-2xl border ${theme.cardBg} flex flex-col justify-between overflow-hidden transition-all duration-300 hover:scale-[1.015] hover:shadow-xl`}
                         >
-                            {/* Modal Header - Responsive Banner */}
-                            <div className="relative h-40 sm:h-48 md:h-56 bg-gradient-to-r from-orange-500 to-purple-500 overflow-hidden flex-shrink-0">
-                                {selectedProject.image ? (
-                                    <img 
-                                        src={selectedProject.image} 
-                                        alt={selectedProject.imageAlt}
-                                        className="w-full h-full object-cover"
+                            {/* Compact Project Cover Image Header */}
+                            <div
+                                className="relative w-full h-36 sm:h-40 overflow-hidden bg-gray-950 cursor-pointer group"
+                                onClick={() => setSelectedProject(project)}
+                            >
+                                {project.image ? (
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                         onError={(e) => {
                                             e.target.style.display = 'none';
                                         }}
                                     />
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center">
-                                        <span className="text-5xl sm:text-6xl md:text-7xl">
-                                            {selectedProject.icon}
-                                        </span>
+                                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-500/20 via-pink-500/20 to-purple-600/20">
+                                        <div className="text-center p-3">
+                                            <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center mx-auto mb-1 text-lg">
+                                                {getCategoryIcon(project.category)}
+                                            </div>
+                                            <span className="text-[10px] font-mono font-bold text-gray-300 uppercase">{project.category}</span>
+                                        </div>
                                     </div>
                                 )}
-                                
-                                <button
-                                    onClick={() => setSelectedProject(null)}
-                                    className="absolute top-3 right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-orange-500 transition-colors text-white"
-                                >
-                                    <FaTimes className="text-sm sm:text-base" />
-                                </button>
 
-                                {/* Status Badge in Modal */}
-                                <div className="absolute bottom-3 left-3">
-                                    <span className={`px-2 py-1 rounded-lg text-xs font-medium ${getStatusColor(selectedProject.status)} backdrop-blur-sm`}>
-                                        {selectedProject.status}
+                                <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-transparent to-black/20" />
+
+                                {/* Category & Status Overlay */}
+                                <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+                                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-black/60 backdrop-blur-md border border-white/20 text-orange-400 uppercase tracking-wider flex items-center gap-1 shadow-md">
+                                        {getCategoryIcon(project.category)}
+                                        <span>{project.category || "Full-Stack"}</span>
                                     </span>
-                                </div>
-                            </div>
-
-                            {/* Modal Content - Scrollable */}
-                            <div className="flex-1 overflow-y-auto p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5 md:space-y-6">
-                                {/* Title Section */}
-                                <div>
-                                    <h2 className={`text-lg sm:text-xl md:text-2xl font-bold ${theme.textPrimary} mb-2`}>
-                                        {selectedProject.title}
-                                    </h2>
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        <span className={`text-xs px-2 py-1 rounded-full ${
-                                            selectedProject.category === 'security' 
-                                                ? 'bg-orange-500/20 text-orange-500' 
-                                                : 'bg-purple-500/20 text-purple-500'
-                                        }`}>
-                                            {selectedProject.category === 'security' ? 'Security Tool' : 'Web Application'}
+                                    {project.status && (
+                                        <span className="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-emerald-500/90 backdrop-blur-md text-white shadow-md">
+                                            {project.status}
                                         </span>
-                                        <span className="text-xs text-gray-400">•</span>
-                                        <span className="text-xs text-gray-400 flex items-center gap-1">
-                                            <FaCalendarAlt /> {selectedProject.date}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Overview */}
-                                <div>
-                                    <h3 className={`text-base sm:text-lg font-bold mb-2 sm:mb-3 ${theme.textPrimary} flex items-center gap-2`}>
-                                        Overview
-                                    </h3>
-                                    <p className={`${theme.textSecondary} leading-relaxed text-xs sm:text-sm md:text-base`}>
-                                        {selectedProject.fullDescription}
-                                    </p>
-                                </div>
-
-                                {/* Features Grid - Responsive */}
-                                <div>
-                                    <h3 className={`text-base sm:text-lg font-bold mb-2 sm:mb-3 ${theme.textPrimary} flex items-center gap-2`}>
-                                        Key Features
-                                    </h3>
-                                    <div className={`grid ${isMobile ? 'grid-cols-1' : 'sm:grid-cols-2'} gap-2 sm:gap-3`}>
-                                        {selectedProject.features.map((feature, i) => (
-                                            <motion.div 
-                                                key={i} 
-                                                className="flex items-start gap-2"
-                                                initial={{ x: -20, opacity: 0 }}
-                                                animate={{ x: 0, opacity: 1 }}
-                                                transition={{ delay: i * 0.05 }}
-                                            >
-                                                <FaCheckCircle className="text-orange-500 text-xs sm:text-sm mt-0.5 flex-shrink-0" />
-                                                <span className={`text-xs sm:text-sm ${theme.textSecondary}`}>
-                                                    {feature}
-                                                </span>
-                                            </motion.div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Technologies */}
-                                <div>
-                                    <h3 className={`text-base sm:text-lg font-bold mb-2 sm:mb-3 ${theme.textPrimary} flex items-center gap-2`}>
-                                        Technologies Used
-                                    </h3>
-                                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                                        {selectedProject.tech.map((tech, i) => (
-                                            <motion.span
-                                                key={i}
-                                                className={`px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium ${
-                                                    darkMode ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-700'
-                                                }`}
-                                                initial={{ scale: 0, opacity: 0 }}
-                                                animate={{ scale: 1, opacity: 1 }}
-                                                transition={{ delay: i * 0.03 }}
-                                                whileHover={{ scale: 1.05, y: -2 }}
-                                            >
-                                                {tech}
-                                            </motion.span>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Action Buttons - Responsive */}
-                                <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-3 pt-4`}>
-                                    <motion.a
-                                        href={selectedProject.github}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex-1 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-purple-500 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 text-sm"
-                                        whileHover={{ scale: 1.02, y: -2 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                        <FaGithub /> View on GitHub
-                                    </motion.a>
-                                    {selectedProject.demo !== "#" && (
-                                        <motion.a
-                                            href={selectedProject.demo}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex-1 py-2.5 sm:py-3 bg-gray-800 text-white rounded-lg font-semibold hover:bg-gray-900 transition-colors flex items-center justify-center gap-2 text-sm"
-                                            whileHover={{ scale: 1.02, y: -2 }}
-                                            whileTap={{ scale: 0.98 }}
-                                        >
-                                            <FaExternalLinkAlt /> Live Demo
-                                        </motion.a>
                                     )}
                                 </div>
                             </div>
+
+                            {/* Compact Card Content Body */}
+                            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+                                <div className="space-y-2">
+                                    <div className="flex items-center justify-between gap-2">
+                                        <span className={`text-[10px] font-mono ${theme.textMuted} flex items-center gap-1`}>
+                                            <FaCalendarAlt /> {project.date || "2024"}
+                                        </span>
+                                    </div>
+
+                                    <h3
+                                        className={`text-base font-bold ${theme.textPrimary} leading-snug hover:text-orange-500 transition-colors cursor-pointer line-clamp-1`}
+                                        onClick={() => setSelectedProject(project)}
+                                        title={project.title}
+                                    >
+                                        {project.title}
+                                    </h3>
+
+                                    <p className={`${theme.textSecondary} text-xs leading-relaxed line-clamp-2`}>
+                                        {project.description}
+                                    </p>
+
+                                    {/* Tech Pills */}
+                                    <div className="flex flex-wrap gap-1 pt-1">
+                                        {project.tech && project.tech.slice(0, 5).map((t, tIdx) => (
+                                            <span
+                                                key={tIdx}
+                                                className={`px-2 py-0.5 rounded-md text-[10px] font-medium border ${theme.badgeBg}`}
+                                            >
+                                                {t}
+                                            </span>
+                                        ))}
+                                        {project.tech && project.tech.length > 5 && (
+                                            <span className={`px-1.5 py-0.5 rounded-md text-[10px] font-mono ${theme.textMuted}`}>
+                                                +{project.tech.length - 5}
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Compact Footer Action Bar */}
+                                <div className="pt-3 mt-2 border-t border-gray-200 dark:border-gray-800/80 flex items-center justify-between">
+                                    <button
+                                        onClick={() => setSelectedProject(project)}
+                                        className="text-xs font-bold text-orange-500 hover:underline flex items-center gap-1"
+                                    >
+                                        <span>View Details</span>
+                                        <FaArrowRight className="text-[9px]" />
+                                    </button>
+
+                                    <div className="flex items-center gap-2">
+                                        {project.github && (
+                                            <a
+                                                href={project.github}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`w-8 h-8 rounded-lg border flex items-center justify-center text-xs transition-all hover:scale-105 ${
+                                                    darkMode ? 'bg-gray-900 border-gray-800 text-gray-300 hover:text-white' : 'bg-gray-100 border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm'
+                                                }`}
+                                                title="View GitHub Repository"
+                                            >
+                                                <FaGithub />
+                                            </a>
+                                        )}
+                                        {project.demo && project.demo !== '#' && (
+                                            <a
+                                                href={project.demo}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-8 h-8 rounded-lg bg-orange-500 text-white flex items-center justify-center text-xs shadow-sm hover:scale-105 transition-all"
+                                                title="Live Demo"
+                                            >
+                                                <FaExternalLinkAlt />
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
                         </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    ))}
+                </div>
+
+                {/* Compact Interactive Detail Modal */}
+                <AnimatePresence>
+                    {selectedProject && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black/75 backdrop-blur-md">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                                className={`w-full max-w-2xl rounded-2xl border shadow-2xl overflow-hidden ${theme.modalBg}`}
+                            >
+                                {/* Modal Image Header Banner */}
+                                <div className="relative w-full h-44 sm:h-52 overflow-hidden bg-gray-950">
+                                    {selectedProject.image && (
+                                        <img
+                                            src={selectedProject.image}
+                                            alt={selectedProject.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    )}
+
+                                    <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent" />
+
+                                    <button
+                                        onClick={() => setSelectedProject(null)}
+                                        className="absolute top-3 right-3 p-2 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white hover:bg-black transition-all text-xs"
+                                    >
+                                        <FaTimes />
+                                    </button>
+
+                                    <div className="absolute bottom-3 left-5 right-5">
+                                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-orange-500/20 text-orange-400 border border-orange-500/40 uppercase">
+                                            {selectedProject.category || "Project Specs"}
+                                        </span>
+                                        <h3 className="text-lg sm:text-xl font-bold text-white mt-1 drop-shadow-md">
+                                            {selectedProject.title}
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                {/* Modal Content Body */}
+                                <div className="p-5 max-h-[60vh] overflow-y-auto space-y-4">
+                                    <div>
+                                        <h4 className={`text-xs font-bold font-mono ${theme.textMuted} uppercase mb-1.5`}>Overview</h4>
+                                        <p className={`${theme.textSecondary} text-xs sm:text-sm leading-relaxed`}>
+                                            {selectedProject.fullDescription || selectedProject.description}
+                                        </p>
+                                    </div>
+
+                                    {/* Key Features */}
+                                    <div>
+                                        <h4 className={`text-xs font-bold font-mono ${theme.textMuted} uppercase mb-2`}>Key Features & Deliverables</h4>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                            {(selectedProject.features || [
+                                                "AI-powered malware detection",
+                                                "Real-time scanning & WAF",
+                                                "REST API services integration",
+                                                "Automated threat classification"
+                                            ]).map((feature, i) => (
+                                                <div key={i} className={`p-2.5 rounded-xl border ${theme.badgeBg} flex items-center gap-2`}>
+                                                    <FaCheckCircle className="text-orange-500 text-xs flex-shrink-0" />
+                                                    <span className={`text-xs font-medium ${theme.textPrimary}`}>{feature}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Tech Stack */}
+                                    <div>
+                                        <h4 className={`text-xs font-bold font-mono ${theme.textMuted} uppercase mb-2`}>Technologies Used</h4>
+                                        <div className="flex flex-wrap gap-1.5">
+                                            {selectedProject.tech && selectedProject.tech.map((tech, i) => (
+                                                <span key={i} className={`px-2.5 py-1 rounded-lg text-xs font-semibold border ${theme.badgeBg}`}>
+                                                    {tech}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Modal Footer Actions */}
+                                <div className="p-4 sm:p-5 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between gap-3">
+                                    <div className="flex items-center gap-2.5">
+                                        {selectedProject.github && (
+                                            <a
+                                                href={selectedProject.github}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-purple-600 text-white text-xs font-bold flex items-center gap-2 shadow-sm hover:scale-105 transition-all"
+                                            >
+                                                <FaGithub /> View Repository
+                                            </a>
+                                        )}
+                                        {selectedProject.demo && selectedProject.demo !== '#' && (
+                                            <a
+                                                href={selectedProject.demo}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="px-4 py-2 rounded-xl bg-gray-900 dark:bg-gray-800 text-white text-xs font-bold flex items-center gap-2 shadow-sm hover:scale-105 transition-all"
+                                            >
+                                                <FaExternalLinkAlt /> Live Demo
+                                            </a>
+                                        )}
+                                    </div>
+                                    <button
+                                        onClick={() => setSelectedProject(null)}
+                                        className="px-3.5 py-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-bold"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </motion.div>
+                        </div>
+                    )}
+                </AnimatePresence>
+            </div>
         </section>
     );
 }

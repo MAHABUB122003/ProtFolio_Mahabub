@@ -11,7 +11,9 @@ import {
     FaGitAlt,
     FaDocker,
     FaDatabase,
-    FaCloud
+    FaCloud,
+    FaBrain,
+    FaServer
 } from 'react-icons/fa';
 import { 
     SiMongodb, 
@@ -21,10 +23,14 @@ import {
     SiSplunk,
     SiWireshark,
     SiGnubash,
-    SiCplusplus
+    SiCplusplus,
+    SiFastapi
 } from 'react-icons/si';
+import { getSection } from '../utils/portfolioData';
 
 function Skills({ darkMode }) {
+    const skillsData = getSection('skills');
+    
     const theme = {
         textPrimary: darkMode ? 'text-white' : 'text-gray-900',
         textSecondary: darkMode ? 'text-gray-300' : 'text-gray-600',
@@ -33,74 +39,65 @@ function Skills({ darkMode }) {
         border: darkMode ? 'border-gray-700/50' : 'border-gray-200/50',
     };
 
-    const skillCategories = [
-        {
-            name: "Frontend",
-            icon: <FaReact className="text-xl text-cyan-400" />,
-            gradient: "from-cyan-500 to-blue-500",
-            skills: [
-                { name: "React.js", level: 90, icon: <FaReact className="text-cyan-400" /> },
-                { name: "JavaScript", level: 85, icon: <SiJavascript className="text-yellow-400" /> },
-                { name: "Tailwind CSS", level: 88, icon: <SiTailwindcss className="text-teal-400" /> },
-                { name: "HTML/CSS", level: 85, icon: <FaCode className="text-orange-400" /> }
-            ]
-        },
-        {
-            name: "Backend",
-            icon: <FaNodeJs className="text-xl text-green-500" />,
-            gradient: "from-green-500 to-emerald-500",
-            skills: [
-                { name: "Node.js", level: 85, icon: <FaNodeJs className="text-green-500" /> },
-                { name: "Express.js", level: 85, icon: <SiExpress className="text-gray-500" /> },
-                { name: "MongoDB", level: 80, icon: <SiMongodb className="text-green-600" /> },
-                { name: "REST APIs", level: 88, icon: <FaDatabase className="text-purple-400" /> }
-            ]
-        },
-        {
-            name: "Cybersecurity",
-            icon: <FaShieldAlt className="text-xl text-red-500" />,
-            gradient: "from-red-500 to-orange-500",
-            skills: [
-                { name: "Penetration Testing", level: 85, icon: <FaShieldAlt className="text-red-500" /> },
-                { name: "SIEM (Splunk/Wazuh)", level: 80, icon: <SiSplunk className="text-green-500" /> },
-                { name: "Network Security", level: 85, icon: <SiWireshark className="text-blue-500" /> },
-                { name: "Digital Forensics", level: 75, icon: <FaShieldAlt className="text-purple-500" /> }
-            ]
-        },
-        {
-            name: "DevOps & Tools",
-            icon: <FaTools className="text-xl text-purple-500" />,
-            gradient: "from-purple-500 to-pink-500",
-            skills: [
-                { name: "Git/GitHub", level: 90, icon: <FaGitAlt className="text-orange-600" /> },
-                { name: "Docker", level: 75, icon: <FaDocker className="text-blue-500" /> },
-                { name: "Burp Suite", level: 85, icon: <FaTools className="text-orange-500" /> },
-                { name: "Wireshark", level: 80, icon: <SiWireshark className="text-blue-500" /> }
-            ]
-        },
-        {
-            name: "Languages",
-            icon: <FaLanguage className="text-xl text-blue-500" />,
-            gradient: "from-blue-500 to-cyan-500",
-            skills: [
-                { name: "Python", level: 85, icon: <FaPython className="text-blue-500" /> },
-                { name: "JavaScript", level: 88, icon: <SiJavascript className="text-yellow-400" /> },
-                { name: "Bash", level: 80, icon: <SiGnubash className="text-green-500" /> },
-                { name: "C/C++", level: 75, icon: <SiCplusplus className="text-blue-600" /> }
-            ]
-        },
-        {
-            name: "Security Tools",
-            icon: <FaShieldAlt className="text-xl text-green-500" />,
-            gradient: "from-green-500 to-teal-500",
-            skills: [
-                { name: "Metasploit", level: 85, icon: <FaShieldAlt className="text-red-500" /> },
-                { name: "Nmap", level: 90, icon: <FaTools className="text-green-500" /> },
-                { name: "YARA/Snort", level: 80, icon: <FaShieldAlt className="text-blue-500" /> },
-                { name: "OWASP Tools", level: 85, icon: <FaShieldAlt className="text-orange-500" /> }
-            ]
-        }
-    ];
+    const categoryIcons = {
+        "Frontend": <FaReact className="text-xl text-cyan-400" />,
+        "Backend": <FaNodeJs className="text-xl text-green-500" />,
+        "Machine Learning": <FaBrain className="text-xl text-purple-500" />,
+        "Cybersecurity": <FaShieldAlt className="text-xl text-red-500" />,
+        "DevOps & Tools": <FaTools className="text-xl text-purple-500" />,
+        "Languages": <FaLanguage className="text-xl text-blue-500" />,
+        "Security Tools": <FaShieldAlt className="text-xl text-green-500" />
+    };
+
+    const skillIcons = {
+        "React.js": <FaReact className="text-cyan-400" />,
+        "JavaScript": <SiJavascript className="text-yellow-400" />,
+        "Tailwind CSS": <SiTailwindcss className="text-teal-400" />,
+        "HTML/CSS": <FaCode className="text-orange-400" />,
+        "Node.js": <FaNodeJs className="text-green-500" />,
+        "Express.js": <SiExpress className="text-gray-500" />,
+        "MongoDB": <SiMongodb className="text-green-600" />,
+        "FastAPI": <SiFastapi className="text-teal-500" />,
+        "XGBoost": <FaBrain className="text-purple-500" />,
+        "CatBoost": <FaBrain className="text-blue-500" />,
+        "LightGBM": <FaBrain className="text-green-500" />,
+        "Scikit-learn": <FaPython className="text-blue-400" />,
+        "Pen Testing": <FaShieldAlt className="text-red-500" />,
+        "SOC/SIEM": <SiSplunk className="text-green-500" />,
+        "Network Security": <SiWireshark className="text-blue-500" />,
+        "Digital Forensics": <FaShieldAlt className="text-purple-500" />,
+        "Git/GitHub": <FaGitAlt className="text-orange-600" />,
+        "Docker": <FaDocker className="text-blue-500" />,
+        "REST APIs": <FaDatabase className="text-purple-400" />,
+        "JWT Auth": <FaShieldAlt className="text-green-500" />,
+        "Python": <FaPython className="text-blue-500" />,
+        "Bash": <SiGnubash className="text-green-500" />,
+        "PowerShell": <FaCode className="text-blue-400" />,
+        "Metasploit": <FaShieldAlt className="text-red-500" />,
+        "Nmap": <FaTools className="text-green-500" />,
+        "YARA/Snort": <FaShieldAlt className="text-blue-500" />,
+        "OWASP Tools": <FaShieldAlt className="text-orange-500" />
+    };
+
+    const categoryGradients = {
+        "Frontend": "from-cyan-500 to-blue-500",
+        "Backend": "from-green-500 to-emerald-500",
+        "Machine Learning": "from-purple-500 to-pink-500",
+        "Cybersecurity": "from-red-500 to-orange-500",
+        "DevOps & Tools": "from-purple-500 to-pink-500",
+        "Languages": "from-blue-500 to-cyan-500",
+        "Security Tools": "from-green-500 to-teal-500"
+    };
+
+    const skillCategories = (skillsData?.categories || []).map(cat => ({
+        ...cat,
+        icon: categoryIcons[cat.name] || <FaCode className="text-xl text-orange-400" />,
+        gradient: cat.gradient || categoryGradients[cat.name] || "from-orange-500 to-purple-500",
+        skills: (cat.skills || []).map(s => ({
+            ...s,
+            icon: skillIcons[s.name] || <FaCode className="text-orange-400" />
+        }))
+    }));
 
     // Smooth card variants with spring physics for fluid motion
     const cardVariants = {
@@ -287,7 +284,40 @@ function Skills({ darkMode }) {
         );
     };
 
-    const titleText = "My Expertise";
+    const subgroupMapping = {
+        "Backend & APIs": ["FastAPI", "GraphQL", "REST APIs", "JWT", "Bcrypt", "Node.js", "Express.js"],
+        "Frontend & UI": ["Next.js", "Tailwind CSS", "React.js", "HTML/CSS", "JavaScript"],
+        "Databases & Cloud": ["Redis", "PostgreSQL", "MongoDB", "Docker", "Firebase"],
+        "Offensive Tools": ["Burp Suite", "Nessus", "Nmap", "Wireshark", "Metasploit", "Sqlmap", "Hydra", "John the Ripper", "Hashcat", "Gobuster", "Nikto", "OWASP ZAP"],
+        "Defensive & Forensics": ["Splunk", "Wazuh", "Autopsy", "Snort", "YARA"],
+        "Algorithms": ["XGBoost", "CatBoost", "LightGBM", "Random Forest", "Decision Trees", "SVM", "Logistic Regression", "Linear Regression", "KNN", "Naïve Bayes"],
+        "Data Science & NLP": ["Python", "NumPy", "Pandas", "Matplotlib", "Seaborn", "Scikit-learn", "TF-IDF", "Count Vectorization", "PCA", "Feature Selection", "Dimensionality Reduction", "One-Hot Encoding", "Standardization", "Normalization"],
+        "Model Optimization": ["GridSearchCV", "RandomizedSearchCV", "Cross-Validation", "Hyperparameter Tuning", "Ensemble Methods"],
+        "Web Application Sec": ["XSS", "SQLi", "LFI", "RFI", "CSRF", "SSRF", "XXE", "IDOR", "Path Traversal", "Command Injection", "JWT Attacks", "Open Redirect", "Clickjacking", "SSTI", "NoSQLi"],
+        "Infrastructure & Network": ["AD Exploitation", "Privilege Escalation", "CVE Exploits", "Pivoting", "RATs", "MITM", "Phishing", "Social Engineering"],
+        "Security OS": ["Kali Linux"],
+        "Server & Desktop OS": ["Ubuntu", "Windows Server", "Windows 10/11"]
+    };
+
+    const getGroupedTags = (tags, mapping) => {
+        const result = {};
+        const groupedSet = new Set();
+        
+        Object.entries(mapping).forEach(([subcat, matchTags]) => {
+            const matches = (tags || []).filter(t => matchTags.some(mt => mt.toLowerCase() === t.toLowerCase()));
+            if (matches.length > 0) {
+                result[subcat] = matches;
+                matches.forEach(t => groupedSet.add(t));
+            }
+        });
+        
+        const remaining = (tags || []).filter(t => !groupedSet.has(t));
+        if (remaining.length > 0) {
+            result["General"] = remaining;
+        }
+        return result;
+    };
+
     const normalPart = "My ";
     const highlightPart = "Expertise";
 
@@ -392,7 +422,7 @@ function Skills({ darkMode }) {
                         transition={{ delay: 0.5, duration: 0.5 }}
                         viewport={{ once: true }}
                     >
-                        Comprehensive skills in development, security, and modern technologies
+                        Comprehensive skills in development, cybersecurity, machine learning, and modern technologies
                     </motion.p>
                 </motion.div>
 
@@ -435,7 +465,7 @@ function Skills({ darkMode }) {
                             </motion.div>
 
                             <div className="space-y-3">
-                                {category.skills.map((skill, skillIdx) => (
+                                {(category.skills || []).map((skill, skillIdx) => (
                                     <motion.div 
                                         key={skillIdx}
                                         custom={skillIdx}
@@ -477,215 +507,340 @@ function Skills({ darkMode }) {
                 </div>
 
                 {/* Additional Technologies Section with Smooth Entrance */}
-                <motion.div
-                    initial={{ opacity: 0, y: 35 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    className="mt-6"
-                >
-                    <motion.div 
-                        className={`rounded-xl p-5 ${theme.cardBg} backdrop-blur-sm border ${theme.border}`}
-                        whileHover={{ boxShadow: "0 20px 40px -12px rgba(0,0,0,0.2)" }}
-                        transition={{ duration: 0.3 }}
+                {skillsData?.additional && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                        viewport={{ once: true, amount: 0.15 }}
+                        className="mt-20 relative"
                     >
-                        <motion.h3 
-                            className={`text-lg font-bold mb-4 text-center ${theme.textPrimary}`}
-                            initial={{ opacity: 0, y: -10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4, duration: 0.4 }}
-                            viewport={{ once: true }}
-                        >
-                            Additional Technologies
-                        </motion.h3>
-                        
-                        {/* Development & Cloud */}
-                        <motion.div 
-                            className="mb-5"
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            transition={{ delay: 0.5, duration: 0.5 }}
-                            viewport={{ once: true }}
-                        >
-                            <motion.div 
-                                className="flex items-center gap-2 mb-3 justify-center"
-                                whileHover={{ scale: 1.02 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <motion.div
-                                    animate={{ y: [0, -2, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                                >
-                                    <FaCloud className="text-orange-500 text-sm" />
-                                </motion.div>
-                                <h4 className="text-sm font-semibold text-orange-500">Development & Cloud</h4>
-                            </motion.div>
-                            <div className="flex flex-wrap justify-center gap-2">
-                                {[
-                                    "TypeScript", "GraphQL", "Redis", "PostgreSQL", 
-                                    "Kubernetes", "Docker", "AWS", "Firebase", 
-                                    "Next.js", "Vue.js"
-                                ].map((tech, idx) => (
-                                    <motion.span
-                                        key={idx}
-                                        custom={idx}
-                                        variants={tagVariants}
-                                        initial="hidden"
-                                        whileInView="visible"
-                                        whileHover="hover"
-                                        viewport={{ once: true }}
-                                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer ${
-                                            darkMode 
-                                                ? 'bg-gray-800/80 text-gray-300 hover:bg-gradient-to-r hover:from-orange-500 hover:to-purple-500 hover:text-white' 
-                                                : 'bg-gray-100 text-gray-600 hover:bg-gradient-to-r hover:from-orange-500 hover:to-purple-500 hover:text-white'
-                                        }`}
-                                    >
-                                        {tech}
-                                    </motion.span>
-                                ))}
-                            </div>
-                        </motion.div>
+                        {/* Background subtle blur ring for section */}
+                        <div className="absolute inset-0 -z-10 flex items-center justify-center">
+                            <div className="w-[500px] h-[250px] bg-gradient-to-r from-orange-500/5 to-purple-500/5 rounded-full blur-[100px]" />
+                        </div>
 
-                        {/* Security Tools */}
-                        <motion.div 
-                            className="mb-5"
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            transition={{ delay: 0.55, duration: 0.5 }}
-                            viewport={{ once: true }}
-                        >
-                            <motion.div 
-                                className="flex items-center gap-2 mb-3 justify-center"
-                                whileHover={{ scale: 1.02 }}
-                                transition={{ duration: 0.2 }}
+                        <div className="text-center mb-12">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 0.1, duration: 0.4 }}
+                                viewport={{ once: true }}
+                                className="inline-block mb-3"
                             >
-                                <motion.div
-                                    animate={{ rotate: [0, 6, -6, 0] }}
-                                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                                >
-                                    <FaShieldAlt className="text-orange-500 text-sm" />
-                                </motion.div>
-                                <h4 className="text-sm font-semibold text-orange-500">Security & Pentesting Tools</h4>
+                                <span className="px-3 py-1 bg-gradient-to-r from-purple-500/10 to-orange-500/10 border border-purple-500/20 rounded-full text-xs font-semibold text-purple-400 tracking-wider">
+                                    COMPLEMENTARY STACK
+                                </span>
                             </motion.div>
-                            <div className="flex flex-wrap justify-center gap-2">
-                                {[
-                                    "Burp Suite", "Nessus", "OpenVAS", "Nikto", "Gobuster",
-                                    "Hydra", "John the Ripper", "Hashcat", "Sqlmap", "XSStrike",
-                                    "Commix", "BeEF", "Metasploit", "Nmap", "Wireshark",
-                                    "Aircrack-ng", "Recon-ng", "TheHarvester", "Shodan", "Maltego"
-                                ].map((tech, idx) => (
-                                    <motion.span
-                                        key={idx}
-                                        custom={idx}
-                                        variants={tagVariants}
-                                        initial="hidden"
-                                        whileInView="visible"
-                                        whileHover="hover"
-                                        viewport={{ once: true }}
-                                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer ${
-                                            darkMode 
-                                                ? 'bg-gray-800/80 text-gray-300 hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 hover:text-white' 
-                                                : 'bg-gray-100 text-gray-600 hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 hover:text-white'
-                                        }`}
-                                    >
-                                        {tech}
-                                    </motion.span>
-                                ))}
-                            </div>
-                        </motion.div>
+                            
+                            <h3 className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-3 ${theme.textPrimary}`}>
+                                Additional Stack & Methodologies
+                            </h3>
+                            <p className={`${theme.textSecondary} text-sm max-w-xl mx-auto leading-relaxed`}>
+                                Auxiliary libraries, security assessment tools, machine learning frameworks, and execution environments supporting my engineering lifecycle.
+                            </p>
+                        </div>
 
-                        {/* Vulnerabilities */}
-                        <motion.div 
-                            className="mb-5"
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            transition={{ delay: 0.6, duration: 0.5 }}
-                            viewport={{ once: true }}
-                        >
-                            <motion.div 
-                                className="flex items-center gap-2 mb-3 justify-center"
-                                whileHover={{ scale: 1.02 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <motion.div
-                                    animate={{ scale: [1, 1.05, 1] }}
-                                    transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                        <div className="flex flex-wrap justify-center gap-6">
+                            
+                            {/* Development & Cloud */}
+                            {skillsData.additional.development && skillsData.additional.development.length > 0 && (
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 25 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: 0.1 }}
+                                    whileHover={{ 
+                                        y: -6,
+                                        boxShadow: "0 15px 30px -10px rgba(6,182,212,0.15)",
+                                        borderColor: "rgba(6,182,212,0.3)"
+                                    }}
+                                    className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] flex-grow flex-shrink-0 max-w-md rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md flex flex-col justify-between transition-all duration-300`}
                                 >
-                                    <FaCode className="text-orange-500 text-sm" />
+                                    <div>
+                                        <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-500 border border-cyan-500/20">
+                                                    <FaCloud className="text-lg" />
+                                                </div>
+                                                <h4 className={`text-sm font-bold ${theme.textPrimary}`}>Development & Cloud</h4>
+                                            </div>
+                                            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-cyan-500/10 text-cyan-500 dark:text-cyan-400 font-semibold border border-cyan-500/20">
+                                                {skillsData.additional.development.length} Items
+                                            </span>
+                                        </div>
+                                        <div className="space-y-4">
+                                            {Object.entries(getGroupedTags(skillsData.additional.development, subgroupMapping)).map(([subcat, tags]) => (
+                                                <div key={subcat} className="space-y-1.5">
+                                                    <span className="text-[10px] font-bold tracking-wider text-cyan-500/80 uppercase block">
+                                                        {subcat}
+                                                    </span>
+                                                    <div className="flex flex-wrap gap-1.5">
+                                                        {tags.map((tech, idx) => (
+                                                            <motion.span
+                                                                key={idx}
+                                                                custom={idx}
+                                                                variants={tagVariants}
+                                                                initial="hidden"
+                                                                whileInView="visible"
+                                                                whileHover="hover"
+                                                                viewport={{ once: true }}
+                                                                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                    darkMode 
+                                                                        ? 'bg-cyan-950/20 text-cyan-300 border-cyan-500/10 hover:bg-cyan-500/20 hover:text-white hover:border-cyan-400' 
+                                                                        : 'bg-cyan-50/60 text-cyan-700 border-cyan-200/80 hover:bg-cyan-100 hover:text-cyan-900 hover:border-cyan-400'
+                                                                }`}
+                                                            >
+                                                                {tech}
+                                                            </motion.span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </motion.div>
-                                <h4 className="text-sm font-semibold text-orange-500">Vulnerability Assessment</h4>
-                            </motion.div>
-                            <div className="flex flex-wrap justify-center gap-2">
-                                {[
-                                    "XSS", "SQLi", "LFI", "RFI", "CSRF", "SSRF", "XXE",
-                                    "IDOR", "Path Traversal", "Command Injection", "JWT Attacks",
-                                    "Open Redirect", "Clickjacking", "SSTI", "NoSQLi"
-                                ].map((vuln, idx) => (
-                                    <motion.span
-                                        key={idx}
-                                        custom={idx}
-                                        variants={tagVariants}
-                                        initial="hidden"
-                                        whileInView="visible"
-                                        whileHover="hover"
-                                        viewport={{ once: true }}
-                                        className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer ${
-                                            darkMode 
-                                                ? 'bg-red-500/10 text-red-400 hover:bg-gradient-to-r hover:from-red-600 hover:to-amber-600 hover:text-white' 
-                                                : 'bg-red-100 text-red-600 hover:bg-gradient-to-r hover:from-red-600 hover:to-amber-600 hover:text-white'
-                                        }`}
-                                    >
-                                        {vuln}
-                                    </motion.span>
-                                ))}
-                            </div>
-                        </motion.div>
+                            )}
 
-                        {/* Operating Systems */}
-                        <motion.div 
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            transition={{ delay: 0.65, duration: 0.5 }}
-                            viewport={{ once: true }}
-                        >
-                            <motion.div 
-                                className="flex items-center gap-2 mb-3 justify-center"
-                                whileHover={{ scale: 1.02 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <motion.div
-                                    animate={{ rotateY: [0, 180, 360] }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                            {/* Security & Pentesting Tools */}
+                            {skillsData.additional.security && skillsData.additional.security.length > 0 && (
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 25 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: 0.15 }}
+                                    whileHover={{ 
+                                        y: -6,
+                                        boxShadow: "0 15px 30px -10px rgba(239,68,68,0.15)",
+                                        borderColor: "rgba(239,68,68,0.3)"
+                                    }}
+                                    className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] flex-grow flex-shrink-0 max-w-md rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md flex flex-col justify-between transition-all duration-300`}
                                 >
-                                    <FaCode className="text-orange-500 text-sm" />
+                                    <div>
+                                        <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20">
+                                                    <FaShieldAlt className="text-lg" />
+                                                </div>
+                                                <h4 className={`text-sm font-bold ${theme.textPrimary}`}>Security & Pentesting</h4>
+                                            </div>
+                                            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-red-500/10 text-red-500 dark:text-red-400 font-semibold border border-red-500/20">
+                                                {skillsData.additional.security.length} Items
+                                            </span>
+                                        </div>
+                                        <div className="space-y-4">
+                                            {Object.entries(getGroupedTags(skillsData.additional.security, subgroupMapping)).map(([subcat, tags]) => (
+                                                <div key={subcat} className="space-y-1.5">
+                                                    <span className="text-[10px] font-bold tracking-wider text-red-500/80 uppercase block">
+                                                        {subcat}
+                                                    </span>
+                                                    <div className="flex flex-wrap gap-1.5">
+                                                        {tags.map((tech, idx) => (
+                                                            <motion.span
+                                                                key={idx}
+                                                                custom={idx}
+                                                                variants={tagVariants}
+                                                                initial="hidden"
+                                                                whileInView="visible"
+                                                                whileHover="hover"
+                                                                viewport={{ once: true }}
+                                                                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                    darkMode 
+                                                                        ? 'bg-red-950/20 text-red-300 border-red-500/10 hover:bg-red-500/20 hover:text-white hover:border-red-400' 
+                                                                        : 'bg-red-50/60 text-red-700 border-red-200/80 hover:bg-red-100 hover:text-red-900 hover:border-red-400'
+                                                                }`}
+                                                            >
+                                                                {tech}
+                                                            </motion.span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </motion.div>
-                                <h4 className="text-sm font-semibold text-orange-500">Operating Systems</h4>
-                            </motion.div>
-                            <div className="flex flex-wrap justify-center gap-2">
-                                {[
-                                    "Kali Linux", "Ubuntu", "Windows Server", "Windows 10/11"
-                                ].map((os, idx) => (
-                                    <motion.span
-                                        key={idx}
-                                        custom={idx}
-                                        variants={tagVariants}
-                                        initial="hidden"
-                                        whileInView="visible"
-                                        whileHover="hover"
-                                        viewport={{ once: true }}
-                                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer ${
-                                            darkMode 
-                                                ? 'bg-gray-800/80 text-gray-300 hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600 hover:text-white' 
-                                                : 'bg-gray-100 text-gray-600 hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600 hover:text-white'
-                                        }`}
-                                    >
-                                        {os}
-                                    </motion.span>
-                                ))}
-                            </div>
-                        </motion.div>
+                            )}
+
+                            {/* Machine Learning & Data Science */}
+                            {skillsData.additional.ml && skillsData.additional.ml.length > 0 && (
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 25 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: 0.2 }}
+                                    whileHover={{ 
+                                        y: -6,
+                                        boxShadow: "0 15px 30px -10px rgba(168,85,247,0.15)",
+                                        borderColor: "rgba(168,85,247,0.3)"
+                                    }}
+                                    className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] flex-grow flex-shrink-0 max-w-md rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md flex flex-col justify-between transition-all duration-300`}
+                                >
+                                    <div>
+                                        <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500 border border-purple-500/20">
+                                                    <FaBrain className="text-lg" />
+                                                </div>
+                                                <h4 className={`text-sm font-bold ${theme.textPrimary}`}>Machine Learning & DS</h4>
+                                            </div>
+                                            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-purple-500/10 text-purple-500 dark:text-purple-400 font-semibold border border-purple-500/20">
+                                                {skillsData.additional.ml.length} Items
+                                            </span>
+                                        </div>
+                                        <div className="space-y-4">
+                                            {Object.entries(getGroupedTags(skillsData.additional.ml, subgroupMapping)).map(([subcat, tags]) => (
+                                                <div key={subcat} className="space-y-1.5">
+                                                    <span className="text-[10px] font-bold tracking-wider text-purple-500/80 uppercase block">
+                                                        {subcat}
+                                                    </span>
+                                                    <div className="flex flex-wrap gap-1.5">
+                                                        {tags.map((tech, idx) => (
+                                                            <motion.span
+                                                                key={idx}
+                                                                custom={idx}
+                                                                variants={tagVariants}
+                                                                initial="hidden"
+                                                                whileInView="visible"
+                                                                whileHover="hover"
+                                                                viewport={{ once: true }}
+                                                                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                    darkMode 
+                                                                        ? 'bg-purple-950/20 text-purple-300 border-purple-500/10 hover:bg-purple-500/20 hover:text-white hover:border-purple-400' 
+                                                                        : 'bg-purple-50/60 text-purple-700 border-purple-200/80 hover:bg-purple-100 hover:text-purple-900 hover:border-purple-400'
+                                                                }`}
+                                                            >
+                                                                {tech}
+                                                            </motion.span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+
+                            {/* Vulnerabilities */}
+                            {skillsData.additional.vulnerabilities && skillsData.additional.vulnerabilities.length > 0 && (
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 25 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: 0.25 }}
+                                    whileHover={{ 
+                                        y: -6,
+                                        boxShadow: "0 15px 30px -10px rgba(245,158,11,0.15)",
+                                        borderColor: "rgba(245,158,11,0.3)"
+                                    }}
+                                    className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] flex-grow flex-shrink-0 max-w-md rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md flex flex-col justify-between transition-all duration-300`}
+                                >
+                                    <div>
+                                        <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 border border-amber-500/20">
+                                                    <FaCode className="text-lg" />
+                                                </div>
+                                                <h4 className={`text-sm font-bold ${theme.textPrimary}`}>Vulnerability Vectors</h4>
+                                            </div>
+                                            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-amber-500/10 text-amber-500 dark:text-amber-400 font-semibold border border-amber-500/20">
+                                                {skillsData.additional.vulnerabilities.length} Items
+                                            </span>
+                                        </div>
+                                        <div className="space-y-4">
+                                            {Object.entries(getGroupedTags(skillsData.additional.vulnerabilities, subgroupMapping)).map(([subcat, tags]) => (
+                                                <div key={subcat} className="space-y-1.5">
+                                                    <span className="text-[10px] font-bold tracking-wider text-amber-500/80 uppercase block">
+                                                        {subcat}
+                                                    </span>
+                                                    <div className="flex flex-wrap gap-1.5">
+                                                        {tags.map((tech, idx) => (
+                                                            <motion.span
+                                                                key={idx}
+                                                                custom={idx}
+                                                                variants={tagVariants}
+                                                                initial="hidden"
+                                                                whileInView="visible"
+                                                                whileHover="hover"
+                                                                viewport={{ once: true }}
+                                                                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                    darkMode 
+                                                                        ? 'bg-amber-950/20 text-amber-300 border-amber-500/10 hover:bg-amber-500/20 hover:text-white hover:border-amber-400' 
+                                                                        : 'bg-amber-50/60 text-amber-700 border-amber-200/80 hover:bg-amber-100 hover:text-amber-900 hover:border-amber-400'
+                                                                }`}
+                                                            >
+                                                                {tech}
+                                                            </motion.span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+
+                            {/* Operating Systems */}
+                            {skillsData.additional.os && skillsData.additional.os.length > 0 && (
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 25 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: 0.3 }}
+                                    whileHover={{ 
+                                        y: -6,
+                                        boxShadow: "0 15px 30px -10px rgba(16,185,129,0.15)",
+                                        borderColor: "rgba(16,185,129,0.3)"
+                                    }}
+                                    className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] flex-grow flex-shrink-0 max-w-md rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md flex flex-col justify-between transition-all duration-300`}
+                                >
+                                    <div>
+                                        <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 border border-emerald-500/20">
+                                                    <SiGnubash className="text-lg" />
+                                                </div>
+                                                <h4 className={`text-sm font-bold ${theme.textPrimary}`}>Operating Systems</h4>
+                                            </div>
+                                            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-emerald-500/10 text-emerald-400/80 font-semibold border border-emerald-500/20">
+                                                {skillsData.additional.os.length} Items
+                                            </span>
+                                        </div>
+                                        <div className="space-y-4">
+                                            {Object.entries(getGroupedTags(skillsData.additional.os, subgroupMapping)).map(([subcat, tags]) => (
+                                                <div key={subcat} className="space-y-1.5">
+                                                    <span className="text-[10px] font-bold tracking-wider text-emerald-500/80 uppercase block">
+                                                        {subcat}
+                                                    </span>
+                                                    <div className="flex flex-wrap gap-1.5">
+                                                        {tags.map((tech, idx) => (
+                                                            <motion.span
+                                                                key={idx}
+                                                                custom={idx}
+                                                                variants={tagVariants}
+                                                                initial="hidden"
+                                                                whileInView="visible"
+                                                                whileHover="hover"
+                                                                viewport={{ once: true }}
+                                                                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                    darkMode 
+                                                                        ? 'bg-emerald-950/20 text-emerald-300 border-emerald-500/10 hover:bg-emerald-500/20 hover:text-white hover:border-emerald-400' 
+                                                                        : 'bg-emerald-50/60 text-emerald-700 border-emerald-200/80 hover:bg-emerald-100 hover:text-emerald-900 hover:border-emerald-400'
+                                                                }`}
+                                                            >
+                                                                {tech}
+                                                            </motion.span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+
+                        </div>
                     </motion.div>
-                </motion.div>
+                )}
             </div>
         </section>
     );
