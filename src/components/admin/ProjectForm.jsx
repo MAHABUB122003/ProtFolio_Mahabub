@@ -161,28 +161,48 @@ function ProjectForm() {
                     </div>
                 </div>
 
-                {/* Project Image URL Input & Preview */}
+                {/* Project Cover Image Upload */}
                 <div>
                     <label className="block text-xs font-medium text-gray-400 mb-1.5 flex items-center gap-1.5">
-                        <FaImage className="text-orange-400" /> Project Cover Image URL
+                        <FaImage className="text-orange-400" /> Project Cover Image
+                        <span className="text-gray-500 font-normal">(1200×800px · max 500KB)</span>
                     </label>
-                    <input
-                        type="url"
-                        name="image"
-                        value={formData.image}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-lg bg-gray-700/50 border border-gray-600 text-white text-sm focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
-                        placeholder="https://images.unsplash.com/... or image link"
-                    />
+                    <div className="flex items-center gap-3">
+                        <label className="cursor-pointer px-4 py-2.5 rounded-lg bg-orange-500/20 text-orange-400 text-sm font-medium hover:bg-orange-500/30 transition-all flex items-center gap-2">
+                            <FaImage /> Choose Image
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    if (file) {
+                                        const reader = new FileReader();
+                                        reader.onload = (ev) => {
+                                            setFormData({ ...formData, image: ev.target.result });
+                                            setError('');
+                                        };
+                                        reader.readAsDataURL(file);
+                                    }
+                                }}
+                            />
+                        </label>
+                        {formData.image && (
+                            <button
+                                type="button"
+                                onClick={() => setFormData({ ...formData, image: '' })}
+                                className="px-3 py-2.5 text-red-400 bg-red-500/10 rounded-lg hover:bg-red-500/20 transition-all text-sm"
+                            >
+                                <FaTrash className="text-xs" />
+                            </button>
+                        )}
+                    </div>
                     {formData.image && (
-                        <div className="mt-2 relative w-full h-32 rounded-lg overflow-hidden border border-gray-700">
+                        <div className="mt-2 relative w-full h-32 rounded-lg overflow-hidden border border-gray-700 group">
                             <img
                                 src={formData.image}
                                 alt="Project Preview"
                                 className="w-full h-full object-cover"
-                                onError={(e) => {
-                                    e.target.style.display = 'none';
-                                }}
                             />
                         </div>
                     )}
