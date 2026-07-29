@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
-    FaEnvelope, FaLock, FaUser, FaEye, FaEyeSlash, FaSignInAlt, 
+    FaEnvelope, FaLock, FaEye, FaEyeSlash, FaSignInAlt, 
     FaShieldAlt, FaExclamationTriangle, FaCheckCircle, FaClock,
     FaFingerprint, FaLockOpen, FaBan
 } from 'react-icons/fa';
@@ -20,10 +20,9 @@ function AdminLogin() {
     const formRef = useRef(null);
     const [formData, setFormData] = useState({
         email: '',
-        password: '',
-        username: ''
+        password: ''
     });
-    const [stepComplete, setStepComplete] = useState({ email: false, username: false });
+    const [stepComplete, setStepComplete] = useState({ email: false });
     const [focusedField, setFocusedField] = useState(null);
 
     useEffect(() => {
@@ -87,16 +86,6 @@ function AdminLogin() {
         }
     };
 
-    const handleUsernameChange = (e) => {
-        const val = e.target.value;
-        setFormData({ ...formData, username: val });
-        if (val.length >= 3) {
-            setStepComplete(prev => ({ ...prev, username: true }));
-        } else {
-            setStepComplete(prev => ({ ...prev, username: false }));
-        }
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (lockInfo.locked) return;
@@ -123,7 +112,7 @@ function AdminLogin() {
         setLoading(false);
     };
 
-    const isFormValid = formData.email && formData.password && formData.username;
+    const isFormValid = formData.email && formData.password;
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 flex items-center justify-center p-4 relative overflow-hidden">
@@ -293,46 +282,6 @@ function AdminLogin() {
                                     />
                                     <AnimatePresence>
                                         {stepComplete.email && (
-                                            <motion.div
-                                                initial={{ scale: 0, opacity: 0 }}
-                                                animate={{ scale: 1, opacity: 1 }}
-                                                exit={{ scale: 0, opacity: 0 }}
-                                                className="absolute right-3 top-1/2 -translate-y-1/2"
-                                            >
-                                                <FaCheckCircle className="text-green-500 text-sm" />
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            </motion.div>
-
-                            {/* Username */}
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.45 }}
-                            >
-                                <label className="block text-xs font-medium text-gray-400 mb-1.5">Username</label>
-                                <div className="relative">
-                                    <FaUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-sm" />
-                                    <input
-                                        type="text"
-                                        value={formData.username}
-                                        onChange={handleUsernameChange}
-                                        onFocus={() => setFocusedField('username')}
-                                        onBlur={() => setFocusedField(null)}
-                                        required
-                                        disabled={lockInfo.locked}
-                                        autoComplete="username"
-                                        className={`w-full pl-11 pr-10 py-3 rounded-xl bg-gray-800/50 border text-white text-sm transition-all duration-300 focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed ${
-                                            focusedField === 'username'
-                                                ? 'border-orange-500 ring-2 ring-orange-500/20 shadow-lg shadow-orange-500/5'
-                                                : 'border-gray-700/50 hover:border-gray-600'
-                                        }`}
-                                        placeholder="Enter username"
-                                    />
-                                    <AnimatePresence>
-                                        {stepComplete.username && (
                                             <motion.div
                                                 initial={{ scale: 0, opacity: 0 }}
                                                 animate={{ scale: 1, opacity: 1 }}

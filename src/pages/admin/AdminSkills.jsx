@@ -9,7 +9,7 @@ function AdminSkills() {
     const [catInput, setCatInput] = useState({ name: '', gradient: 'from-orange-500 to-purple-500' });
     const [skillInput, setSkillInput] = useState({ name: '', level: 80 });
     const [activeCat, setActiveCat] = useState(0);
-    const [tagInput, setTagInput] = useState('');
+    const [tagInputs, setTagInputs] = useState({});
 
     useEffect(() => { setData(getSection('skills')); }, []);
 
@@ -51,8 +51,9 @@ function AdminSkills() {
     };
 
     const removeCategory = (idx) => {
-        setData({ ...data, categories: data.categories.filter((_, i) => i !== idx) });
-        if (activeCat >= data.categories.length - 1) setActiveCat(Math.max(0, data.categories.length - 2));
+        const newCats = data.categories.filter((_, i) => i !== idx);
+        setData({ ...data, categories: newCats });
+        if (activeCat >= newCats.length) setActiveCat(Math.max(0, newCats.length - 1));
     };
 
     const handleAdditionalChange = (section, value) => {
@@ -61,10 +62,11 @@ function AdminSkills() {
     };
 
     const addTag = (section) => {
-        if (tagInput.trim()) {
+        const input = tagInputs[section] || '';
+        if (input.trim()) {
             const current = data.additional[section] || [];
-            handleAdditionalChange(section, [...current, tagInput.trim()]);
-            setTagInput('');
+            handleAdditionalChange(section, [...current, input.trim()]);
+            setTagInputs({ ...tagInputs, [section]: '' });
         }
     };
 
@@ -156,7 +158,7 @@ function AdminSkills() {
                 <div key={section.key} className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6">
                     <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">{section.icon} {section.label}</h3>
                     <div className="flex gap-2 mb-3">
-                        <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && addTag(section.key)} className={`${inputClass} flex-1`} placeholder="Add tag" />
+                        <input value={tagInputs[section.key] || ''} onChange={(e) => setTagInputs({ ...tagInputs, [section.key]: e.target.value })} onKeyDown={(e) => e.key === 'Enter' && addTag(section.key)} className={`${inputClass} flex-1`} placeholder="Add tag" />
                         <button onClick={() => addTag(section.key)} className="px-3 py-2 bg-orange-500/20 text-orange-400 rounded-lg hover:bg-orange-500/30"><FaPlus className="text-sm" /></button>
                     </div>
                     <div className="flex flex-wrap gap-1.5">

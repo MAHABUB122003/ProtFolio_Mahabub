@@ -22,7 +22,9 @@ function AdminGeneral() {
         const a = document.createElement('a');
         a.href = url;
         a.download = 'portfolio-backup.json';
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
         URL.revokeObjectURL(url);
     };
 
@@ -32,7 +34,7 @@ function AdminGeneral() {
         if (result.success) {
             window.location.reload();
         } else {
-            alert('Invalid JSON data');
+            alert(result.error || 'Invalid JSON data');
         }
     };
 
@@ -46,9 +48,16 @@ function AdminGeneral() {
         }
     };
 
+    const [footerData, setFooterData] = useState(null);
+
+    useEffect(() => {
+        if (data) setFooterData(getSection('footer'));
+    }, [data]);
+
     const handleFooterChange = (field, value) => {
-        const footer = getSection('footer');
-        updateSection('footer', { ...footer, [field]: value });
+        const updated = { ...footerData, [field]: value };
+        setFooterData(updated);
+        updateSection('footer', updated);
     };
 
     const inputClass = "w-full px-4 py-2.5 rounded-lg bg-gray-700/50 border border-gray-600 text-white text-sm focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all";
@@ -93,21 +102,23 @@ function AdminGeneral() {
             </div>
 
             {/* Footer Settings */}
+            {footerData && (
             <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 space-y-4">
                 <h3 className="text-sm font-bold text-white flex items-center gap-2"><FaLink className="text-orange-400 text-xs" /> Footer</h3>
                 <div>
                     <label className="block text-[10px] text-gray-500 mb-1">Tagline</label>
-                    <input defaultValue={getSection('footer').tagline} onBlur={(e) => handleFooterChange('tagline', e.target.value)} className={inputClass} />
+                    <input value={footerData.tagline || ''} onChange={(e) => handleFooterChange('tagline', e.target.value)} className={inputClass} />
                 </div>
                 <div>
                     <label className="block text-[10px] text-gray-500 mb-1">Description</label>
-                    <textarea defaultValue={getSection('footer').description} onBlur={(e) => handleFooterChange('description', e.target.value)} rows="2" className={`${inputClass} resize-none`} />
+                    <textarea value={footerData.description || ''} onChange={(e) => handleFooterChange('description', e.target.value)} rows="2" className={`${inputClass} resize-none`} />
                 </div>
                 <div>
                     <label className="block text-[10px] text-gray-500 mb-1">Copyright Name</label>
-                    <input defaultValue={getSection('footer').copyright} onBlur={(e) => handleFooterChange('copyright', e.target.value)} className={inputClass} />
+                    <input value={footerData.copyright || ''} onChange={(e) => handleFooterChange('copyright', e.target.value)} className={inputClass} />
                 </div>
             </div>
+            )}
 
             {/* Data Management */}
             <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6 space-y-4">

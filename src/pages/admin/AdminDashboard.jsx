@@ -15,19 +15,32 @@ function AdminDashboard() {
 
     const handleDelete = (id, title) => {
         if (window.confirm(`Delete "${title}"?`)) {
-            deleteProject(id);
-            setProjects(getProjects());
+            try {
+                deleteProject(id);
+                setProjects(getProjects());
+            } catch (e) {
+                alert('Failed to delete project. Check console for details.');
+                console.error('Delete failed:', e);
+            }
         }
     };
 
     const handleMoveUp = (id) => {
-        moveProjectUp(id);
-        setProjects(getProjects());
+        try {
+            moveProjectUp(id);
+            setProjects(getProjects());
+        } catch (e) {
+            console.error('Move up failed:', e);
+        }
     };
 
     const handleMoveDown = (id) => {
-        moveProjectDown(id);
-        setProjects(getProjects());
+        try {
+            moveProjectDown(id);
+            setProjects(getProjects());
+        } catch (e) {
+            console.error('Move down failed:', e);
+        }
     };
 
     const getCategoryIcon = (cat) => {

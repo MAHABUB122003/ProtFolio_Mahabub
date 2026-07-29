@@ -14,7 +14,7 @@ function AdminAbout() {
     if (!data) return null;
 
     const handleChange = (field, value) => { setData({ ...data, [field]: value }); setSaved(false); };
-    const handleDetailChange = (field, value) => { setData({ ...data, personalDetails: { ...data.personalDetails, [field]: value } }); setSaved(false); };
+    const handleDetailChange = (field, value) => { setData({ ...data, personalDetails: { ...(data.personalDetails || {}), [field]: value } }); setSaved(false); };
     const handleBioChange = (idx, value) => { const bio = [...data.bio]; bio[idx] = value; setData({ ...data, bio }); setSaved(false); };
     const addBio = () => setData({ ...data, bio: [...data.bio, ''] });
     const removeBio = (idx) => setData({ ...data, bio: data.bio.filter((_, i) => i !== idx) });

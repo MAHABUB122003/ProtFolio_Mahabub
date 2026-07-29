@@ -70,8 +70,13 @@ function AppRoutes() {
             offset: 100
         });
         emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+    }, []);
+
+    useEffect(() => {
         if (darkMode) {
             document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
     }, [darkMode]);
 
