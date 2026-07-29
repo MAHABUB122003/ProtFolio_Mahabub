@@ -126,7 +126,7 @@ function About({ darkMode }) {
                                     href="/mahabub1.pdf"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-lg shadow-orange-500/20 flex items-center gap-2 hover:scale-105 transition-all"
+                                    className="px-6 py-3.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-lg shadow-orange-500/20 flex items-center gap-2 hover:scale-105 transition-all"
                                 >
                                     <FaDownload className="text-xs" />
                                     <span>Download Resume (PDF)</span>
@@ -134,7 +134,7 @@ function About({ darkMode }) {
 
                                 <a
                                     href="#contact"
-                                    className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold border flex items-center gap-2 transition-all ${
+                                    className={`px-5 py-3.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-semibold border flex items-center gap-2 transition-all ${
                                         darkMode ? 'bg-gray-800 hover:bg-gray-700 text-gray-200 border-gray-700' : 'bg-gray-100 hover:bg-gray-200 text-gray-800 border-gray-300'
                                     }`}
                                 >
@@ -179,7 +179,7 @@ function About({ darkMode }) {
                                             <span className={`text-[11px] font-mono ${theme.textMuted} block mb-1`}>{item.label}</span>
                                             <div className={`flex items-center gap-2 font-semibold text-xs sm:text-sm ${theme.textPrimary}`}>
                                                 <IconComponent className={`text-xs ${item.color}`} />
-                                                <span className="break-all">{item.value}</span>
+                                                <span className="break-words">{item.value}</span>
                                             </div>
                                         </div>
                                     );
@@ -279,7 +279,7 @@ function About({ darkMode }) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 {techStack.map((tech, idx) => (
                                     <div key={idx} className={`p-3 rounded-2xl border ${theme.innerCardBg} flex items-center gap-3`}>
                                         <div className="text-xl flex-shrink-0">{tech.icon}</div>

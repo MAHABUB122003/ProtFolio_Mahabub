@@ -268,7 +268,7 @@ function Contact({ darkMode }) {
                                                         setFormData({ ...formData, title: res.label });
                                                         setSubmitStatus(null);
                                                     }}
-                                        className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                                        className={`px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                                             darkMode
                                                 ? 'bg-gray-800/80 hover:bg-orange-500/20 text-gray-300 hover:text-orange-400 border-gray-700/60'
                                                 : 'bg-gray-100 hover:bg-orange-500/10 text-gray-700 hover:text-orange-600 border-gray-200'
@@ -292,7 +292,7 @@ function Contact({ darkMode }) {
                                             onBlur={() => setFocusedField(null)}
                                             required
                                                     placeholder="Your full name"
-                                            className={`w-full px-4 py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.inputBg}`}
+                                            className={`w-full px-4 py-3.5 sm:py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.inputBg}`}
                                         />
                                     </div>
 
@@ -307,7 +307,7 @@ function Contact({ darkMode }) {
                                             onBlur={() => setFocusedField(null)}
                                             required
                                                     placeholder="you@example.com"
-                                            className={`w-full px-4 py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.inputBg}`}
+                                            className={`w-full px-4 py-3.5 sm:py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.inputBg}`}
                                         />
                                     </div>
                                 </div>
@@ -322,7 +322,7 @@ function Contact({ darkMode }) {
                                         onFocus={() => setFocusedField('title')}
                                         onBlur={() => setFocusedField(null)}
                                                         placeholder="e.g., Project Inquiry, Security Audit, ML Model"
-                                        className={`w-full px-4 py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.inputBg}`}
+                                        className={`w-full px-4 py-3.5 sm:py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.inputBg}`}
                                     />
                                 </div>
 
@@ -337,7 +337,7 @@ function Contact({ darkMode }) {
                                         required
                                         rows="5"
                                                         placeholder="Describe your project, requirements, or goals..."
-                                        className={`w-full px-4 py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 resize-none ${theme.inputBg}`}
+                                        className={`w-full px-4 py-3.5 sm:py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all focus:ring-2 focus:ring-orange-500/50 resize-none ${theme.inputBg}`}
                                     />
                                 </div>
 

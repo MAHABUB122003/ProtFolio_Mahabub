@@ -176,12 +176,23 @@ export function addProject(project) {
 }
 
 export function updateProject(id, updates) {
-    const projects = getProjects();
-    const idx = projects.findIndex(p => p.id === id);
-    if (idx === -1) return null;
-    projects[idx] = { ...projects[idx], ...updates };
-    saveProjects(projects);
-    return projects[idx];
+    try {
+        const raw = localStorage.getItem(PROJECTS_KEY);
+        if (!raw) return null;
+        const projects = JSON.parse(raw);
+        const idx = projects.findIndex(p => p.id === id);
+        if (idx === -1) return null;
+        projects[idx] = { ...projects[idx], ...updates };
+        const json = JSON.stringify(projects);
+        if (json.length > 4_500_000) {
+            console.warn('Project data is very large (' + (json.length / 1024 / 1024).toFixed(1) + 'MB)');
+        }
+        localStorage.setItem(PROJECTS_KEY, json);
+        return projects[idx];
+    } catch (e) {
+        console.error('updateProject error:', e.name, e.message);
+        return null;
+    }
 }
 
 export function deleteProject(id) {

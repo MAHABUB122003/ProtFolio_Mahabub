@@ -117,7 +117,7 @@ function Projects({ darkMode }) {
                             <button
                                 key={cat.id}
                                 onClick={() => setActiveCategory(cat.id)}
-                                className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 ${
+                                className={`px-4 py-2.5 sm:py-2 rounded-full text-xs font-bold transition-all duration-200 ${
                                     activeCategory === cat.id ? theme.pillActive : theme.pillBg
                                 }`}
                             >
@@ -134,7 +134,7 @@ function Projects({ darkMode }) {
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Search project or tech..."
-                            className={`w-full pl-9 pr-3 py-2 rounded-xl border text-xs outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.searchBg}`}
+                            className={`w-full pl-9 pr-3 py-2.5 sm:py-2 rounded-xl border text-xs outline-none transition-all focus:ring-2 focus:ring-orange-500/50 ${theme.searchBg}`}
                         />
                     </div>
                 </div>
@@ -217,7 +217,7 @@ function Projects({ darkMode }) {
                                         {project.tech && project.tech.slice(0, 5).map((t, tIdx) => (
                                             <span
                                                 key={tIdx}
-                                                className={`px-2 py-0.5 rounded-md text-[10px] font-medium border ${theme.badgeBg}`}
+                                                className={`px-2 py-1 rounded-md text-xs font-medium border ${theme.badgeBg}`}
                                             >
                                                 {t}
                                             </span>
@@ -234,7 +234,7 @@ function Projects({ darkMode }) {
                                 <div className="pt-3 mt-2 border-t border-gray-200 dark:border-gray-800/80 flex items-center justify-between">
                                     <button
                                         onClick={() => setSelectedProject(project)}
-                                        className="text-xs font-bold text-orange-500 hover:underline flex items-center gap-1"
+                                        className="px-2 py-2 sm:py-1 text-xs font-bold text-orange-500 hover:underline flex items-center gap-1"
                                     >
                                         <span>View Details</span>
                                         <FaArrowRight className="text-[9px]" />
@@ -246,7 +246,7 @@ function Projects({ darkMode }) {
                                                 href={project.github}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className={`w-8 h-8 rounded-lg border flex items-center justify-center text-xs transition-all hover:scale-105 ${
+                                                className={`w-10 h-10 sm:w-8 sm:h-8 rounded-lg border flex items-center justify-center text-xs transition-all hover:scale-105 ${
                                                     darkMode ? 'bg-gray-900 border-gray-800 text-gray-300 hover:text-white' : 'bg-gray-100 border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm'
                                                 }`}
                                                 title="View GitHub Repository"
@@ -259,7 +259,7 @@ function Projects({ darkMode }) {
                                                 href={project.demo}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="w-8 h-8 rounded-lg bg-orange-500 text-white flex items-center justify-center text-xs shadow-sm hover:scale-105 transition-all"
+                                                className="w-10 h-10 sm:w-8 sm:h-8 rounded-lg bg-orange-500 text-white flex items-center justify-center text-xs shadow-sm hover:scale-105 transition-all"
                                                 title="Live Demo"
                                             >
                                                 <FaExternalLinkAlt />
@@ -296,7 +296,7 @@ function Projects({ darkMode }) {
 
                                     <button
                                         onClick={() => setSelectedProject(null)}
-                                        className="absolute top-3 right-3 p-2 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white hover:bg-black transition-all text-xs"
+                                        className="absolute top-3 right-3 p-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white hover:bg-black transition-all text-xs"
                                     >
                                         <FaTimes />
                                     </button>

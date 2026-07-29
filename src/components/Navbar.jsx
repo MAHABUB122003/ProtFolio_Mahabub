@@ -132,7 +132,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                             {/* Theme Toggle Button */}
                             <button
                                 onClick={toggleDarkMode}
-                                className={`p-2 rounded-2xl border transition-all hover:scale-105 ${
+                                className={`p-2.5 sm:p-2 rounded-2xl border transition-all hover:scale-105 ${
                                     darkMode
                                         ? 'bg-gray-900 border-gray-800 text-amber-400 hover:bg-gray-800'
                                         : 'bg-white border-gray-200 text-gray-800 hover:bg-gray-100 shadow-sm'
@@ -145,7 +145,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                             {/* Hire Me Desktop Button */}
                             <button
                                 onClick={handleHireMeClick}
-                                className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-lg shadow-orange-500/20 hover:scale-105 transition-all"
+                                className="hidden sm:flex items-center gap-2 px-5 py-3 sm:py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-lg shadow-orange-500/20 hover:scale-105 transition-all"
                             >
                                 <FaPaperPlane className="text-xs" />
                                 <span>Hire Me</span>
@@ -177,7 +177,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                 <button
                                     key={item.name}
                                     onClick={() => handleNavClick(item.name)}
-                                    className={`w-full text-left px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${
+                                    className={`w-full text-left px-4 py-3.5 rounded-2xl text-sm font-semibold transition-all ${
                                         activeSection === item.name.toLowerCase()
                                             ? 'bg-orange-500/20 text-orange-500 border border-orange-500/30'
                                             : darkMode ? 'text-gray-300 hover:bg-gray-900' : 'text-gray-700 hover:bg-gray-100'

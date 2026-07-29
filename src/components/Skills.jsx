@@ -427,7 +427,7 @@ function Skills({ darkMode }) {
                 </motion.div>
 
                 {/* Skills Grid with Smooth Card Animations */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {skillCategories.map((category, idx) => (
                         <motion.div
                             key={idx}
@@ -585,7 +585,7 @@ function Skills({ darkMode }) {
                                                                 whileInView="visible"
                                                                 whileHover="hover"
                                                                 viewport={{ once: true }}
-                                                                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                                                                     darkMode 
                                                                         ? 'bg-cyan-950/20 text-cyan-300 border-cyan-500/10 hover:bg-cyan-500/20 hover:text-white hover:border-cyan-400' 
                                                                         : 'bg-cyan-50/60 text-cyan-700 border-cyan-200/80 hover:bg-cyan-100 hover:text-cyan-900 hover:border-cyan-400'
@@ -644,7 +644,7 @@ function Skills({ darkMode }) {
                                                                 whileInView="visible"
                                                                 whileHover="hover"
                                                                 viewport={{ once: true }}
-                                                                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                                                                     darkMode 
                                                                         ? 'bg-red-950/20 text-red-300 border-red-500/10 hover:bg-red-500/20 hover:text-white hover:border-red-400' 
                                                                         : 'bg-red-50/60 text-red-700 border-red-200/80 hover:bg-red-100 hover:text-red-900 hover:border-red-400'
@@ -703,7 +703,7 @@ function Skills({ darkMode }) {
                                                                 whileInView="visible"
                                                                 whileHover="hover"
                                                                 viewport={{ once: true }}
-                                                                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                                                                     darkMode 
                                                                         ? 'bg-purple-950/20 text-purple-300 border-purple-500/10 hover:bg-purple-500/20 hover:text-white hover:border-purple-400' 
                                                                         : 'bg-purple-50/60 text-purple-700 border-purple-200/80 hover:bg-purple-100 hover:text-purple-900 hover:border-purple-400'
@@ -762,7 +762,7 @@ function Skills({ darkMode }) {
                                                                 whileInView="visible"
                                                                 whileHover="hover"
                                                                 viewport={{ once: true }}
-                                                                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                                                                     darkMode 
                                                                         ? 'bg-amber-950/20 text-amber-300 border-amber-500/10 hover:bg-amber-500/20 hover:text-white hover:border-amber-400' 
                                                                         : 'bg-amber-50/60 text-amber-700 border-amber-200/80 hover:bg-amber-100 hover:text-amber-900 hover:border-amber-400'
@@ -821,7 +821,7 @@ function Skills({ darkMode }) {
                                                                 whileInView="visible"
                                                                 whileHover="hover"
                                                                 viewport={{ once: true }}
-                                                                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                                                                     darkMode 
                                                                         ? 'bg-emerald-950/20 text-emerald-300 border-emerald-500/10 hover:bg-emerald-500/20 hover:text-white hover:border-emerald-400' 
                                                                         : 'bg-emerald-50/60 text-emerald-700 border-emerald-200/80 hover:bg-emerald-100 hover:text-emerald-900 hover:border-emerald-400'

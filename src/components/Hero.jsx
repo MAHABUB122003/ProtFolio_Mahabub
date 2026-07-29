@@ -166,7 +166,7 @@ function Hero({ darkMode }) {
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className={`w-10 h-10 rounded-xl border flex items-center justify-center text-base transition-all hover:-translate-y-0.5 ${theme.socialIconBg}`}
+                                        className={`w-11 h-11 lg:w-10 lg:h-10 rounded-xl border flex items-center justify-center text-base transition-all hover:-translate-y-0.5 ${theme.socialIconBg}`}
                                         aria-label={social.platform}
                                     >
                                         <IconComponent />
@@ -237,7 +237,7 @@ function Hero({ darkMode }) {
                             <motion.div
                                 animate={{ y: [0, -6, 0] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute -top-1 right-0 sm:top-3 sm:right-2 px-3.5 py-1.5 rounded-xl border backdrop-blur-xl flex items-center gap-2 bg-gray-950/80 border-gray-800/80 text-white shadow-xl"
+                                className="absolute -top-1 -right-1 sm:top-3 sm:right-2 px-3.5 py-1.5 rounded-xl border backdrop-blur-xl flex items-center gap-2 bg-gray-950/80 border-gray-800/80 text-white shadow-xl"
                                 style={{ transform: 'translateZ(40px)' }}
                             >
                                 <FaShieldAlt className="text-purple-400 text-xs sm:text-sm" />
@@ -247,7 +247,7 @@ function Hero({ darkMode }) {
                             <motion.div
                                 animate={{ y: [0, 6, 0] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                                className="absolute -bottom-1 left-0 sm:bottom-3 sm:left-2 px-3.5 py-1.5 rounded-xl border backdrop-blur-xl flex items-center gap-2 bg-gray-950/80 border-gray-800/80 text-white shadow-xl"
+                                className="absolute -bottom-1 -left-1 sm:bottom-3 sm:left-2 px-3.5 py-1.5 rounded-xl border backdrop-blur-xl flex items-center gap-2 bg-gray-950/80 border-gray-800/80 text-white shadow-xl"
                                 style={{ transform: 'translateZ(40px)' }}
                             >
                                 <FaCode className="text-orange-400 text-xs sm:text-sm" />

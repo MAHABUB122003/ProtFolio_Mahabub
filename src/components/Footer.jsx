@@ -76,7 +76,7 @@ function Footer({ darkMode }) {
             <div className="h-1 w-full bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 shadow-[0_0_20px_rgba(249,115,22,0.4)]" />
 
             <div className="container mx-auto max-w-7xl px-4 sm:px-6 py-16 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
 
                     {/* Brand Column */}
                     <div className="space-y-4">
@@ -105,7 +105,7 @@ function Footer({ darkMode }) {
                                     href={social.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-9 h-9 rounded-xl bg-gray-900 border border-gray-800 text-gray-400 hover:text-white hover:border-orange-500/50 flex items-center justify-center text-sm transition-all hover:scale-110"
+                                    className="w-11 h-11 lg:w-9 lg:h-9 rounded-xl bg-gray-900 border border-gray-800 text-gray-400 hover:text-white hover:border-orange-500/50 flex items-center justify-center text-sm transition-all hover:scale-110"
                                     aria-label={social.label}
                                 >
                                     {social.icon}
@@ -147,7 +147,7 @@ function Footer({ darkMode }) {
                                     <div className="text-sm mt-0.5">{serv.icon}</div>
                                     <div>
                                         <h4 className="text-xs font-bold text-white">{serv.name}</h4>
-                                        <p className="text-[10px] text-gray-400">{serv.desc}</p>
+                                        <p className="text-xs sm:text-[10px] text-gray-400">{serv.desc}</p>
                                     </div>
                                 </div>
                             ))}

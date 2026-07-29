@@ -27,6 +27,7 @@ function ProjectForm() {
     const [featureInput, setFeatureInput] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         if (isEditing) {
@@ -97,7 +98,11 @@ function ProjectForm() {
         }
 
         if (isEditing) {
-            updateProject(parseInt(id), formData);
+            const result = updateProject(parseInt(id), formData);
+            if (!result) {
+                setError('Failed to update project. The project may have been deleted or storage is full.');
+                return;
+            }
             setSuccess('Project updated successfully!');
         } else {
             addProject(formData);
@@ -165,7 +170,7 @@ function ProjectForm() {
                 <div>
                     <label className="block text-xs font-medium text-gray-400 mb-1.5 flex items-center gap-1.5">
                         <FaImage className="text-orange-400" /> Project Cover Image
-                        <span className="text-gray-500 font-normal">(1200×800px · max 500KB)</span>
+                        <span className="text-gray-500 font-normal">(1200×800px · max 2MB)</span>
                     </label>
                     <div className="flex items-center gap-3">
                         <label className="cursor-pointer px-4 py-2.5 rounded-lg bg-orange-500/20 text-orange-400 text-sm font-medium hover:bg-orange-500/30 transition-all flex items-center gap-2">
@@ -176,14 +181,43 @@ function ProjectForm() {
                                 className="hidden"
                                 onChange={(e) => {
                                     const file = e.target.files[0];
-                                    if (file) {
-                                        const reader = new FileReader();
-                                        reader.onload = (ev) => {
-                                            setFormData({ ...formData, image: ev.target.result });
-                                            setError('');
-                                        };
-                                        reader.readAsDataURL(file);
+                                    if (!file) return;
+                                    if (file.size > 2 * 1024 * 1024) {
+                                        setError('Image is too large. Maximum size is 2MB.');
+                                        return;
                                     }
+                                    setUploading(true);
+                                    const reader = new FileReader();
+                                    reader.onload = (ev) => {
+                                        const img = new Image();
+                                        img.onload = () => {
+                                            const maxW = 1200;
+                                            const maxH = 800;
+                                            let w = img.width;
+                                            let h = img.height;
+                                            if (w > maxW) { h = h * maxW / w; w = maxW; }
+                                            if (h > maxH) { w = w * maxH / h; h = maxH; }
+                                            const canvas = document.createElement('canvas');
+                                            canvas.width = w;
+                                            canvas.height = h;
+                                            const ctx = canvas.getContext('2d');
+                                            ctx.drawImage(img, 0, 0, w, h);
+                                            const compressed = canvas.toDataURL('image/jpeg', 0.7);
+                                            setFormData({ ...formData, image: compressed });
+                                            setError('');
+                                            setUploading(false);
+                                        };
+                                        img.onerror = () => {
+                                            setError('Failed to process image. Try a different file.');
+                                            setUploading(false);
+                                        };
+                                        img.src = ev.target.result;
+                                    };
+                                    reader.onerror = () => {
+                                        setError('Failed to read image file. Try a different file.');
+                                        setUploading(false);
+                                    };
+                                    reader.readAsDataURL(file);
                                 }}
                             />
                         </label>
@@ -375,11 +409,16 @@ function ProjectForm() {
                 <div className="flex gap-3 pt-2">
                     <motion.button
                         type="submit"
+                        disabled={uploading}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-purple-500 text-white rounded-lg font-medium text-sm flex items-center gap-2 hover:shadow-lg transition-all"
+                        className={`px-6 py-2.5 rounded-lg font-medium text-sm flex items-center gap-2 transition-all ${
+                            uploading
+                                ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-orange-500 to-purple-500 text-white hover:shadow-lg'
+                        }`}
                     >
-                        <FaSave /> {isEditing ? 'Update Project' : 'Save Project'}
+                        <FaSave /> {uploading ? 'Processing...' : (isEditing ? 'Update Project' : 'Save Project')}
                     </motion.button>
                     <button
                         type="button"

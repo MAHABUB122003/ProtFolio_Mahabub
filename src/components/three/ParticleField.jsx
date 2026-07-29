@@ -142,24 +142,24 @@ function Rings() {
     );
 }
 
-function Scene({ darkMode }) {
+function Scene({ darkMode, isMobile }) {
     return (
         <>
             <ambientLight intensity={0.3} />
             <pointLight position={[10, 10, 10]} intensity={0.5} color="#f97316" />
             <pointLight position={[-10, -10, -10]} intensity={0.3} color="#a855f7" />
-            <Particles count={1500} darkMode={darkMode} />
-            <FloatingShape position={[-8, 3, -5]} color="#f97316" scale={0.8} speed={0.5} />
-            <FloatingShape position={[10, -4, -8]} color="#a855f7" scale={1.2} speed={0.3} />
-            <FloatingShape position={[-5, -6, -3]} color="#06b6d4" scale={0.6} speed={0.7} />
-            <FloatingShape position={[7, 5, -10]} color="#f97316" scale={1} speed={0.4} />
-            <TorusKnot position={[12, 0, -12]} color="#a855f7" scale={0.7} />
-            <TorusKnot position={[-12, -2, -15]} color="#f97316" scale={0.5} />
-            <Icosahedron position={[0, -5, -8]} color="#f97316" scale={0.9} />
-            <Icosahedron position={[8, 7, -12]} color="#a855f7" scale={0.6} />
-            <Icosahedron position={[-10, 4, -10]} color="#06b6d4" scale={0.7} />
-            <Rings />
-            <Stars radius={30} depth={60} count={2500} factor={4} saturation={0.5} fade speed={1.5} />
+            <Particles count={isMobile ? 500 : 1500} darkMode={darkMode} />
+            {!isMobile && <FloatingShape position={[-8, 3, -5]} color="#f97316" scale={0.8} speed={0.5} />}
+            {!isMobile && <FloatingShape position={[10, -4, -8]} color="#a855f7" scale={1.2} speed={0.3} />}
+            {!isMobile && <FloatingShape position={[-5, -6, -3]} color="#06b6d4" scale={0.6} speed={0.7} />}
+            {!isMobile && <FloatingShape position={[7, 5, -10]} color="#f97316" scale={1} speed={0.4} />}
+            {!isMobile && <TorusKnot position={[12, 0, -12]} color="#a855f7" scale={0.7} />}
+            {!isMobile && <TorusKnot position={[-12, -2, -15]} color="#f97316" scale={0.5} />}
+            {!isMobile && <Icosahedron position={[0, -5, -8]} color="#f97316" scale={0.9} />}
+            {!isMobile && <Icosahedron position={[8, 7, -12]} color="#a855f7" scale={0.6} />}
+            {!isMobile && <Icosahedron position={[-10, 4, -10]} color="#06b6d4" scale={0.7} />}
+            {!isMobile && <Rings />}
+            <Stars radius={30} depth={60} count={isMobile ? 800 : 2500} factor={4} saturation={0.5} fade speed={1.5} />
         </>
     );
 }
@@ -180,6 +180,8 @@ class ErrorBoundary extends React.Component {
 
 export default function ParticleField({ darkMode = true }) {
     const [webglSupported, setWebglSupported] = useState(true);
+    const [reducedMotion, setReducedMotion] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         try {
@@ -189,23 +191,36 @@ export default function ParticleField({ darkMode = true }) {
         } catch {
             setWebglSupported(false);
         }
+
+        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        setReducedMotion(mq.matches);
+        const handler = (e) => setReducedMotion(e.matches);
+        mq.addEventListener('change', handler);
+        setIsMobile(window.innerWidth < 768);
+        const resizeHandler = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', resizeHandler);
+
+        return () => {
+            mq.removeEventListener('change', handler);
+            window.removeEventListener('resize', resizeHandler);
+        };
     }, []);
 
-    if (!webglSupported) return null;
+    if (!webglSupported || reducedMotion) return null;
 
     return (
         <div className="fixed inset-0 z-0 pointer-events-none">
             <ErrorBoundary>
                 <Canvas
                     camera={{ position: [0, 0, 15], fov: 60 }}
-                    dpr={[1, 1.5]}
-                    gl={{ antialias: true, alpha: true }}
+                    dpr={isMobile ? [0.75, 1] : [1, 1.5]}
+                    gl={{ antialias: !isMobile, alpha: true }}
                     style={{ background: 'transparent' }}
                     onCreated={({ gl }) => {
                         gl.setClearColor(0x000000, 0);
                     }}
                 >
-                    <Scene darkMode={darkMode} />
+                    <Scene darkMode={darkMode} isMobile={isMobile} />
                 </Canvas>
             </ErrorBoundary>
         </div>
