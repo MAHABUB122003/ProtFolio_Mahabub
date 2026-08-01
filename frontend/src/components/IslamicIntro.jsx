@@ -73,34 +73,6 @@ function IslamicIntro({ onComplete, duration = 4.2 }) {
             <div className="absolute top-1/4 -left-24 w-[420px] h-[420px] rounded-full bg-orange-500/10 blur-[120px] pointer-events-none" />
             <div className="absolute bottom-1/4 -right-24 w-[420px] h-[420px] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
 
-            {/* Floating crescent moon & star */}
-            <motion.div
-                initial={{ opacity: 0, y: -24, scale: 0.7 }}
-                animate={{ opacity: 1, y: [0, -10, 0], scale: 1 }}
-                transition={{
-                    opacity: { delay: 0.5, duration: 0.6 },
-                    scale: { delay: 0.5, duration: 0.6 },
-                    y: { delay: 1.5, duration: 5, repeat: Infinity, ease: 'easeInOut' },
-                }}
-                className="absolute top-[12%] right-[12%] sm:right-[18%] text-amber-300/90 pointer-events-none"
-                style={{ filter: 'drop-shadow(0 0 16px rgba(251,191,36,0.45))' }}
-            >
-                <svg viewBox="0 0 24 24" className="w-10 h-10 sm:w-14 sm:h-14" aria-hidden="true">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" />
-                </svg>
-            </motion.div>
-            <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.1, duration: 0.5 }}
-                className="absolute top-[20%] right-[19%] sm:right-[24.5%] text-amber-200 pointer-events-none"
-                style={{ filter: 'drop-shadow(0 0 8px rgba(251,191,36,0.6))' }}
-            >
-                <svg viewBox="0 0 24 24" className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" aria-hidden="true">
-                    <polygon points="12,0 14.5,9.5 24,12 14.5,14.5 12,24 9.5,14.5 0,12 9.5,9.5" />
-                </svg>
-            </motion.div>
-
             {/* Twinkling 8-pointed stars */}
             <TwinkleStar className="w-4 h-4" style={{ top: '18%', left: '16%' }} delay={0.9} duration={3.2} />
             <TwinkleStar className="w-3 h-3" style={{ top: '32%', left: '8%' }} delay={1.4} duration={4} />
