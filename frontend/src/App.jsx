@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar';
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -10,6 +11,7 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import IslamicIntro from './components/IslamicIntro';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -62,6 +64,7 @@ function AppRoutes() {
     const location = useLocation();
     const isAdmin = location.pathname.startsWith('/admin');
     const [darkMode, setDarkMode] = useState(true);
+    const [showIntro, setShowIntro] = useState(true);
 
     useEffect(() => {
         AOS.init({
@@ -80,6 +83,16 @@ function AppRoutes() {
         }
     }, [darkMode]);
 
+    // Lock page scroll while the intro splash is visible
+    useEffect(() => {
+        if (showIntro && !isAdmin) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [showIntro, isAdmin]);
+
     const toggleDarkMode = () => {
         const newMode = !darkMode;
         setDarkMode(newMode);
@@ -94,7 +107,14 @@ function AppRoutes() {
         return <AdminRoutes />;
     }
 
-    return <PortfolioSite darkMode={darkMode} toggleDarkMode={toggleDarkMode} />;
+    return (
+        <>
+            <AnimatePresence>
+                {showIntro && <IslamicIntro onComplete={() => setShowIntro(false)} />}
+            </AnimatePresence>
+            {!showIntro && <PortfolioSite darkMode={darkMode} toggleDarkMode={toggleDarkMode} />}
+        </>
+    );
 }
 
 function App() {
