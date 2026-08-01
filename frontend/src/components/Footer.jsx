@@ -119,7 +119,10 @@ function Footer({ darkMode }) {
                         <div className="cursor-pointer inline-block group" onClick={scrollToTop}>
                             <div className="flex items-center gap-2.5">
                                 <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-purple-600 flex items-center justify-center shadow-lg shadow-orange-500/15 group-hover:shadow-orange-500/30 transition-shadow">
-                                    <span className="text-white font-black text-sm">M</span>
+                                    <svg viewBox="0 0 40 40" className="w-6 h-6" aria-hidden="true">
+                                        <path d="M 13 16.5 L 19.5 20 L 13 23.5" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M 21.5 25.5 H 28" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" />
+                                    </svg>
                                 </div>
                                 <div>
                                     <h2 className={`text-xl font-black tracking-tight ${theme.text}`}>

@@ -219,10 +219,8 @@ function Hero({ darkMode }) {
                             <p className={`text-base sm:text-lg font-medium ${theme.textSecondary} tracking-wide`}>
                                 As-salamu alaykum 👋, I'm
                             </p>
-                            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-black tracking-tight leading-[1.05] ${theme.textPrimary}`}>
-                                <span className="animated-gradient-text">
-                                    {heroData.name}
-                                </span>
+                            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-black tracking-tight leading-[1.05] bg-gradient-to-r from-orange-500 to-purple-600 bg-clip-text text-transparent`}>
+                                {heroData.name}
                             </h1>
                             {/* Arabic name signature */}
                             <p

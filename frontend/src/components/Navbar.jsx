@@ -142,7 +142,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                 className="cursor-pointer flex items-center gap-3 group"
                                 aria-label="Mahabub — Home"
                             >
-                                {/* Logo mark — crisp SVG monogram */}
+                                {/* Logo mark — crisp SVG icon */}
                                 <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0">
                                     <svg viewBox="0 0 40 40" className="w-full h-full" aria-hidden="true">
                                         <defs>
@@ -153,8 +153,9 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                             </linearGradient>
                                         </defs>
                                         <rect width="40" height="40" rx="11" fill="url(#brandGradient)" />
-                                        <rect x="1" y="1" width="38" height="38" rx="10" fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="1.25" />
-                                        <path d="M 11.5 28.5 V 14 L 20 23 L 28.5 14 V 28.5" fill="none" stroke="#ffffff" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <rect x="0.5" y="0.5" width="39" height="39" rx="10.5" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
+                                        <path d="M 13 16.5 L 19.5 20 L 13 23.5" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M 21.5 25.5 H 28" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" />
                                     </svg>
                                     <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-orange-500/40 to-purple-600/40 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300 -z-10" />
                                 </div>
