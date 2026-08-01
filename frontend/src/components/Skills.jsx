@@ -555,7 +555,7 @@ function Skills({ darkMode }) {
                             </p>
                         </div>
 
-                        <div className="flex flex-wrap justify-center gap-6">
+                        <div className="columns-1 md:columns-2 xl:columns-3 gap-6">
                             
                             {/* Development & Cloud */}
                             {skillsData.additional.development && skillsData.additional.development.length > 0 && (
@@ -569,7 +569,7 @@ function Skills({ darkMode }) {
                                         boxShadow: "0 15px 30px -10px rgba(6,182,212,0.15)",
                                         borderColor: "rgba(6,182,212,0.3)"
                                     }}
-                                    className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] flex-grow flex-shrink-0 max-w-md rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md flex flex-col justify-between transition-all duration-300`}
+                                    className={`mb-6 break-inside-avoid rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md transition-all duration-300`}
                                 >
                                     <div>
                                         <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
@@ -599,7 +599,7 @@ function Skills({ darkMode }) {
                                                                 whileInView="visible"
                                                                 whileHover="hover"
                                                                 viewport={{ once: true }}
-                                                                className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                                                                     darkMode 
                                                                         ? 'bg-cyan-950/20 text-cyan-300 border-cyan-500/10 hover:bg-cyan-500/20 hover:text-white hover:border-cyan-400' 
                                                                         : 'bg-cyan-50/60 text-cyan-700 border-cyan-200/80 hover:bg-cyan-100 hover:text-cyan-900 hover:border-cyan-400'
@@ -628,7 +628,7 @@ function Skills({ darkMode }) {
                                         boxShadow: "0 15px 30px -10px rgba(239,68,68,0.15)",
                                         borderColor: "rgba(239,68,68,0.3)"
                                     }}
-                                    className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] flex-grow flex-shrink-0 max-w-md rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md flex flex-col justify-between transition-all duration-300`}
+                                    className={`mb-6 break-inside-avoid rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md transition-all duration-300`}
                                 >
                                     <div>
                                         <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
@@ -658,7 +658,7 @@ function Skills({ darkMode }) {
                                                                 whileInView="visible"
                                                                 whileHover="hover"
                                                                 viewport={{ once: true }}
-                                                                className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                                                                     darkMode 
                                                                         ? 'bg-red-950/20 text-red-300 border-red-500/10 hover:bg-red-500/20 hover:text-white hover:border-red-400' 
                                                                         : 'bg-red-50/60 text-red-700 border-red-200/80 hover:bg-red-100 hover:text-red-900 hover:border-red-400'
@@ -687,7 +687,7 @@ function Skills({ darkMode }) {
                                         boxShadow: "0 15px 30px -10px rgba(168,85,247,0.15)",
                                         borderColor: "rgba(168,85,247,0.3)"
                                     }}
-                                    className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] flex-grow flex-shrink-0 max-w-md rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md flex flex-col justify-between transition-all duration-300`}
+                                    className={`mb-6 break-inside-avoid rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md transition-all duration-300`}
                                 >
                                     <div>
                                         <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
@@ -717,7 +717,7 @@ function Skills({ darkMode }) {
                                                                 whileInView="visible"
                                                                 whileHover="hover"
                                                                 viewport={{ once: true }}
-                                                                className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                                                                     darkMode 
                                                                         ? 'bg-purple-950/20 text-purple-300 border-purple-500/10 hover:bg-purple-500/20 hover:text-white hover:border-purple-400' 
                                                                         : 'bg-purple-50/60 text-purple-700 border-purple-200/80 hover:bg-purple-100 hover:text-purple-900 hover:border-purple-400'
@@ -746,7 +746,7 @@ function Skills({ darkMode }) {
                                         boxShadow: "0 15px 30px -10px rgba(245,158,11,0.15)",
                                         borderColor: "rgba(245,158,11,0.3)"
                                     }}
-                                    className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] flex-grow flex-shrink-0 max-w-md rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md flex flex-col justify-between transition-all duration-300`}
+                                    className={`mb-6 break-inside-avoid rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md transition-all duration-300`}
                                 >
                                     <div>
                                         <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
@@ -776,7 +776,7 @@ function Skills({ darkMode }) {
                                                                 whileInView="visible"
                                                                 whileHover="hover"
                                                                 viewport={{ once: true }}
-                                                                className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                                                                     darkMode 
                                                                         ? 'bg-amber-950/20 text-amber-300 border-amber-500/10 hover:bg-amber-500/20 hover:text-white hover:border-amber-400' 
                                                                         : 'bg-amber-50/60 text-amber-700 border-amber-200/80 hover:bg-amber-100 hover:text-amber-900 hover:border-amber-400'
@@ -805,7 +805,7 @@ function Skills({ darkMode }) {
                                         boxShadow: "0 15px 30px -10px rgba(16,185,129,0.15)",
                                         borderColor: "rgba(16,185,129,0.3)"
                                     }}
-                                    className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] flex-grow flex-shrink-0 max-w-md rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md flex flex-col justify-between transition-all duration-300`}
+                                    className={`mb-6 break-inside-avoid rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md transition-all duration-300`}
                                 >
                                     <div>
                                         <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
@@ -835,7 +835,7 @@ function Skills({ darkMode }) {
                                                                 whileInView="visible"
                                                                 whileHover="hover"
                                                                 viewport={{ once: true }}
-                                                                className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                                                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer ${
                                                                     darkMode 
                                                                         ? 'bg-emerald-950/20 text-emerald-300 border-emerald-500/10 hover:bg-emerald-500/20 hover:text-white hover:border-emerald-400' 
                                                                         : 'bg-emerald-50/60 text-emerald-700 border-emerald-200/80 hover:bg-emerald-100 hover:text-emerald-900 hover:border-emerald-400'
