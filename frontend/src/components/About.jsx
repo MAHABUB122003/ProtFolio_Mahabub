@@ -17,6 +17,7 @@ import {
 } from 'react-icons/fa';
 import { SiMongodb, SiExpress, SiReact, SiNodedotjs, SiTailwindcss, SiJavascript } from 'react-icons/si';
 import { getSection } from '../utils/portfolioData';
+import IslamicPattern from './IslamicPattern';
 import myCV from '../assets/mahabub.pdf';
 
 // Animated counter for stats
@@ -105,6 +106,19 @@ function About({ darkMode }) {
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                 <div className="absolute top-1/4 -left-40 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-orange-500/8 via-amber-500/6 to-transparent blur-[140px]" />
                 <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-gradient-to-tl from-purple-500/8 via-cyan-500/6 to-transparent blur-[150px]" />
+                {/* Islamic girih pattern accent */}
+                <div
+                    className={`absolute -bottom-20 -right-20 w-72 h-72 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+                    style={{ opacity: darkMode ? 0.04 : 0.05 }}
+                >
+                    <IslamicPattern strokeWidth={1} />
+                </div>
+                <div
+                    className={`absolute -top-24 -left-24 w-64 h-64 rotate-90 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+                    style={{ opacity: darkMode ? 0.03 : 0.04 }}
+                >
+                    <IslamicPattern strokeWidth={1} />
+                </div>
             </div>
 
             <div className="container mx-auto max-w-7xl relative z-10">

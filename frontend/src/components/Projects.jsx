@@ -16,6 +16,7 @@ import {
     FaCode
 } from 'react-icons/fa';
 import { getProjects } from '../utils/projectStorage';
+import IslamicPattern from './IslamicPattern';
 
 function Projects({ darkMode }) {
     const [projects, setProjects] = useState([]);
@@ -89,6 +90,19 @@ function Projects({ darkMode }) {
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                 <div className="absolute top-1/4 -right-40 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-orange-500/8 via-pink-500/6 to-transparent blur-[140px]" />
                 <div className="absolute bottom-10 -left-40 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-purple-500/8 via-cyan-500/6 to-transparent blur-[150px]" />
+                {/* Islamic girih pattern accent */}
+                <div
+                    className={`absolute -top-24 -left-24 w-80 h-80 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+                    style={{ opacity: darkMode ? 0.04 : 0.05 }}
+                >
+                    <IslamicPattern strokeWidth={1} />
+                </div>
+                <div
+                    className={`absolute -bottom-24 -right-24 w-72 h-72 rotate-90 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+                    style={{ opacity: darkMode ? 0.03 : 0.04 }}
+                >
+                    <IslamicPattern strokeWidth={1} />
+                </div>
             </div>
 
             <div className="container mx-auto max-w-7xl relative z-10">

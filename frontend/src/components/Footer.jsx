@@ -17,6 +17,7 @@ import {
     FaHeart,
     FaStar,
 } from 'react-icons/fa';
+import IslamicPattern from './IslamicPattern';
 
 function Footer({ darkMode }) {
     const [showScrollTop, setShowScrollTop] = useState(false);
@@ -93,11 +94,18 @@ function Footer({ darkMode }) {
                 <div className={`absolute top-0 right-[20%] w-[500px] h-[300px] rounded-full blur-[100px] ${
                     darkMode ? 'bg-gradient-to-b from-purple-500/5 to-transparent' : 'bg-gradient-to-b from-purple-500/3 to-transparent'
                 }`} />
-                {/* Subtle Islamic star pattern watermark */}
-                <div className={`absolute bottom-8 right-8 w-32 h-32 ${darkMode ? 'opacity-[0.03]' : 'opacity-[0.04]'}`}>
-                    <svg viewBox="0 0 100 100" fill="currentColor">
-                        <polygon points="50,5 61,35 95,35 68,55 79,90 50,70 21,90 32,55 5,35 39,35" />
-                    </svg>
+                {/* Subtle Islamic girih pattern watermark */}
+                <div
+                    className={`absolute bottom-0 right-0 w-[420px] h-[420px] ${darkMode ? 'text-white' : 'text-gray-900'}`}
+                    style={{ opacity: darkMode ? 0.03 : 0.04 }}
+                >
+                    <IslamicPattern strokeWidth={1} />
+                </div>
+                <div
+                    className={`absolute -top-24 -left-24 w-96 h-96 rotate-90 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+                    style={{ opacity: darkMode ? 0.025 : 0.03 }}
+                >
+                    <IslamicPattern strokeWidth={1} />
                 </div>
             </div>
 
@@ -272,11 +280,19 @@ function Footer({ darkMode }) {
                             <span>All rights reserved</span>
                         </div>
 
-                
+                        {/* 8-pointed star ornament */}
+                        <div className={`flex items-center gap-3 ${theme.textDimmer}`}>
+                            <span className="h-px w-12 bg-gradient-to-r from-transparent to-current opacity-40" />
+                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-orange-500/70" aria-hidden="true">
+                                <polygon points="12,2 14.5,9.5 22,12 14.5,14.5 12,22 9.5,14.5 2,12 9.5,9.5" fill="currentColor" />
+                                <polygon points="12,6 13.5,10.5 18,12 13.5,13.5 12,18 10.5,13.5 6,12 10.5,10.5" fill="currentColor" opacity="0.5" />
+                            </svg>
+                            <span className="h-px w-12 bg-gradient-to-r from-current to-transparent opacity-40" />
+                        </div>
                     </div>
 
                     {/* Bismillah watermark */}
-                    <p className={`text-center mt-4 text-[10px] font-mono ${theme.textDimmer} tracking-wider`}>
+                    <p dir="rtl" lang="ar" className={`text-center mt-5 text-[13px] font-arabic ${theme.textDimmer}`}>
                         بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
                     </p>
                 </div>

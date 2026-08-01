@@ -27,6 +27,7 @@ import {
     SiFastapi
 } from 'react-icons/si';
 import { getSection } from '../utils/portfolioData';
+import IslamicPattern from './IslamicPattern';
 
 function Skills({ darkMode }) {
     const skillsData = getSection('skills');
@@ -344,6 +345,19 @@ function Skills({ darkMode }) {
                     transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-orange-500/3 to-purple-500/3 rounded-full blur-3xl"
                 />
+                {/* Islamic girih pattern accent */}
+                <div
+                    className={`absolute top-0 right-0 w-80 h-80 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+                    style={{ opacity: darkMode ? 0.04 : 0.05 }}
+                >
+                    <IslamicPattern strokeWidth={1} />
+                </div>
+                <div
+                    className={`absolute bottom-0 left-0 w-72 h-72 rotate-90 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+                    style={{ opacity: darkMode ? 0.03 : 0.04 }}
+                >
+                    <IslamicPattern strokeWidth={1} />
+                </div>
             </div>
 
             <div className="container mx-auto max-w-6xl relative z-10">

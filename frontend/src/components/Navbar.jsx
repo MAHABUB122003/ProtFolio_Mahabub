@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
-import { Menu, Moon, Sun, X, Sparkles } from 'lucide-react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 import { FaPaperPlane } from 'react-icons/fa';
 
 function Navbar({ darkMode, toggleDarkMode }) {
@@ -134,25 +134,35 @@ function Navbar({ darkMode, toggleDarkMode }) {
                     >
                         <div className="flex items-center justify-between">
 
-                            {/* Brand Logo — with subtle gradient accent */}
+                            {/* Brand Logo */}
                             <motion.div
                                 whileHover={{ scale: 1.03 }}
                                 whileTap={{ scale: 0.97 }}
                                 onClick={() => handleNavClick('Home')}
-                                className="cursor-pointer flex items-center gap-2.5 group"
+                                className="cursor-pointer flex items-center gap-3 group"
+                                aria-label="Mahabub — Home"
                             >
-                                {/* Logo mark */}
-                                <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-orange-500 to-purple-600 flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:shadow-orange-500/40 transition-shadow">
-                                    <span className="text-white font-black text-sm sm:text-base">M</span>
-                                    <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-orange-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <span className="relative text-white font-black text-sm sm:text-base">M</span>
+                                {/* Logo mark — crisp SVG monogram */}
+                                <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0">
+                                    <svg viewBox="0 0 40 40" className="w-full h-full" aria-hidden="true">
+                                        <defs>
+                                            <linearGradient id="brandGradient" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stopColor="#f97316" />
+                                                <stop offset="55%" stopColor="#d946ef" />
+                                                <stop offset="100%" stopColor="#a855f7" />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="40" height="40" rx="11" fill="url(#brandGradient)" />
+                                        <rect x="1" y="1" width="38" height="38" rx="10" fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="1.25" />
+                                        <path d="M 11.5 28.5 V 14 L 20 23 L 28.5 14 V 28.5" fill="none" stroke="#ffffff" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-orange-500/40 to-purple-600/40 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300 -z-10" />
                                 </div>
-                                <div className="hidden sm:block">
+                                <div className="hidden sm:block leading-none">
                                     <span className={`text-lg font-extrabold tracking-tight ${theme.textPrimary}`}>
-                                        MAHABUB
+                                        Mahabub<span className="text-orange-500">.</span>
                                     </span>
-                                    <span className="text-orange-500 font-black">.</span>
-                                    <span className={`text-[10px] font-mono block -mt-1 tracking-widest uppercase ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+                                    <span className={`text-[10px] font-mono block mt-0.5 tracking-[0.2em] uppercase ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
                                         developer
                                     </span>
                                 </div>

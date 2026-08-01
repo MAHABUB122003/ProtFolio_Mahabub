@@ -13,6 +13,7 @@ import {
     FaPlay,
 } from 'react-icons/fa';
 import { getSection } from '../utils/portfolioData';
+import IslamicPattern from './IslamicPattern';
 import myImage from '../assets/mahabub.png';
 import myCV from '../assets/mahabub.pdf';
 
@@ -147,6 +148,14 @@ function Hero({ darkMode }) {
             {/* Dot grid */}
             <div className={`absolute inset-0 ${darkMode ? 'dot-grid-dark' : 'dot-grid-light'} opacity-40 pointer-events-none z-0`} />
 
+            {/* Islamic girih pattern overlay */}
+            <div
+                className={`absolute inset-0 pointer-events-none z-0 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+                style={{ opacity: darkMode ? 0.035 : 0.045 }}
+            >
+                <IslamicPattern strokeWidth={1} />
+            </div>
+
             {/* Mouse-reactive gradient orb */}
             <div
                 className="absolute w-[600px] h-[600px] rounded-full pointer-events-none z-0 transition-all duration-[2s] ease-out"
@@ -177,6 +186,19 @@ function Hero({ darkMode }) {
                         animate="show"
                         className="lg:col-span-7 text-center lg:text-left space-y-7"
                     >
+                        {/* Bismillah — Arabic calligraphy accent */}
+                        <motion.div variants={fadeUp} className="flex justify-center lg:justify-start">
+                            <p
+                                dir="rtl"
+                                lang="ar"
+                                className={`font-arabic text-lg sm:text-xl md:text-2xl leading-relaxed tracking-wide ${
+                                    darkMode ? 'text-orange-300/90' : 'text-orange-600/90'
+                                }`}
+                            >
+                                بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+                            </p>
+                        </motion.div>
+
                         {/* Availability badge */}
                         <motion.div variants={fadeUp}>
                             <div className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full border backdrop-blur-md text-xs sm:text-sm font-medium tracking-wide ${
@@ -202,6 +224,14 @@ function Hero({ darkMode }) {
                                     {heroData.name}
                                 </span>
                             </h1>
+                            {/* Arabic name signature */}
+                            <p
+                                dir="rtl"
+                                lang="ar"
+                                className={`font-arabic text-xl sm:text-2xl md:text-3xl font-bold ${darkMode ? 'text-purple-300/80' : 'text-purple-600/80'}`}
+                            >
+                                مَحْبُوب
+                            </p>
                         </motion.div>
 
                         {/* Animated Role */}
