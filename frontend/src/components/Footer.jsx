@@ -272,19 +272,7 @@ function Footer({ darkMode }) {
                             <span>All rights reserved</span>
                         </div>
 
-                        <div className={`flex items-center gap-1.5 text-[11px] font-mono ${theme.textFaint}`}>
-                            <span>Crafted with</span>
-                            <motion.span
-                                animate={{ scale: [1, 1.2, 1] }}
-                                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                            >
-                                <FaHeart className="text-red-500 text-[10px]" />
-                            </motion.span>
-                            <span>using</span>
-                            <span className="text-orange-400 font-semibold">React</span>
-                            <span className={theme.textDimmer}>&</span>
-                            <span className="text-cyan-400 font-semibold">Tailwind</span>
-                        </div>
+                
                     </div>
 
                     {/* Bismillah watermark */}
