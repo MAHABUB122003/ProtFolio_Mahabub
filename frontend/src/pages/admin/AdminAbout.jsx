@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSave, FaPlus, FaTimes, FaUserTie, FaGraduationCap, FaCertificate, FaStar } from 'react-icons/fa';
-import { getSection, updateSection } from '../../utils/portfolioData';
+import { getSection, updateSection, saveSectionToBackend } from '../../utils/portfolioData';
 
 function AdminAbout() {
     const [data, setData] = useState(null);
@@ -35,7 +35,16 @@ function AdminAbout() {
     const addValue = () => { if (valueInput.title) { setData({ ...data, coreValues: [...data.coreValues, { ...valueInput }] }); setValueInput({ title: '', description: '' }); } };
     const removeValue = (idx) => setData({ ...data, coreValues: data.coreValues.filter((_, i) => i !== idx) });
 
-    const handleSave = () => { updateSection('about', data); setSaved(true); setTimeout(() => setSaved(false), 2000); };
+    const handleSave = async () => {
+        updateSection('about', data);
+        try {
+            await saveSectionToBackend('about', data);
+        } catch (e) {
+            alert('Saved locally, but failed to save to server: ' + e.message);
+        }
+        setSaved(true);
+        setTimeout(() => setSaved(false), 2000);
+    };
 
     const inputClass = "w-full px-4 py-2.5 rounded-lg bg-gray-700/50 border border-gray-600 text-white text-sm focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all";
 

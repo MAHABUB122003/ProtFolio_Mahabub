@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSave, FaPlus, FaTimes, FaCog, FaDownload, FaUpload, FaTrash, FaLink, FaFileAlt } from 'react-icons/fa';
-import { getSection, updateSection, resetAllData, exportData, importData } from '../../utils/portfolioData';
+import { getSection, updateSection, exportData, importData, saveSectionToBackend, resetAllDataFromBackend, syncSectionsFromBackend } from '../../utils/portfolioData';
+import { api, getToken } from '../../utils/api';
 
 function AdminGeneral() {
     const [data, setData] = useState(null);
@@ -13,10 +14,35 @@ function AdminGeneral() {
 
     if (!data) return null;
 
-    const handleSave = () => { updateSection('general', data); setSaved(true); setTimeout(() => setSaved(false), 2000); };
+    const handleSave = async () => {
+        updateSection('general', data);
+        const footer = footerData || getSection('footer');
+        updateSection('footer', footer);
+        try {
+            await Promise.all([
+                saveSectionToBackend('general', data),
+                saveSectionToBackend('footer', footer)
+            ]);
+        } catch (e) {
+            alert('Saved locally, but failed to save to server: ' + e.message);
+        }
+        setSaved(true);
+        setTimeout(() => setSaved(false), 2000);
+    };
 
-    const handleExport = () => {
-        const json = exportData();
+    const handleExport = async () => {
+        let json;
+        if (getToken()) {
+            try {
+                const res = await api('/sections/export', { auth: true });
+                json = JSON.stringify(res.data, null, 2);
+            } catch (e) {
+                alert('Export failed: ' + e.message);
+                return;
+            }
+        } else {
+            json = exportData();
+        }
         const blob = new Blob([json], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -28,9 +54,32 @@ function AdminGeneral() {
         URL.revokeObjectURL(url);
     };
 
-    const handleImport = () => {
+    const handleImport = async () => {
         if (!importJson.trim()) return;
-        const result = importData(importJson);
+        let result;
+        if (getToken()) {
+            try {
+                let parsed;
+                try {
+                    parsed = JSON.parse(importJson);
+                } catch {
+                    alert('Invalid JSON data');
+                    return;
+                }
+                await api('/sections/import', {
+                    method: 'POST',
+                    body: { data: parsed },
+                    auth: true
+                });
+                await syncSectionsFromBackend();
+                result = { success: true };
+            } catch (e) {
+                alert('Import failed: ' + e.message);
+                return;
+            }
+        } else {
+            result = importData(importJson);
+        }
         if (result.success) {
             window.location.reload();
         } else {
@@ -38,9 +87,14 @@ function AdminGeneral() {
         }
     };
 
-    const handleReset = () => {
+    const handleReset = async () => {
         if (confirmReset) {
-            resetAllData();
+            try {
+                await resetAllDataFromBackend();
+            } catch (e) {
+                alert('Reset failed: ' + e.message);
+                return;
+            }
             window.location.reload();
         } else {
             setConfirmReset(true);
@@ -57,7 +111,6 @@ function AdminGeneral() {
     const handleFooterChange = (field, value) => {
         const updated = { ...footerData, [field]: value };
         setFooterData(updated);
-        updateSection('footer', updated);
     };
 
     const inputClass = "w-full px-4 py-2.5 rounded-lg bg-gray-700/50 border border-gray-600 text-white text-sm focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all";

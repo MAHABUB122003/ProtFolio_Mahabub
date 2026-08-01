@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSave, FaPlus, FaTimes, FaBrain, FaCode } from 'react-icons/fa';
-import { getSection, updateSection } from '../../utils/portfolioData';
+import { getSection, updateSection, saveSectionToBackend } from '../../utils/portfolioData';
 
 function AdminSkills() {
     const [data, setData] = useState(null);
@@ -75,7 +75,16 @@ function AdminSkills() {
         handleAdditionalChange(section, current);
     };
 
-    const handleSave = () => { updateSection('skills', data); setSaved(true); setTimeout(() => setSaved(false), 2000); };
+    const handleSave = async () => {
+        updateSection('skills', data);
+        try {
+            await saveSectionToBackend('skills', data);
+        } catch (e) {
+            alert('Saved locally, but failed to save to server: ' + e.message);
+        }
+        setSaved(true);
+        setTimeout(() => setSaved(false), 2000);
+    };
 
     const inputClass = "w-full px-4 py-2.5 rounded-lg bg-gray-700/50 border border-gray-600 text-white text-sm focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all";
     const gradients = ['from-cyan-500 to-blue-500', 'from-green-500 to-emerald-500', 'from-purple-500 to-pink-500', 'from-red-500 to-orange-500', 'from-blue-500 to-cyan-500', 'from-yellow-500 to-orange-500', 'from-pink-500 to-rose-500', 'from-teal-500 to-cyan-500'];

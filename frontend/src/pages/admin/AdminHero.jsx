@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSave, FaPlus, FaTimes, FaArrowUp, FaArrowDown, FaUser, FaLink, FaRocket } from 'react-icons/fa';
-import { getSection, updateSection } from '../../utils/portfolioData';
+import { getSection, updateSection, saveSectionToBackend } from '../../utils/portfolioData';
 
 function AdminHero() {
     const [data, setData] = useState(null);
@@ -55,8 +55,13 @@ function AdminHero() {
         setData({ ...data, socials: data.socials.filter((_, i) => i !== idx) });
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         updateSection('hero', data);
+        try {
+            await saveSectionToBackend('hero', data);
+        } catch (e) {
+            alert('Saved locally, but failed to save to server: ' + e.message);
+        }
         setSaved(true);
         setTimeout(() => setSaved(false), 2000);
     };

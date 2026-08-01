@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSave, FaPlus, FaTimes, FaEnvelope, FaLink, FaComment } from 'react-icons/fa';
-import { getSection, updateSection } from '../../utils/portfolioData';
+import { getSection, updateSection, saveSectionToBackend } from '../../utils/portfolioData';
 
 function AdminContact() {
     const [data, setData] = useState(null);
@@ -28,7 +28,16 @@ function AdminContact() {
     const addQR = () => { if (qrInput.label) { setData({ ...data, quickResponses: [...data.quickResponses, { ...qrInput }] }); setQrInput({ label: '', value: '' }); } };
     const removeQR = (idx) => setData({ ...data, quickResponses: data.quickResponses.filter((_, i) => i !== idx) });
 
-    const handleSave = () => { updateSection('contact', data); setSaved(true); setTimeout(() => setSaved(false), 2000); };
+    const handleSave = async () => {
+        updateSection('contact', data);
+        try {
+            await saveSectionToBackend('contact', data);
+        } catch (e) {
+            alert('Saved locally, but failed to save to server: ' + e.message);
+        }
+        setSaved(true);
+        setTimeout(() => setSaved(false), 2000);
+    };
 
     const inputClass = "w-full px-4 py-2.5 rounded-lg bg-gray-700/50 border border-gray-600 text-white text-sm focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all";
 

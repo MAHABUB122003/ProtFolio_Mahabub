@@ -1,3 +1,5 @@
+import { api, getToken } from './api';
+
 const PORTFOLIO_KEY = 'portfolio_data_v3';
 
 const defaultData = {
@@ -235,7 +237,42 @@ export function importData(jsonString) {
         const data = JSON.parse(jsonString);
         localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(data));
         return { success: true };
-    } catch (e) {
+    } catch {
         return { success: false, error: 'Invalid JSON' };
     }
+}
+
+export async function syncSectionsFromBackend() {
+    try {
+        const res = await api('/sections');
+        const sections = res?.sections;
+        if (!sections || typeof sections !== 'object') return false;
+        const data = getPortfolioData();
+        let changed = false;
+        for (const [key, value] of Object.entries(sections)) {
+            if (value && typeof value === 'object') {
+                data[key] = value;
+                changed = true;
+            }
+        }
+        if (changed) localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(data));
+        return changed;
+    } catch {
+        return false;
+    }
+}
+
+export async function saveSectionToBackend(key, sectionData) {
+    if (!getToken()) return;
+    return api(`/sections/${key}`, { method: 'PUT', body: { data: sectionData }, auth: true });
+}
+
+export async function resetAllDataFromBackend() {
+    if (!getToken()) {
+        resetAllData();
+        return { success: true, message: 'Data reset locally' };
+    }
+    const res = await api('/sections/reset-all', { method: 'POST', auth: true });
+    await syncSectionsFromBackend();
+    return res;
 }

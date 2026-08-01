@@ -13,10 +13,10 @@ function AdminDashboard() {
         setProjects(getProjects());
     }, []);
 
-    const handleDelete = (id, title) => {
+    const handleDelete = async (id, title) => {
         if (window.confirm(`Delete "${title}"?`)) {
             try {
-                deleteProject(id);
+                await deleteProject(id);
                 setProjects(getProjects());
             } catch (e) {
                 alert('Failed to delete project. Check console for details.');
@@ -25,18 +25,18 @@ function AdminDashboard() {
         }
     };
 
-    const handleMoveUp = (id) => {
+    const handleMoveUp = async (id) => {
         try {
-            moveProjectUp(id);
+            await moveProjectUp(id);
             setProjects(getProjects());
         } catch (e) {
             console.error('Move up failed:', e);
         }
     };
 
-    const handleMoveDown = (id) => {
+    const handleMoveDown = async (id) => {
         try {
-            moveProjectDown(id);
+            await moveProjectDown(id);
             setProjects(getProjects());
         } catch (e) {
             console.error('Move down failed:', e);

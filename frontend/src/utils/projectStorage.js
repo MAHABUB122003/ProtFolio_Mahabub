@@ -1,3 +1,5 @@
+import { api, getToken } from './api';
+
 const PROJECTS_KEY = 'portfolio_projects_v3';
 const ORDER_KEY = 'portfolio_project_order_v3';
 const VERSION_KEY = 'portfolio_projects_version';
@@ -248,7 +250,7 @@ export function getProjects() {
             projects.sort((a, b) => (a.order || 0) - (b.order || 0));
         }
         return projects;
-    } catch (e) {
+    } catch {
         saveDefaultsWithVersion();
         return defaultProjects;
     }
@@ -259,7 +261,16 @@ export function saveProjects(projects) {
     localStorage.setItem(VERSION_KEY, DEFAULTS_VERSION);
 }
 
-export function addProject(project) {
+export async function addProject(project) {
+    if (getToken()) {
+        const res = await api('/projects', { method: 'POST', body: project, auth: true });
+        const created = res.project;
+        const projects = getProjects();
+        projects.push(created);
+        saveProjects(projects);
+        updateOrder(projects.map(p => p.id));
+        return created;
+    }
     const projects = getProjects();
     const maxId = projects.length > 0 ? Math.max(...projects.map(p => p.id)) : 0;
     const newProject = {
@@ -273,31 +284,34 @@ export function addProject(project) {
     return newProject;
 }
 
-export function updateProject(id, updates) {
-    try {
-        const raw = localStorage.getItem(PROJECTS_KEY);
-        if (!raw) return null;
-        const projects = JSON.parse(raw);
-        const idx = projects.findIndex(p => p.id === id);
-        if (idx === -1) return null;
-        projects[idx] = { ...projects[idx], ...updates };
-        const json = JSON.stringify(projects);
-        if (json.length > 4_500_000) {
-            console.warn('Project data is very large (' + (json.length / 1024 / 1024).toFixed(1) + 'MB)');
-        }
-        localStorage.setItem(PROJECTS_KEY, json);
-        return projects[idx];
-    } catch (e) {
-        console.error('updateProject error:', e.name, e.message);
-        return null;
+export async function updateProject(id, updates) {
+    const projects = getProjects();
+    const idx = projects.findIndex(p => String(p.id) === String(id));
+    if (idx === -1) return null;
+    const merged = { ...projects[idx], ...updates };
+    projects[idx] = merged;
+    saveProjects(projects);
+
+    if (getToken()) {
+        const res = await api(`/projects/${id}`, { method: 'PUT', body: updates, auth: true });
+        const updated = res.project;
+        const list = getProjects();
+        const i = list.findIndex(p => String(p.id) === String(id));
+        if (i !== -1) list[i] = updated;
+        saveProjects(list);
+        return updated;
     }
+    return merged;
 }
 
-export function deleteProject(id) {
+export async function deleteProject(id) {
     let projects = getProjects();
-    projects = projects.filter(p => p.id !== id);
+    projects = projects.filter(p => String(p.id) !== String(id));
     saveProjects(projects);
     updateOrder(projects.map(p => p.id));
+    if (getToken()) {
+        await api(`/projects/${id}`, { method: 'DELETE', auth: true });
+    }
     return true;
 }
 
@@ -319,16 +333,43 @@ export function reorderProjects(fromIndex, toIndex) {
     return projects;
 }
 
-export function moveProjectUp(id) {
+export async function syncOrderToBackend() {
+    if (!getToken()) return;
     const projects = getProjects();
-    const idx = projects.findIndex(p => p.id === id);
-    if (idx <= 0) return projects;
-    return reorderProjects(idx, idx - 1);
+    await api('/projects/reorder', {
+        method: 'PUT',
+        body: { orderedIds: projects.map(p => p.id) },
+        auth: true
+    });
 }
 
-export function moveProjectDown(id) {
+export async function moveProjectUp(id) {
     const projects = getProjects();
-    const idx = projects.findIndex(p => p.id === id);
+    const idx = projects.findIndex(p => String(p.id) === String(id));
+    if (idx <= 0) return projects;
+    const result = reorderProjects(idx, idx - 1);
+    if (getToken()) syncOrderToBackend().catch(() => {});
+    return result;
+}
+
+export async function moveProjectDown(id) {
+    const projects = getProjects();
+    const idx = projects.findIndex(p => String(p.id) === String(id));
     if (idx === -1 || idx >= projects.length - 1) return projects;
-    return reorderProjects(idx, idx + 1);
+    const result = reorderProjects(idx, idx + 1);
+    if (getToken()) syncOrderToBackend().catch(() => {});
+    return result;
+}
+
+export async function syncProjectsFromBackend() {
+    try {
+        const res = await api('/projects');
+        const projects = res?.projects;
+        if (!Array.isArray(projects)) return false;
+        saveProjects(projects);
+        updateOrder(projects.map(p => p.id));
+        return true;
+    } catch {
+        return false;
+    }
 }

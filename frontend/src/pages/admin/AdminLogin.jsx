@@ -95,7 +95,7 @@ function AdminLogin() {
 
         await new Promise(r => setTimeout(r, 800 + Math.random() * 400));
 
-        const result = loginUser(formData.email, formData.password);
+        const result = await loginUser(formData.email, formData.password);
         
         if (result.success) {
             setSecurityStep(2);

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
+import { api } from '../utils/api';
 import {
     FaEnvelope,
     FaPhone,
@@ -36,19 +37,53 @@ function Contact({ darkMode }) {
     const sendEmail = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+
+        const payload = {
+            name: formData.name,
+            email: formData.email,
+            title: formData.title || 'General Inquiry',
+            message: formData.message
+        };
+
+        const sendToBackend = async () => {
+            try {
+                await api('/messages', { method: 'POST', body: payload });
+                return true;
+            } catch (error) {
+                console.error('Backend message error:', error);
+                return false;
+            }
+        };
+
+        const sendToEmailJS = async () => {
+            try {
+                await emailjs.send(
+                    import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                    import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+                    payload,
+                    import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+                );
+                return true;
+            } catch (error) {
+                console.error('EmailJS error:', error);
+                return false;
+            }
+        };
+
         try {
-            await emailjs.send(
-                import.meta.env.VITE_EMAILJS_SERVICE_ID,
-                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-                { name: formData.name, email: formData.email, title: formData.title || 'General Inquiry', message: formData.message },
-                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-            );
-            setSubmitStatus('success');
-            setFormData({ name: '', email: '', title: '', message: '' });
-            setCharCount(0);
+            const backendOk = await sendToBackend();
+            const emailOk = backendOk ? true : await sendToEmailJS();
+
+            if (backendOk || emailOk) {
+                setSubmitStatus('success');
+                setFormData({ name: '', email: '', title: '', message: '' });
+                setCharCount(0);
+            } else {
+                setSubmitStatus('error');
+            }
             setTimeout(() => setSubmitStatus(null), 6000);
         } catch (error) {
-            console.error('EmailJS error:', error);
+            console.error('Send message error:', error);
             setSubmitStatus('error');
             setTimeout(() => setSubmitStatus(null), 6000);
         } finally {

@@ -1,33 +1,11 @@
+import { api } from './api';
+
 const ADMIN_KEY = 'portfolio_admin_session';
 const ATTEMPTS_KEY = 'portfolio_login_attempts';
 const LOCKOUT_KEY = 'portfolio_lockout';
 const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_DURATION = 15 * 60 * 1000; // 15 minutes
-
-const ADMIN_CREDENTIALS = {
-    email: 'rahmanmdmahabubur666@gmail.com',
-    password: '*1610833658#',
-    name: 'MD Mahabubur Rahman'
-};
-
-function hashPassword(password) {
-    let hash = 0;
-    for (let i = 0; i < password.length; i++) {
-        const char = password.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash;
-    }
-    const salt = 'mhr2003sec';
-    let saltedHash = 0;
-    const salted = salt + password;
-    for (let i = 0; i < salted.length; i++) {
-        const char = salted.charCodeAt(i);
-        saltedHash = ((saltedHash << 5) - saltedHash) + char;
-        saltedHash = saltedHash & saltedHash;
-    }
-    return 'sh_' + Math.abs(saltedHash).toString(36) + '_' + Math.abs(hash).toString(36);
-}
 
 function getAttempts() {
     const data = localStorage.getItem(ATTEMPTS_KEY);
@@ -74,7 +52,7 @@ function lockAccount() {
     localStorage.setItem(LOCKOUT_KEY, JSON.stringify(Date.now()));
 }
 
-export function loginUser(email, password) {
+export async function loginUser(email, password) {
     if (isLocked()) {
         const remaining = getRemainingLockTime();
         const mins = Math.ceil(remaining / 60000);
@@ -93,42 +71,33 @@ export function loginUser(email, password) {
         return { success: false, error: `Too many failed attempts. Locked for ${mins} minute${mins > 1 ? 's' : ''}.`, locked: true, remaining };
     }
 
-    const emailMatch = email.toLowerCase().trim() === ADMIN_CREDENTIALS.email;
-    const passMatch = password === ADMIN_CREDENTIALS.password;
+    try {
+        const res = await api('/auth/login', { method: 'POST', body: { email, password } });
+        clearAttempts();
 
-    if (!emailMatch || !passMatch) {
-        const count = recordAttempt();
-        const remaining = MAX_ATTEMPTS - count;
-        if (count >= MAX_ATTEMPTS) {
-            lockAccount();
-            const lockRemaining = getRemainingLockTime();
-            const mins = Math.ceil(lockRemaining / 60000);
-            return { success: false, error: `Account locked for ${mins} minute${mins > 1 ? 's' : ''} due to too many failed attempts.`, locked: true, remaining: lockRemaining };
+        const session = {
+            email: res.user.email,
+            name: res.user.name,
+            loggedInAt: new Date().toISOString(),
+            expiresAt: Date.now() + SESSION_TIMEOUT,
+            token: res.token
+        };
+        localStorage.setItem(ADMIN_KEY, JSON.stringify(session));
+        return { success: true, user: session };
+    } catch (err) {
+        if (err.status === 401 || err.status === 400) {
+            const count = recordAttempt();
+            const remaining = MAX_ATTEMPTS - count;
+            if (count >= MAX_ATTEMPTS) {
+                lockAccount();
+                const lockRemaining = getRemainingLockTime();
+                const mins = Math.ceil(lockRemaining / 60000);
+                return { success: false, error: `Account locked for ${mins} minute${mins > 1 ? 's' : ''} due to too many failed attempts.`, locked: true, remaining: lockRemaining };
+            }
+            return { success: false, error: `Invalid credentials. ${remaining} attempt${remaining !== 1 ? 's' : ''} remaining.` };
         }
-        return { success: false, error: `Invalid credentials. ${remaining} attempt${remaining !== 1 ? 's' : ''} remaining.` };
+        return { success: false, error: err.message || 'Cannot reach the server. Please try again.' };
     }
-
-    clearAttempts();
-
-    const session = {
-        email: ADMIN_CREDENTIALS.email,
-        name: ADMIN_CREDENTIALS.name,
-        loggedInAt: new Date().toISOString(),
-        expiresAt: Date.now() + SESSION_TIMEOUT,
-        token: generateToken()
-    };
-    localStorage.setItem(ADMIN_KEY, JSON.stringify(session));
-    return { success: true, user: session };
-}
-
-function generateToken() {
-    const arr = new Uint8Array(32);
-    if (typeof window !== 'undefined' && window.crypto) {
-        window.crypto.getRandomValues(arr);
-    } else {
-        for (let i = 0; i < 32; i++) arr[i] = Math.floor(Math.random() * 256);
-    }
-    return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
 }
 
 export function logoutUser() {

@@ -32,7 +32,7 @@ function ProjectForm() {
     useEffect(() => {
         if (isEditing) {
             const projects = getProjects();
-            const project = projects.find(p => p.id === parseInt(id));
+            const project = projects.find(p => String(p.id) === String(id));
             if (project) {
                 setFormData({
                     title: project.title || '',
@@ -80,7 +80,7 @@ function ProjectForm() {
         setFormData({ ...formData, features: formData.features.filter(f => f !== feature) });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
@@ -97,16 +97,21 @@ function ProjectForm() {
             return;
         }
 
-        if (isEditing) {
-            const result = updateProject(parseInt(id), formData);
-            if (!result) {
-                setError('Failed to update project. The project may have been deleted or storage is full.');
-                return;
+        try {
+            if (isEditing) {
+                const result = await updateProject(id, formData);
+                if (!result) {
+                    setError('Failed to update project. The project may have been deleted.');
+                    return;
+                }
+                setSuccess('Project updated successfully!');
+            } else {
+                await addProject(formData);
+                setSuccess('Project added successfully!');
             }
-            setSuccess('Project updated successfully!');
-        } else {
-            addProject(formData);
-            setSuccess('Project added successfully!');
+        } catch (err) {
+            setError(err.message || 'Failed to save project. Please try again.');
+            return;
         }
 
         setTimeout(() => navigate('/admin/projects'), 1000);

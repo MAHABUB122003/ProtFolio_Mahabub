@@ -22,6 +22,8 @@ import AdminContact from './pages/admin/AdminContact';
 import AdminGeneral from './pages/admin/AdminGeneral';
 import ProjectForm from './components/admin/ProjectForm';
 import ParticleField from './components/three/ParticleField';
+import { syncSectionsFromBackend } from './utils/portfolioData';
+import { syncProjectsFromBackend } from './utils/projectStorage';
 
 function PortfolioSite({ darkMode, toggleDarkMode }) {
     return (
@@ -73,6 +75,9 @@ function AppRoutes() {
             offset: 100
         });
         emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+
+        syncSectionsFromBackend();
+        syncProjectsFromBackend();
     }, []);
 
     useEffect(() => {
