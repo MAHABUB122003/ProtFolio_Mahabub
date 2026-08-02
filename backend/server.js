@@ -11,7 +11,7 @@ import { notFound, errorHandler } from './src/middleware/errorHandler.js';
 
 const app = express();
 
-const origins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173')
+const origins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173,https://mahabubur.vercel.app')
     .split(',')
     .map(s => s.trim())
     .filter(Boolean);
