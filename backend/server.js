@@ -11,10 +11,12 @@ import { notFound, errorHandler } from './src/middleware/errorHandler.js';
 
 const app = express();
 
-const origins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173,https://mahabubur.vercel.app')
+const DEFAULT_ORIGINS = ['http://localhost:5173', 'https://mahabubur.vercel.app'];
+const envOrigins = (process.env.CLIENT_ORIGIN || '')
     .split(',')
     .map(s => s.trim())
     .filter(Boolean);
+const origins = [...new Set([...DEFAULT_ORIGINS, ...envOrigins])];
 
 app.use(cors({
     origin: origins.length > 0 ? origins : true,
