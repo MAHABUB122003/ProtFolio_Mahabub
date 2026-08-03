@@ -19,6 +19,7 @@ import AdminHero from './pages/admin/AdminHero';
 import AdminAbout from './pages/admin/AdminAbout';
 import AdminSkills from './pages/admin/AdminSkills';
 import AdminContact from './pages/admin/AdminContact';
+import AdminMessages from './pages/admin/AdminMessages';
 import AdminGeneral from './pages/admin/AdminGeneral';
 import ProjectForm from './components/admin/ProjectForm';
 import ParticleField from './components/three/ParticleField';
@@ -56,6 +57,7 @@ function AdminRoutes() {
                 <Route path="projects/new" element={<ProjectForm />} />
                 <Route path="projects/edit/:id" element={<ProjectForm />} />
                 <Route path="contact" element={<AdminContact />} />
+                <Route path="messages" element={<AdminMessages />} />
                 <Route path="general" element={<AdminGeneral />} />
             </Route>
         </Routes>

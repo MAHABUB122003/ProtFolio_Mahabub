@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaTachometerAlt, FaFolderOpen, FaPlusCircle, FaSignOutAlt, FaUser, FaHome, FaRocket, FaUserTie, FaCogs, FaEnvelope, FaCog } from 'react-icons/fa';
+import { FaTachometerAlt, FaFolderOpen, FaPlusCircle, FaSignOutAlt, FaUser, FaHome, FaRocket, FaUserTie, FaCogs, FaEnvelope, FaInbox, FaCog } from 'react-icons/fa';
 import { getCurrentUser, logoutUser } from '../../utils/adminAuth';
 
 function AdminLayout() {
@@ -28,6 +28,7 @@ function AdminLayout() {
         { name: 'Projects', path: '/admin/projects', icon: <FaFolderOpen /> },
         { name: 'Add Project', path: '/admin/projects/new', icon: <FaPlusCircle /> },
         { name: 'Contact', path: '/admin/contact', icon: <FaEnvelope /> },
+        { name: 'Messages', path: '/admin/messages', icon: <FaInbox /> },
         { name: 'General', path: '/admin/general', icon: <FaCog /> },
     ];
 

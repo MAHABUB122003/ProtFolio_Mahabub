@@ -71,8 +71,7 @@ function Contact({ darkMode }) {
         };
 
         try {
-            const backendOk = await sendToBackend();
-            const emailOk = backendOk ? true : await sendToEmailJS();
+            const [backendOk, emailOk] = await Promise.all([sendToBackend(), sendToEmailJS()]);
 
             if (backendOk || emailOk) {
                 setSubmitStatus('success');
