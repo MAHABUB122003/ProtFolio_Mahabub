@@ -129,13 +129,17 @@ function Hero({ darkMode }) {
         }
     };
 
-    const handleDownloadCV = () => {
+    const handleDownloadCV = async () => {
+        const response = await fetch(myCV);
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.href = myCV;
+        link.href = url;
         link.download = 'MD_Mahabubur_Rahman_CV.pdf';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        URL.revokeObjectURL(url);
     };
 
     return (
