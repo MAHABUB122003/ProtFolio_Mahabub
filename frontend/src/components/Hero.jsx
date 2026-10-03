@@ -12,7 +12,7 @@ import { getSection } from '../utils/portfolioData';
 import myImage from '../assets/mahabub.png';
 import myCV from '../assets/mahabub.pdf';
 
-/* ── Stagger Animation Variants ── */
+/* Stagger animation variants */
 const staggerContainer = {
     hidden: { opacity: 0 },
     show: {
@@ -27,23 +27,21 @@ const fadeUp = {
 };
 
 const scaleIn = {
-    hidden: { opacity: 0, scale: 0.94 },
+    hidden: { opacity: 0, scale: 0.95 },
     show: { opacity: 1, scale: 1, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
 function Hero({ darkMode }) {
     const heroData = getSection('hero');
 
-    // Subtle 3D Parallax Tilt for the Portrait
+    // Subtle 3D Depth on Mouse Move
     const containerRef = useRef(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    const springConfig = { damping: 28, stiffness: 180 };
-    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [6, -6]), springConfig);
-    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-6, 6]), springConfig);
-    const moveX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), springConfig);
-    const moveY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-12, 12]), springConfig);
+    const springConfig = { damping: 30, stiffness: 150 };
+    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), springConfig);
+    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), springConfig);
 
     const handleMouseMove = (e) => {
         if (!containerRef.current) return;
@@ -120,27 +118,25 @@ function Hero({ darkMode }) {
     return (
         <section
             id="home"
-            className="relative min-h-[94vh] lg:min-h-screen flex items-center pt-24 sm:pt-28 pb-12 sm:pb-20 px-4 sm:px-8 md:px-12 lg:px-16 overflow-hidden bg-transparent"
+            className="relative min-h-[92vh] lg:min-h-screen flex items-center pt-24 sm:pt-28 pb-12 sm:pb-20 px-4 sm:px-8 md:px-12 lg:px-16 overflow-hidden bg-[#000000]"
         >
-            {/* ── Soft Ambient Studio Backlight ── */}
-            <div className="absolute top-[20%] left-[8%] w-[480px] h-[480px] rounded-full bg-rose-500/[0.035] blur-[140px] pointer-events-none" />
-            <div className="absolute bottom-[20%] right-[12%] w-[500px] h-[500px] rounded-full bg-slate-800/[0.04] blur-[150px] pointer-events-none" />
+            {/* ── Soft Ambient Low-Key Studio Lighting ── */}
+            <div className="absolute top-[20%] left-[5%] w-[450px] h-[450px] rounded-full bg-rose-500/[0.03] blur-[150px] pointer-events-none" />
 
-            {/* ── Main Container ── */}
+            {/* ── Main Hero Layout (Matching Template) ── */}
             <div className="container mx-auto max-w-7xl relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
                     {/* ════════════════════════════════════════════
-                        LEFT COLUMN: Large Free-Standing Studio Portrait
-                        (Seamless Cutout Standing Directly on Canvas)
+                        LEFT COLUMN: Cinematic Studio Portrait
+                        (Matching Matt Cannon's Low-Key Lighting)
                         ════════════════════════════════════════════ */}
                     <motion.div
                         variants={scaleIn}
                         initial="hidden"
                         animate="show"
-                        className="lg:col-span-6 flex justify-center items-end relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px]"
+                        className="lg:col-span-6 flex justify-center lg:justify-start items-center relative"
                     >
-                        {/* 3D Motion Container */}
                         <motion.div
                             ref={containerRef}
                             onMouseMove={handleMouseMove}
@@ -148,23 +144,21 @@ function Hero({ darkMode }) {
                             style={{
                                 rotateX,
                                 rotateY,
-                                x: moveX,
-                                y: moveY,
                                 transformStyle: 'preserve-3d',
                             }}
-                            className="relative w-full max-w-[460px] sm:max-w-[500px] lg:max-w-[540px] flex justify-center items-end cursor-pointer"
+                            className="relative w-full max-w-[480px] sm:max-w-[540px] lg:max-w-[580px] flex items-center justify-center cursor-pointer"
                         >
-                            {/* Subtle Ambient Backlight Halo directly behind the head/shoulders */}
-                            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-84 sm:h-84 bg-gradient-to-tr from-rose-500/10 via-slate-600/10 to-transparent rounded-full blur-[90px] pointer-events-none" />
+                            {/* Subtle Ambient Studio Halo behind face */}
+                            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/[0.03] rounded-full blur-[90px] pointer-events-none" />
 
-                            {/* Large High-Contrast Portrait (Free-Standing, Zero Bounding Box) */}
+                            {/* Studio Portrait (Low-Key Lighting, Seamless Blend with Black) */}
                             <motion.img
                                 src={myImage}
                                 alt="MD Mahabubur Rahman"
-                                className="relative z-10 w-full h-auto max-h-[520px] sm:max-h-[580px] lg:max-h-[640px] object-contain object-bottom filter contrast-[1.05] brightness-[1.0] select-none drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
-                                initial={{ y: 30, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                className="relative z-10 w-full h-auto object-contain object-center filter contrast-[1.06] brightness-[1.0] select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.95)]"
+                                initial={{ opacity: 0, scale: 0.96 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.9, ease: "easeOut" }}
                             />
                         </motion.div>
                     </motion.div>
@@ -193,12 +187,12 @@ function Hero({ darkMode }) {
                             </div>
                         </motion.div>
 
-                        {/* Main Editorial Headline */}
+                        {/* Main Editorial Headline — "I'm MD Mahabubur Rahman" */}
                         <motion.div variants={fadeUp} className="space-y-2">
                             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-bold tracking-tight text-white leading-[1.08]">
                                 I'm <span className="font-extrabold text-white">MD Mahabubur Rahman</span>
                             </h1>
-                            <h2 className="text-xl sm:text-2xl md:text-[1.65rem] font-medium text-slate-300">
+                            <h2 className="text-xl sm:text-2xl md:text-[1.65rem] font-normal text-slate-300">
                                 a <span className="text-white font-semibold">Creative Full-Stack Developer</span> & <span className="text-white font-semibold">Security Specialist</span>
                             </h2>
                         </motion.div>
@@ -227,7 +221,7 @@ function Hero({ darkMode }) {
 
                         {/* ── Action Buttons ── */}
                         <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center lg:justify-start items-center pt-2">
-                            {/* Primary Button: "Get in touch" */}
+                            {/* Primary Button: "Get in touch" (Matching Template Red/Coral Accent) */}
                             <motion.button
                                 whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(244, 63, 94, 0.45)" }}
                                 whileTap={{ scale: 0.96 }}
