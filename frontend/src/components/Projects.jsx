@@ -12,11 +12,23 @@ import {
     FaSearch,
     FaFolderOpen,
     FaArrowRight,
-    FaStar,
-    FaCode
+    FaCode,
+    FaLayerGroup
 } from 'react-icons/fa';
 import { getProjects, syncProjectsFromBackend } from '../utils/projectStorage';
-import IslamicPattern from './IslamicPattern';
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+    },
+};
 
 function Projects({ darkMode }) {
     const [projects, setProjects] = useState(() => getProjects());
@@ -47,29 +59,11 @@ function Projects({ darkMode }) {
         };
     }, []);
 
-    const theme = {
-        bg: darkMode ? 'bg-transparent' : 'bg-slate-50',
-        textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        textSecondary: darkMode ? 'text-slate-300' : 'text-gray-700',
-        textMuted: darkMode ? 'text-slate-400' : 'text-gray-500',
-        cardBg: darkMode
-            ? 'bg-[#080d1a]/80 backdrop-blur-2xl border-white/[0.08] text-white shadow-xl shadow-black/70 hover:border-white/20'
-            : 'bg-white/90 backdrop-blur-xl border-gray-200/90 text-gray-900 shadow-lg shadow-gray-200/50',
-        pillBg: darkMode
-            ? 'bg-[#080d1a]/80 border-white/[0.08] text-slate-300 hover:text-white hover:border-white/30'
-            : 'bg-white border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm',
-        pillActive: 'bg-white text-gray-950 shadow-lg shadow-white/10 border-white font-bold',
-        badgeBg: darkMode ? 'bg-[#0e1424] text-slate-300 border-white/[0.06]' : 'bg-gray-100 text-gray-700 border-gray-200',
-        modalBg: darkMode ? 'bg-[#060a12] border-white/[0.1] text-white shadow-2xl shadow-black/90' : 'bg-white border-gray-200 text-gray-900',
-        searchBg: darkMode ? 'bg-[#080d1a]/90 border-white/[0.08] text-white placeholder-slate-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 shadow-sm',
-        innerCard: darkMode ? 'bg-[#0e1424] border-white/[0.06]' : 'bg-gray-50 border-gray-200',
-    };
-
     const categories = [
-        { id: 'all', label: 'All Work', icon: <FaFolderOpen /> },
-        { id: 'security', label: 'Cybersecurity', icon: <FaShieldAlt /> },
-        { id: 'ml', label: 'Machine Learning', icon: <FaBrain /> },
-        { id: 'web', label: 'Full-Stack Web', icon: <FaLaptopCode /> },
+        { id: 'all', label: 'All Projects', icon: FaFolderOpen },
+        { id: 'security', label: 'Cybersecurity & Pentest', icon: FaShieldAlt },
+        { id: 'ml', label: 'Machine Learning & AI', icon: FaBrain },
+        { id: 'web', label: 'Full-Stack Web', icon: FaLaptopCode },
     ];
 
     const normalizeCategory = (cat) => {
@@ -85,402 +79,433 @@ function Projects({ darkMode }) {
         const matchesCategory = activeCategory === 'all' || normCat === activeCategory;
         const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (project.fullDescription && project.fullDescription.toLowerCase().includes(searchQuery.toLowerCase())) ||
             (project.tech && project.tech.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())));
         return matchesCategory && matchesSearch;
     });
 
-    const getCategoryIcon = (category) => {
+    const getCategoryDetails = (category) => {
         const norm = normalizeCategory(category);
-        if (norm === 'security') return <FaShieldAlt className="text-blue-400" />;
-        if (norm === 'ml') return <FaBrain className="text-purple-400" />;
-        return <FaLaptopCode className="text-cyan-400" />;
-    };
-
-    const getCategoryColor = (category) => {
-        const norm = normalizeCategory(category);
-        if (norm === 'security') return { text: 'text-blue-400', border: 'border-blue-500/30', bg: 'bg-blue-500/10' };
-        if (norm === 'ml') return { text: 'text-purple-400', border: 'border-purple-500/30', bg: 'bg-purple-500/10' };
-        return { text: 'text-cyan-400', border: 'border-cyan-500/30', bg: 'bg-cyan-500/10' };
+        if (norm === 'security') {
+            return {
+                icon: FaShieldAlt,
+                color: 'text-rose-400',
+                border: 'border-rose-500/30',
+                bg: 'bg-rose-500/10 text-rose-300',
+                label: 'Cybersecurity'
+            };
+        }
+        if (norm === 'ml') {
+            return {
+                icon: FaBrain,
+                color: 'text-blue-400',
+                border: 'border-blue-500/30',
+                bg: 'bg-blue-500/10 text-blue-300',
+                label: 'Machine Learning'
+            };
+        }
+        return {
+            icon: FaLaptopCode,
+            color: 'text-emerald-400',
+            border: 'border-emerald-500/30',
+            bg: 'bg-emerald-500/10 text-emerald-300',
+            label: 'Full-Stack Web'
+        };
     };
 
     return (
-        <section id="projects" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 relative overflow-hidden">
-            {/* Ambient Background */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                <div className="absolute top-1/4 -right-40 w-[550px] h-[550px] rounded-full bg-cyan-500/[0.03] blur-[140px]" />
-                <div className="absolute bottom-10 -left-40 w-[600px] h-[600px] rounded-full bg-indigo-500/[0.04] blur-[150px]" />
-            </div>
+        <section
+            id="projects"
+            className="relative py-24 sm:py-32 px-4 sm:px-6 md:px-10 lg:px-12 overflow-hidden bg-[#000000] border-t border-white/[0.06]"
+        >
+            {/* Ambient Background Flares */}
+            <div className="absolute top-[15%] right-[-5%] w-[550px] h-[550px] rounded-full bg-rose-500/[0.02] blur-[170px] pointer-events-none" />
+            <div className="absolute bottom-[15%] left-[-5%] w-[550px] h-[550px] rounded-full bg-blue-500/[0.02] blur-[170px] pointer-events-none" />
 
-            <div className="container mx-auto max-w-7xl relative z-10">
+            <div className="w-full max-w-[1350px] mx-auto relative z-10">
 
                 {/* Section Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-10 sm:mb-12"
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-80px" }}
+                    variants={staggerContainer}
+                    className="space-y-3 mb-14 text-center lg:text-left"
                 >
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full backdrop-blur-md mb-3 border border-white/10 bg-white/[0.04]">
-                        <FaFolderOpen className="text-cyan-400 text-xs animate-pulse" />
-                        <span className="text-xs font-semibold tracking-wider uppercase text-slate-300">
-                            PORTFOLIO SHOWCASE
-                        </span>
-                    </div>
+                    <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-400 text-xs font-mono tracking-widest uppercase">
+                        <FaFolderOpen className="text-xs" />
+                        <span>Featured Engineering Portfolio</span>
+                    </motion.div>
 
-                    <h2 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight ${theme.textPrimary} mb-3`}>
-                        Featured <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Projects & Solutions</span>
-                    </h2>
+                    <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                        Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-rose-300">Projects & Solutions</span>
+                    </motion.h2>
 
-                    <p className={`${theme.textSecondary} max-w-2xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed`}>
-                        Production-grade applications combining AI threat classification, malware detection, active pentesting labs, and secure full-stack architectures.
-                    </p>
+                    <motion.p variants={fadeUp} className="text-slate-300 text-base sm:text-lg max-w-2xl font-light leading-relaxed">
+                        Production-grade applications combining AI threat classification, offensive security research labs, and hardened full-stack web platforms.
+                    </motion.p>
                 </motion.div>
 
-                {/* Filters + Search */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-                    <div className="flex flex-wrap items-center justify-center gap-2">
-                        {categories.map((cat) => (
-                            <motion.button
-                                key={cat.id}
-                                whileHover={{ scale: 1.04 }}
-                                whileTap={{ scale: 0.96 }}
-                                onClick={() => setActiveCategory(cat.id)}
-                                className={`px-4 py-2.5 sm:py-2 rounded-full text-xs font-bold transition-all duration-200 border flex items-center gap-1.5 ${
-                                    activeCategory === cat.id ? theme.pillActive : theme.pillBg
-                                }`}
-                            >
-                                <span className="text-xs">{cat.icon}</span>
-                                {cat.label}
-                            </motion.button>
-                        ))}
+                {/* Filter Controls & Instant Search */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-12">
+                    {/* Category Filter Tabs */}
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 p-1.5 rounded-2xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl">
+                        {categories.map((cat) => {
+                            const IconComp = cat.icon;
+                            const isActive = activeCategory === cat.id;
+                            return (
+                                <button
+                                    key={cat.id}
+                                    onClick={() => setActiveCategory(cat.id)}
+                                    className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 flex items-center gap-2 cursor-pointer ${
+                                        isActive
+                                            ? 'text-white bg-[#f43f5e] shadow-lg shadow-rose-900/40 font-semibold'
+                                            : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
+                                    }`}
+                                >
+                                    <IconComp className="text-xs" />
+                                    <span>{cat.label}</span>
+                                </button>
+                            );
+                        })}
                     </div>
 
+                    {/* Quick Search Input */}
                     <div className="relative w-full md:w-72">
-                        <FaSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs" />
+                        <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs" />
                         <input
                             type="text"
+                            placeholder="Search by title, tech or tag..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search projects or tech..."
-                            className={`w-full pl-9 pr-3 py-2.5 sm:py-2 rounded-xl border text-xs outline-none transition-all input-glow ${theme.searchBg}`}
+                            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500/50 transition-colors"
                         />
                     </div>
                 </div>
 
                 {/* Projects Grid */}
-                <AnimatePresence mode="popLayout">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                <motion.div
+                    layout
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7"
+                >
+                    <AnimatePresence>
                         {filteredProjects.map((project, idx) => {
-                            const catColor = getCategoryColor(project.category);
-                            const isFeatured = idx === 0 && activeCategory === 'all';
+                            const catDetails = getCategoryDetails(project.category);
+                            const CatIcon = catDetails.icon;
 
                             return (
                                 <motion.div
-                                    key={project.id || idx}
                                     layout
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    transition={{ duration: 0.4, delay: idx * 0.04 }}
-                                    className={`group rounded-2xl border ${theme.cardBg} flex flex-col overflow-hidden transition-all duration-300 hover:scale-[1.015] card-hover-glow ${
-                                        isFeatured ? 'ring-1 ring-orange-500/30' : ''
-                                    }`}
+                                    transition={{ duration: 0.35, delay: idx * 0.04 }}
+                                    key={project.id || idx}
+                                    whileHover={{ y: -4 }}
+                                    className="group rounded-3xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-rose-500/40 shadow-2xl shadow-black/80"
                                 >
-                                    {/* Featured Banner */}
-                                    {isFeatured && (
-                                        <div className="featured-badge text-white text-[10px] font-bold font-mono text-center py-1.5 flex items-center justify-center gap-1.5">
-                                            <FaStar className="text-[10px]" />
-                                            <span>FEATURED PROJECT</span>
-                                            <FaStar className="text-[10px]" />
-                                        </div>
-                                    )}
-
-                                    {/* Project Cover Image */}
+                                    {/* Top Cover Image Area */}
                                     <div
-                                        className="relative w-full h-40 overflow-hidden bg-gray-950 cursor-pointer"
+                                        className="relative w-full h-48 sm:h-52 overflow-hidden bg-[#0a0a14] cursor-pointer"
                                         onClick={() => setSelectedProject(project)}
                                     >
                                         {project.image ? (
                                             <img
                                                 src={project.image}
                                                 alt={project.title}
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                                 onError={(e) => { e.target.style.display = 'none'; }}
                                             />
                                         ) : (
-                                            <div className={`w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-500/20 via-pink-500/15 to-purple-600/20`}>
-                                                <div className="text-center p-3">
-                                                    <div className="w-12 h-12 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center mx-auto mb-2 text-2xl">
-                                                        {getCategoryIcon(project.category)}
+                                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-rose-500/10 via-slate-900 to-black">
+                                                <div className="text-center p-4">
+                                                    <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mx-auto mb-2 text-2xl text-white">
+                                                        <CatIcon className={catDetails.color} />
                                                     </div>
-                                                    <span className="text-[10px] font-mono font-bold text-gray-300 uppercase">{project.category}</span>
+                                                    <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest">{catDetails.label}</span>
                                                 </div>
                                             </div>
                                         )}
 
-                                        {/* Hover overlay */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-gray-950/90 via-gray-950/30 to-transparent" />
-                                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        {/* Ambient dark gradient vignette */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#06060a] via-[#06060a]/40 to-transparent" />
 
-                                        {/* Category + Status overlay */}
-                                        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
-                                            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold backdrop-blur-md border ${catColor.bg} ${catColor.border} ${catColor.text} uppercase tracking-wider flex items-center gap-1 shadow-md`}>
-                                                {getCategoryIcon(project.category)}
-                                                <span>{project.category || "Full-Stack"}</span>
+                                        {/* Category & Status Overlay Pills */}
+                                        <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2">
+                                            <span className={`px-3 py-1 rounded-full text-[11px] font-mono font-bold backdrop-blur-xl border ${catDetails.bg} ${catDetails.border} flex items-center gap-1.5 shadow-lg`}>
+                                                <CatIcon className="text-xs" />
+                                                <span>{catDetails.label}</span>
                                             </span>
+
                                             {project.status && (
-                                                <span className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold backdrop-blur-md text-white shadow-md ${
-                                                    project.status === 'Active' ? 'bg-emerald-500/90' : 'bg-blue-500/80'
-                                                }`}>
-                                                    {project.status}
+                                                <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold backdrop-blur-xl border border-emerald-500/30 bg-emerald-500/15 text-emerald-400 flex items-center gap-1.5 shadow-lg">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                                    <span>{project.status}</span>
                                                 </span>
                                             )}
                                         </div>
 
-                                        {/* Click to expand hint */}
-                                        <div className="absolute bottom-2.5 right-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <span className="text-[10px] text-white/80 font-mono bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded-full">
-                                                Click to expand
+                                        {/* Quick Expand Hint */}
+                                        <div className="absolute bottom-3 right-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <span className="text-[11px] text-white/90 font-mono bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 flex items-center gap-1.5">
+                                                <span>View Details</span>
+                                                <FaArrowRight className="text-[9px] text-rose-400" />
                                             </span>
                                         </div>
                                     </div>
 
                                     {/* Card Body */}
-                                    <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
-                                        <div className="space-y-2">
-                                            <span className={`text-[10px] font-mono ${theme.textMuted} flex items-center gap-1`}>
-                                                <FaCalendarAlt className="text-[9px]" /> {project.date || "2024"}
-                                            </span>
+                                    <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                                        <div className="space-y-2.5">
+                                            <div className="flex items-center justify-between text-[11px] font-mono text-slate-500">
+                                                <span className="flex items-center gap-1.5">
+                                                    <FaCalendarAlt className="text-rose-400" />
+                                                    <span>{project.date || '2024'}</span>
+                                                </span>
+                                                <span className="capitalize text-slate-400">{project.category || 'Project'}</span>
+                                            </div>
 
                                             <h3
-                                                className={`text-base font-bold ${theme.textPrimary} leading-snug group-hover:text-orange-500 transition-colors cursor-pointer line-clamp-2`}
                                                 onClick={() => setSelectedProject(project)}
+                                                className="text-lg font-bold text-white group-hover:text-rose-200 transition-colors cursor-pointer leading-snug line-clamp-2"
                                             >
                                                 {project.title}
                                             </h3>
 
-                                            <p className={`${theme.textSecondary} text-xs leading-relaxed line-clamp-2`}>
+                                            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed line-clamp-2 font-normal">
                                                 {project.description}
                                             </p>
 
-                                            {/* Tech Pills */}
-                                            <div className="flex flex-wrap gap-1 pt-1">
+                                            {/* Tech Stack Pills */}
+                                            <div className="flex flex-wrap gap-1.5 pt-2">
                                                 {project.tech && project.tech.slice(0, 4).map((t, tIdx) => (
                                                     <span
                                                         key={tIdx}
-                                                        className={`px-2 py-1 rounded-md text-[11px] font-medium border ${theme.badgeBg} tag-pill`}
+                                                        className="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/[0.03] border border-white/[0.08] text-slate-300 hover:border-white/20 transition-all"
                                                     >
                                                         {t}
                                                     </span>
                                                 ))}
                                                 {project.tech && project.tech.length > 4 && (
-                                                    <span className={`px-2 py-1 rounded-md text-[11px] font-mono ${theme.textMuted} border ${theme.badgeBg}`}>
+                                                    <span className="px-2 py-1 rounded-lg text-xs font-mono bg-white/[0.02] border border-white/[0.06] text-slate-500">
                                                         +{project.tech.length - 4} more
                                                     </span>
                                                 )}
                                             </div>
                                         </div>
 
-                                        {/* Footer Actions */}
-                                        <div className={`pt-3 mt-1 border-t ${darkMode ? 'border-white/[0.08]' : 'border-gray-200'} flex items-center justify-between`}>
-                                            <motion.button
-                                                 whileHover={{ x: 3 }}
-                                                 onClick={() => setSelectedProject(project)}
-                                                 className="text-xs font-bold text-white hover:text-cyan-400 flex items-center gap-1 transition-colors"
-                                             >
-                                                 <span>View Details</span>
-                                                 <FaArrowRight className="text-[9px]" />
-                                             </motion.button>
+                                        {/* Card Footer Actions */}
+                                        <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between">
+                                            <button
+                                                onClick={() => setSelectedProject(project)}
+                                                className="text-xs font-bold text-white hover:text-rose-300 flex items-center gap-1.5 transition-colors cursor-pointer"
+                                            >
+                                                <span>View Details</span>
+                                                <FaArrowRight className="text-[10px] text-rose-400" />
+                                            </button>
 
-                                             <div className="flex items-center gap-2">
-                                                 {project.github && (
-                                                     <motion.a
-                                                         href={project.github}
-                                                         target="_blank"
-                                                         rel="noopener noreferrer"
-                                                         whileHover={{ scale: 1.1, y: -1 }}
-                                                         className={`w-8 h-8 rounded-lg border flex items-center justify-center text-xs transition-all ${
-                                                             darkMode ? 'bg-[#0e1424] border-white/10 text-gray-300 hover:text-white hover:border-white/30' : 'bg-gray-100 border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm'
-                                                         }`}
-                                                         title="GitHub Repository"
-                                                     >
-                                                         <FaGithub />
-                                                     </motion.a>
-                                                 )}
-                                                 {project.demo && project.demo !== '#' && (
-                                                     <motion.a
-                                                         href={project.demo}
-                                                         target="_blank"
-                                                         rel="noopener noreferrer"
-                                                         whileHover={{ scale: 1.1, y: -1 }}
-                                                         className="w-8 h-8 rounded-lg bg-white text-gray-950 font-bold flex items-center justify-center text-xs shadow-md hover:bg-slate-200 transition-all"
-                                                         title="Live Demo"
-                                                     >
-                                                         <FaExternalLinkAlt />
-                                                     </motion.a>
-                                                 )}
-                                             </div>
+                                            <div className="flex items-center gap-2">
+                                                {project.github && (
+                                                    <a
+                                                        href={project.github}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="w-8 h-8 rounded-xl border border-white/10 bg-white/[0.03] text-slate-300 hover:text-white hover:bg-white/[0.08] hover:border-white/30 flex items-center justify-center text-xs transition-all"
+                                                        title="GitHub Repository"
+                                                    >
+                                                        <FaGithub />
+                                                    </a>
+                                                )}
+                                                {project.demo && project.demo !== '#' && (
+                                                    <a
+                                                        href={project.demo}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="w-8 h-8 rounded-xl bg-white text-gray-950 font-bold flex items-center justify-center text-xs shadow-md hover:bg-slate-200 transition-all"
+                                                        title="Live Demo"
+                                                    >
+                                                        <FaExternalLinkAlt />
+                                                    </a>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </motion.div>
                             );
                         })}
-                    </div>
-                </AnimatePresence>
+                    </AnimatePresence>
+                </motion.div>
 
-                {/* Empty state */}
+                {/* Empty State */}
                 {filteredProjects.length === 0 && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="text-center py-16"
-                    >
-                        <FaSearch className={`text-4xl ${theme.textMuted} mx-auto mb-3`} />
-                        <p className={`${theme.textMuted} text-sm`}>No projects match your search.</p>
-                    </motion.div>
+                    <div className="text-center py-20">
+                        <FaSearch className="text-4xl text-slate-600 mx-auto mb-3" />
+                        <p className="text-slate-400 text-sm font-mono">No matching projects found for your query.</p>
+                    </div>
                 )}
 
-                {/* ── Detail Modal ── */}
+                {/* ════════════════════════════════════════════
+                    100% AUTHENTIC & RICH PROJECT DETAILS MODAL
+                    ════════════════════════════════════════════ */}
                 <AnimatePresence>
                     {selectedProject && (
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
-                            onClick={(e) => e.target === e.currentTarget && setSelectedProject(null)}
+                            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-2xl overflow-y-auto"
+                            onClick={() => setSelectedProject(null)}
                         >
-                            {/* Backdrop */}
-                            <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={() => setSelectedProject(null)} />
-
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.92, y: 20 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.92, y: 20 }}
-                                transition={{ type: 'spring', stiffness: 280, damping: 24 }}
-                                className={`relative w-full max-w-2xl rounded-3xl border shadow-2xl overflow-hidden ${theme.modalBg}`}
+                                initial={{ scale: 0.94, y: 30, opacity: 0 }}
+                                animate={{ scale: 1, y: 0, opacity: 1 }}
+                                exit={{ scale: 0.94, y: 30, opacity: 0 }}
+                                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                                className="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-3xl border border-white/15 bg-[#06060a] p-6 sm:p-9 shadow-2xl shadow-black space-y-7 text-white custom-scrollbar my-auto"
+                                onClick={(e) => e.stopPropagation()}
                             >
-                                {/* Modal Image Header */}
-                                <div className="relative w-full h-48 sm:h-56 overflow-hidden bg-gray-950">
-                                    {selectedProject.image && (
+                                {/* Modal Header Area */}
+                                <div className="flex items-start justify-between gap-4 pb-6 border-b border-white/10">
+                                    <div className="space-y-2">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-500/15 border border-rose-500/30 text-rose-300 uppercase tracking-wider">
+                                                {selectedProject.category || 'Project'}
+                                            </span>
+                                            {selectedProject.status && (
+                                                <span className="px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-1.5">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                                    <span>{selectedProject.status}</span>
+                                                </span>
+                                            )}
+                                            {selectedProject.date && (
+                                                <span className="text-xs font-mono text-slate-500">
+                                                    • {selectedProject.date}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug">
+                                            {selectedProject.title}
+                                        </h3>
+                                    </div>
+
+                                    <button
+                                        onClick={() => setSelectedProject(null)}
+                                        className="p-2.5 rounded-2xl border border-white/10 bg-white/[0.04] text-slate-400 hover:text-white hover:bg-white/[0.08] hover:border-white/25 transition-all cursor-pointer shrink-0"
+                                        aria-label="Close modal"
+                                    >
+                                        <FaTimes className="text-base" />
+                                    </button>
+                                </div>
+
+                                {/* Modal Cover Image */}
+                                {selectedProject.image && (
+                                    <div className="w-full h-64 sm:h-72 rounded-2xl overflow-hidden border border-white/10 bg-[#0a0a14] relative group">
                                         <img
                                             src={selectedProject.image}
                                             alt={selectedProject.title}
                                             className="w-full h-full object-cover"
                                         />
-                                    )}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/50 to-transparent" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#06060a]/80 via-transparent to-transparent pointer-events-none" />
+                                    </div>
+                                )}
 
-                                    {/* Close Button */}
-                                    <motion.button
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        onClick={() => setSelectedProject(null)}
-                                        className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white hover:bg-red-500/80 transition-all flex items-center justify-center text-xs"
-                                    >
-                                        <FaTimes />
-                                    </motion.button>
-
-                                    <div className="absolute bottom-4 left-5 right-5">
-                                        <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold backdrop-blur-md border mb-2 ${getCategoryColor(selectedProject.category).bg} ${getCategoryColor(selectedProject.category).border} ${getCategoryColor(selectedProject.category).text}`}>
-                                            {getCategoryIcon(selectedProject.category)}
-                                            <span className="uppercase">{selectedProject.category}</span>
-                                        </div>
-                                        <h3 className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg">
-                                            {selectedProject.title}
-                                        </h3>
+                                {/* Authentic Description / Full Description */}
+                                <div className="space-y-3 p-5 rounded-2xl border border-white/[0.08] bg-[#0c0c14]/80">
+                                    <h4 className="text-xs font-mono uppercase tracking-widest text-rose-400 flex items-center gap-2">
+                                        <FaFolderOpen />
+                                        <span>Project Overview & Details</span>
+                                    </h4>
+                                    <div className="text-slate-300 text-sm sm:text-base leading-relaxed font-normal space-y-3">
+                                        {(selectedProject.fullDescription || selectedProject.description)
+                                            .split('\n\n')
+                                            .map((para, pIdx) => (
+                                                <p key={pIdx}>{para}</p>
+                                            ))}
                                     </div>
                                 </div>
 
-                                {/* Modal Body */}
-                                <div className="p-5 sm:p-6 max-h-[55vh] overflow-y-auto space-y-5">
-                                    <div>
-                                        <h4 className={`text-[11px] font-bold font-mono ${theme.textMuted} uppercase tracking-wider mb-2`}>Project Overview</h4>
-                                        <p className={`${theme.textSecondary} text-xs sm:text-sm leading-relaxed`}>
-                                            {selectedProject.fullDescription || selectedProject.description}
-                                        </p>
-                                    </div>
-
-                                    {/* Key Features */}
-                                    {selectedProject.features && (
-                                        <div>
-                                            <h4 className={`text-[11px] font-bold font-mono ${theme.textMuted} uppercase tracking-wider mb-2`}>Key Features</h4>
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                                {selectedProject.features.map((feature, i) => (
-                                                    <motion.div
-                                                        key={i}
-                                                        initial={{ opacity: 0, x: -10 }}
-                                                        animate={{ opacity: 1, x: 0 }}
-                                                        transition={{ delay: i * 0.05 }}
-                                                        className={`p-2.5 rounded-xl border ${theme.innerCard} flex items-center gap-2`}
-                                                    >
-                                                        <FaCheckCircle className="text-cyan-400 text-xs flex-shrink-0" />
-                                                        <span className={`text-xs font-medium ${theme.textPrimary}`}>{feature}</span>
-                                                    </motion.div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* Tech Stack */}
-                                    {selectedProject.tech && (
-                                        <div>
-                                            <h4 className={`text-[11px] font-bold font-mono ${theme.textMuted} uppercase tracking-wider mb-2`}>Technologies Used</h4>
-                                            <div className="flex flex-wrap gap-1.5">
-                                                {selectedProject.tech.map((tech, i) => (
-                                                    <span key={i} className={`px-2.5 py-1 rounded-lg text-xs font-semibold border ${theme.badgeBg} tag-pill`}>
-                                                        {tech}
+                                {/* Authentic Project Key Features (Real list from project) */}
+                                {selectedProject.features && selectedProject.features.length > 0 && (
+                                    <div className="space-y-4">
+                                        <h4 className="text-xs font-mono uppercase tracking-widest text-slate-300 flex items-center gap-2">
+                                            <FaCheckCircle className="text-emerald-400" />
+                                            <span>Key Features & Functional Highlights</span>
+                                        </h4>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                            {selectedProject.features.map((feature, fIdx) => (
+                                                <div
+                                                    key={fIdx}
+                                                    className="p-3.5 rounded-2xl border border-white/[0.07] bg-[#0c0c14]/50 flex items-start gap-3"
+                                                >
+                                                    <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0 mt-1.5" />
+                                                    <span className="text-xs sm:text-sm text-slate-200 leading-relaxed font-normal">
+                                                        {feature}
                                                     </span>
-                                                ))}
-                                            </div>
+                                                </div>
+                                            ))}
                                         </div>
-                                    )}
-                                </div>
+                                    </div>
+                                )}
 
-                                {/* Modal Footer */}
-                                <div className={`px-5 sm:px-6 py-4 border-t ${darkMode ? 'border-white/10' : 'border-gray-200'} flex items-center justify-between gap-3`}>
-                                    <div className="flex items-center gap-2.5">
+                                {/* Complete Technology Stack (Real tags) */}
+                                {selectedProject.tech && selectedProject.tech.length > 0 && (
+                                    <div className="space-y-3">
+                                        <h4 className="text-xs font-mono uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                                            <FaCode className="text-rose-400" />
+                                            <span>Technology Stack & Integrated Libraries</span>
+                                        </h4>
+                                        <div className="flex flex-wrap gap-2">
+                                            {selectedProject.tech.map((t, tIdx) => (
+                                                <span
+                                                    key={tIdx}
+                                                    className="px-3.5 py-1.5 rounded-xl text-xs font-mono bg-white/[0.04] border border-white/10 text-slate-200"
+                                                >
+                                                    {t}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Modal Footer Actions */}
+                                <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+                                    <div className="flex flex-wrap items-center gap-3">
+                                        {selectedProject.demo && selectedProject.demo !== '#' && (
+                                            <a
+                                                href={selectedProject.demo}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="px-7 py-3.5 rounded-xl text-xs sm:text-sm font-bold bg-[#f43f5e] hover:bg-[#e11d48] text-white shadow-lg shadow-rose-900/40 flex items-center gap-2.5 transition-all cursor-pointer"
+                                            >
+                                                <FaExternalLinkAlt className="text-xs" />
+                                                <span>Live Deployment</span>
+                                            </a>
+                                        )}
                                         {selectedProject.github && (
-                                            <motion.a
+                                            <a
                                                 href={selectedProject.github}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                whileHover={{ scale: 1.04 }}
-                                                className="px-4 py-2.5 rounded-xl bg-white text-gray-950 text-xs font-bold flex items-center gap-2 shadow-md hover:bg-slate-200 transition-all"
+                                                className="px-6 py-3.5 rounded-xl text-xs sm:text-sm font-medium border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08] hover:border-white/30 backdrop-blur-xl flex items-center gap-2.5 transition-all cursor-pointer"
                                             >
-                                                <FaGithub /> View Repository
-                                            </motion.a>
+                                                <FaGithub className="text-sm" />
+                                                <span>GitHub Source Code</span>
+                                            </a>
                                         )}
-                                        {selectedProject.demo && selectedProject.demo !== '#' && (
-                                             <motion.a
-                                                 href={selectedProject.demo}
-                                                 target="_blank"
-                                                 rel="noopener noreferrer"
-                                                 whileHover={{ scale: 1.04 }}
-                                                 className={`px-4 py-2.5 rounded-xl text-white text-xs font-bold flex items-center gap-2 border border-white/20 shadow-sm transition-all ${
-                                                     darkMode ? 'bg-[#0e1424] hover:bg-[#151f38]' : 'bg-gray-900 hover:bg-gray-800'
-                                                 }`}
-                                             >
-                                                 <FaExternalLinkAlt /> Live Demo
-                                             </motion.a>
-                                         )}
-                                     </div>
-                                     <motion.button
-                                         whileHover={{ scale: 1.03 }}
-                                         whileTap={{ scale: 0.97 }}
-                                         onClick={() => setSelectedProject(null)}
-                                         className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                                             darkMode ? 'bg-white/10 hover:bg-white/20 text-gray-300' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                                         }`}
-                                     >
-                                         Close
-                                     </motion.button>
-                                 </div>
-                             </motion.div>
-                         </motion.div>
-                     )}
-                 </AnimatePresence>
+                                    </div>
+
+                                    <button
+                                        onClick={() => setSelectedProject(null)}
+                                        className="text-xs font-mono text-slate-400 hover:text-white transition-colors cursor-pointer"
+                                    >
+                                        Close Window [Esc]
+                                    </button>
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
             </div>
         </section>
     );

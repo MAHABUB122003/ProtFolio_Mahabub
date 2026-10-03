@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
     FaCode,
     FaShieldAlt,
@@ -10,10 +10,11 @@ import {
     FaBug,
     FaDatabase,
     FaLock,
-    FaSearch,
     FaLayerGroup,
     FaCheckCircle,
-    FaFire
+    FaFire,
+    FaCogs,
+    FaExternalLinkAlt
 } from 'react-icons/fa';
 import {
     SiReact,
@@ -27,19 +28,18 @@ import {
     SiGnubash,
     SiDocker,
     SiGit,
-    SiLinux,
     SiSplunk,
     SiWireshark,
     SiKalilinux,
     SiPostgresql,
     SiRedis,
     SiNextdotjs,
-    SiGraphql
+    SiLinux
 } from 'react-icons/si';
 
 const fadeUp = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+    hidden: { opacity: 0, y: 16 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const staggerContainer = {
@@ -50,68 +50,117 @@ const staggerContainer = {
     },
 };
 
-const categories = [
-    { id: 'all', label: 'All Disciplines', icon: FaLayerGroup },
-    { id: 'fullstack', label: 'Full-Stack & Web', icon: FaCode },
-    { id: 'security', label: 'Cybersecurity & Pentesting', icon: FaShieldAlt },
-    { id: 'ml', label: 'Machine Learning & AI', icon: FaBrain },
-    { id: 'devops', label: 'DevOps & Linux', icon: FaTools },
+const skillPillars = [
+    {
+        id: 'fullstack',
+        title: 'Full-Stack Web Engineering',
+        subtitle: 'Production-grade MERN & FastAPI Architectures',
+        icon: FaCode,
+        color: 'text-rose-400',
+        borderColor: 'hover:border-rose-500/40',
+        badgeColor: 'bg-rose-500/10 text-rose-300 border-rose-500/20',
+        skills: [
+            { name: 'React.js', icon: SiReact, color: 'text-cyan-400' },
+            { name: 'Next.js', icon: SiNextdotjs, color: 'text-white' },
+            { name: 'Node.js', icon: SiNodedotjs, color: 'text-emerald-400' },
+            { name: 'Express.js', icon: SiExpress, color: 'text-slate-300' },
+            { name: 'FastAPI', icon: SiFastapi, color: 'text-teal-400' },
+            { name: 'MongoDB', icon: SiMongodb, color: 'text-green-500' },
+            { name: 'PostgreSQL', icon: SiPostgresql, color: 'text-blue-400' },
+            { name: 'Tailwind CSS', icon: SiTailwindcss, color: 'text-sky-400' },
+            { name: 'JavaScript ES6+', icon: SiJavascript, color: 'text-yellow-400' },
+            { name: 'REST & GraphQL', icon: FaDatabase, color: 'text-purple-400' },
+        ],
+        highlight: 'Architecting scalable APIs, responsive SPAs, and secure backend systems with strict clean-code principles.'
+    },
+    {
+        id: 'security',
+        title: 'Cybersecurity & Pentesting',
+        subtitle: 'Offensive Assessment & Defensive Hardening',
+        icon: FaShieldAlt,
+        color: 'text-red-400',
+        borderColor: 'hover:border-red-500/40',
+        badgeColor: 'bg-red-500/10 text-red-300 border-red-500/20',
+        skills: [
+            { name: 'Burp Suite Pro', icon: FaBug, color: 'text-orange-400' },
+            { name: 'OWASP Top 10', icon: FaLock, color: 'text-rose-400' },
+            { name: 'Metasploit & Nmap', icon: FaTools, color: 'text-red-400' },
+            { name: 'Wireshark & PCAP', icon: SiWireshark, color: 'text-cyan-400' },
+            { name: 'Splunk & Wazuh SIEM', icon: SiSplunk, color: 'text-amber-400' },
+            { name: 'Active Directory Pentest', icon: FaShieldAlt, color: 'text-emerald-400' },
+            { name: 'Digital Forensics (Autopsy)', icon: FaTerminal, color: 'text-indigo-400' },
+            { name: 'Bug Bounty Hunting', icon: FaCheckCircle, color: 'text-emerald-300' },
+        ],
+        highlight: '20+ disclosed vulnerability reports. Hands-on penetration testing, exploit validation, and SOC alert analysis.'
+    },
+    {
+        id: 'ml',
+        title: 'Machine Learning & Threat AI',
+        subtitle: 'Predictive Modeling & Anomaly Detection',
+        icon: FaBrain,
+        color: 'text-blue-400',
+        borderColor: 'hover:border-blue-500/40',
+        badgeColor: 'bg-blue-500/10 text-blue-300 border-blue-500/20',
+        skills: [
+            { name: 'Python Data Science', icon: SiPython, color: 'text-blue-400' },
+            { name: 'Scikit-learn', icon: FaBrain, color: 'text-cyan-400' },
+            { name: 'XGBoost & CatBoost', icon: FaFire, color: 'text-rose-400' },
+            { name: 'LightGBM & Random Forest', icon: FaBrain, color: 'text-emerald-400' },
+            { name: 'NumPy & Pandas', icon: SiPython, color: 'text-indigo-400' },
+            { name: 'Feature Engineering', icon: FaCogs, color: 'text-amber-400' },
+            { name: 'Threat Anomaly ML', icon: FaShieldAlt, color: 'text-purple-400' },
+            { name: 'Model Optimization', icon: FaLayerGroup, color: 'text-teal-400' },
+        ],
+        highlight: 'Supervised learning & ensemble architectures trained for automated security telemetry and anomaly classification.'
+    },
+    {
+        id: 'devops',
+        title: 'DevOps, Linux & Automation',
+        subtitle: 'Infrastructure, Toolchains & CI/CD',
+        icon: FaTools,
+        color: 'text-emerald-400',
+        borderColor: 'hover:border-emerald-500/40',
+        badgeColor: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20',
+        skills: [
+            { name: 'Docker & Containers', icon: SiDocker, color: 'text-blue-400' },
+            { name: 'Kali Linux & Ubuntu', icon: SiKalilinux, color: 'text-cyan-400' },
+            { name: 'Git & GitHub Workflows', icon: SiGit, color: 'text-orange-400' },
+            { name: 'Bash & PowerShell Scripting', icon: SiGnubash, color: 'text-emerald-400' },
+            { name: 'JWT & Security Auth', icon: FaLock, color: 'text-rose-400' },
+            { name: 'Linux System Hardening', icon: SiLinux, color: 'text-yellow-400' },
+            { name: 'CI/CD Pipelines', icon: FaServer, color: 'text-indigo-400' },
+            { name: 'Redis Caching', icon: SiRedis, color: 'text-red-400' },
+        ],
+        highlight: 'Containerized environments, automated administrative shell scripts, and hardened Linux infrastructure.'
+    }
 ];
 
-const allSkills = [
-    // Full-Stack
-    { name: 'React.js', category: 'fullstack', level: 'Advanced', icon: SiReact, color: 'text-cyan-400', bg: 'hover:border-cyan-500/40', desc: 'SPA, Hooks, Context, State Architecture' },
-    { name: 'Node.js', category: 'fullstack', level: 'Advanced', icon: SiNodedotjs, color: 'text-emerald-400', bg: 'hover:border-emerald-500/40', desc: 'Asynchronous event-driven backend services' },
-    { name: 'Express.js', category: 'fullstack', level: 'Advanced', icon: SiExpress, color: 'text-slate-300', bg: 'hover:border-slate-500/40', desc: 'RESTful API routing & custom middleware' },
-    { name: 'MongoDB', category: 'fullstack', level: 'Advanced', icon: SiMongodb, color: 'text-green-500', bg: 'hover:border-green-500/40', desc: 'Document schemas, aggregations & indexing' },
-    { name: 'FastAPI', category: 'fullstack', level: 'Proficient', icon: SiFastapi, color: 'text-teal-400', bg: 'hover:border-teal-500/40', desc: 'High-speed Python asynchronous APIs & Pydantic' },
-    { name: 'Next.js', category: 'fullstack', level: 'Proficient', icon: SiNextdotjs, color: 'text-white', bg: 'hover:border-white/40', desc: 'SSR, App Router & Server Components' },
-    { name: 'Tailwind CSS', category: 'fullstack', level: 'Expert', icon: SiTailwindcss, color: 'text-sky-400', bg: 'hover:border-sky-500/40', desc: 'Responsive design systems & bespoke styling' },
-    { name: 'JavaScript (ES6+)', category: 'fullstack', level: 'Advanced', icon: SiJavascript, color: 'text-yellow-400', bg: 'hover:border-yellow-500/40', desc: 'Async/await, closures, prototypes, DOM engine' },
-    { name: 'PostgreSQL', category: 'fullstack', level: 'Proficient', icon: SiPostgresql, color: 'text-blue-400', bg: 'hover:border-blue-500/40', desc: 'Relational design, queries & ACID transactions' },
-
-    // Cybersecurity
-    { name: 'Web Pentesting', category: 'security', level: 'Expert', icon: FaShieldAlt, color: 'text-rose-400', bg: 'hover:border-rose-500/40', desc: 'OWASP Top 10, Auth bypass, SSRF, XSS, SQLi' },
-    { name: 'Burp Suite Pro', category: 'security', level: 'Expert', icon: FaBug, color: 'text-orange-400', bg: 'hover:border-orange-500/40', desc: 'Repeater, Intruder, Match/Replace, Proxy audits' },
-    { name: 'Network Security', category: 'security', level: 'Advanced', icon: SiWireshark, color: 'text-cyan-400', bg: 'hover:border-cyan-500/40', desc: 'Packet dissection, traffic analysis & MITM analysis' },
-    { name: 'SOC & SIEM (Splunk/Wazuh)', category: 'security', level: 'Proficient', icon: SiSplunk, color: 'text-amber-400', bg: 'hover:border-amber-500/40', desc: 'Log correlation, incident response & alert triage' },
-    { name: 'Digital Forensics', category: 'security', level: 'Proficient', icon: FaSearch, color: 'text-indigo-400', bg: 'hover:border-indigo-500/40', desc: 'Autopsy, disk artifact recovery, memory inspection' },
-    { name: 'Bug Bounty Hunting', category: 'security', level: 'Active Hunter', icon: FaLock, color: 'text-emerald-400', bg: 'hover:border-emerald-500/40', desc: '20+ verified vulnerability disclosures & reporting' },
-    { name: 'Metasploit & Nmap', category: 'security', level: 'Advanced', icon: FaTools, color: 'text-red-400', bg: 'hover:border-red-500/40', desc: 'Port scanning, service discovery & exploit payloads' },
-
-    // Machine Learning
-    { name: 'Python Data Science', category: 'ml', level: 'Advanced', icon: SiPython, color: 'text-blue-400', bg: 'hover:border-blue-500/40', desc: 'NumPy, Pandas, Matplotlib, Seaborn workflows' },
-    { name: 'Scikit-learn', category: 'ml', level: 'Advanced', icon: FaBrain, color: 'text-cyan-400', bg: 'hover:border-cyan-500/40', desc: 'Supervised classification, regression & clustering' },
-    { name: 'XGBoost & CatBoost', category: 'ml', level: 'Advanced', icon: FaFire, color: 'text-rose-400', bg: 'hover:border-rose-500/40', desc: 'Gradient boosted trees for high-accuracy prediction' },
-    { name: 'LightGBM & Random Forest', category: 'ml', level: 'Proficient', icon: FaBrain, color: 'text-emerald-400', bg: 'hover:border-emerald-500/40', desc: 'Ensemble modeling & hyperparameter tuning' },
-    { name: 'Predictive Threat ML', category: 'ml', level: 'Specialized', icon: FaShieldAlt, color: 'text-purple-400', bg: 'hover:border-purple-500/40', desc: 'Anomaly detection for malicious traffic & security telemetry' },
-
-    // DevOps & Linux
-    { name: 'Kali Linux & Ubuntu', category: 'devops', level: 'Advanced', icon: SiKalilinux, color: 'text-cyan-400', bg: 'hover:border-cyan-500/40', desc: 'Kernel administration, security toolchains & hardening' },
-    { name: 'Docker', category: 'devops', level: 'Proficient', icon: SiDocker, color: 'text-blue-400', bg: 'hover:border-blue-500/40', desc: 'Containerization, Dockerfile recipes & multi-stage builds' },
-    { name: 'Git & GitHub', category: 'devops', level: 'Advanced', icon: SiGit, color: 'text-orange-400', bg: 'hover:border-orange-500/40', desc: 'Version control, branching strategies & CI/CD workflows' },
-    { name: 'Bash & PowerShell', category: 'devops', level: 'Advanced', icon: SiGnubash, color: 'text-emerald-400', bg: 'hover:border-emerald-500/40', desc: 'Automated shell scripting & administrative tooling' },
+const marqueeTechs = [
+    { name: 'React 19', icon: SiReact, color: 'text-cyan-400' },
+    { name: 'Next.js', icon: SiNextdotjs, color: 'text-white' },
+    { name: 'Node.js', icon: SiNodedotjs, color: 'text-emerald-400' },
+    { name: 'FastAPI', icon: SiFastapi, color: 'text-teal-400' },
+    { name: 'Burp Suite', icon: FaBug, color: 'text-orange-400' },
+    { name: 'Python ML', icon: SiPython, color: 'text-blue-400' },
+    { name: 'XGBoost', icon: FaFire, color: 'text-rose-400' },
+    { name: 'MongoDB', icon: SiMongodb, color: 'text-green-500' },
+    { name: 'Docker', icon: SiDocker, color: 'text-blue-400' },
+    { name: 'Kali Linux', icon: SiKalilinux, color: 'text-cyan-300' },
+    { name: 'Splunk SIEM', icon: SiSplunk, color: 'text-amber-400' },
+    { name: 'Tailwind CSS', icon: SiTailwindcss, color: 'text-sky-400' },
 ];
 
 function Skills({ darkMode }) {
-    const [selectedCategory, setSelectedCategory] = useState('all');
-    const [searchQuery, setSearchQuery] = useState('');
-
-    const filteredSkills = allSkills.filter(skill => {
-        const matchesCategory = selectedCategory === 'all' || skill.category === selectedCategory;
-        const matchesSearch = skill.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              skill.desc.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
+    const [activePillar, setActivePillar] = useState(null);
 
     return (
         <section
             id="skills"
-            className="relative py-24 sm:py-32 px-4 sm:px-6 md:px-10 lg:px-12 overflow-hidden bg-[#000000] border-t border-white/[0.06]"
+            className="relative py-20 sm:py-28 px-4 sm:px-6 md:px-10 lg:px-12 overflow-hidden bg-[#000000] border-t border-white/[0.06]"
         >
-            {/* Ambient Background Flare */}
-            <div className="absolute top-[25%] left-[-5%] w-[520px] h-[520px] rounded-full bg-rose-500/[0.025] blur-[170px] pointer-events-none" />
-            <div className="absolute bottom-[20%] right-[-5%] w-[520px] h-[520px] rounded-full bg-blue-500/[0.02] blur-[170px] pointer-events-none" />
+            {/* Subtle Ambient Glow */}
+            <div className="absolute top-[20%] left-[-5%] w-[480px] h-[480px] rounded-full bg-rose-500/[0.02] blur-[160px] pointer-events-none" />
+            <div className="absolute bottom-[20%] right-[-5%] w-[480px] h-[480px] rounded-full bg-blue-500/[0.02] blur-[160px] pointer-events-none" />
 
             <div className="w-full max-w-[1350px] mx-auto relative z-10">
 
@@ -121,11 +170,11 @@ function Skills({ darkMode }) {
                     whileInView="show"
                     viewport={{ once: true, margin: "-80px" }}
                     variants={staggerContainer}
-                    className="space-y-3 mb-14 text-center lg:text-left"
+                    className="space-y-3 mb-12 text-center lg:text-left"
                 >
                     <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-400 text-xs font-mono tracking-widest uppercase">
                         <FaCode className="text-xs" />
-                        <span>Technical Proficiency & Toolchain</span>
+                        <span>Core Arsenal & Specializations</span>
                     </motion.div>
 
                     <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
@@ -133,139 +182,98 @@ function Skills({ darkMode }) {
                     </motion.h2>
 
                     <motion.p variants={fadeUp} className="text-slate-300 text-base sm:text-lg max-w-2xl font-light leading-relaxed">
-                        A multidimensional arsenal spanning modern full-stack web engineering, offensive and defensive cybersecurity, and predictive machine learning.
+                        A structured domain matrix spanning full-stack web engineering, offensive cybersecurity, and predictive machine learning.
                     </motion.p>
                 </motion.div>
 
-                {/* Filter Controls & Search Bar */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-12">
-
-                    {/* Category Filter Tabs */}
-                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 p-1.5 rounded-2xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl">
-                        {categories.map((cat) => {
-                            const IconComp = cat.icon;
-                            const isActive = selectedCategory === cat.id;
+                {/* Compact Infinite Marquee Bar */}
+                <div className="mb-10 p-3 rounded-2xl border border-white/[0.08] bg-[#06060a]/80 backdrop-blur-xl overflow-hidden relative">
+                    <div className="flex items-center gap-6 animate-marquee whitespace-nowrap">
+                        {[...marqueeTechs, ...marqueeTechs, ...marqueeTechs].map((item, idx) => {
+                            const IconComp = item.icon;
                             return (
-                                <button
-                                    key={cat.id}
-                                    onClick={() => setSelectedCategory(cat.id)}
-                                    className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 flex items-center gap-2 cursor-pointer ${
-                                        isActive
-                                            ? 'text-white bg-[#f43f5e] shadow-lg shadow-rose-900/40 font-semibold'
-                                            : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
-                                    }`}
+                                <div
+                                    key={idx}
+                                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-white/[0.06] bg-white/[0.02] text-xs font-mono text-slate-300 shrink-0 hover:border-white/20 transition-colors"
                                 >
-                                    <IconComp className="text-xs" />
-                                    <span>{cat.label}</span>
-                                </button>
+                                    <IconComp className={`${item.color} text-sm`} />
+                                    <span>{item.name}</span>
+                                </div>
                             );
                         })}
                     </div>
-
-                    {/* Quick Search Input */}
-                    <div className="relative w-full md:w-72">
-                        <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs" />
-                        <input
-                            type="text"
-                            placeholder="Filter skills & tools..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500/50 transition-colors"
-                        />
-                    </div>
                 </div>
 
-                {/* Skills Interactive Grid */}
+                {/* ════════════════════════════════════════════
+                    4-BENTO DOMAIN MATRIX (Compact & Elite)
+                    ════════════════════════════════════════════ */}
                 <motion.div
-                    layout
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 mb-16"
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-60px" }}
+                    variants={staggerContainer}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-6"
                 >
-                    <AnimatePresence>
-                        {filteredSkills.map((skill) => {
-                            const IconComp = skill.icon;
-                            return (
-                                <motion.div
-                                    layout
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    transition={{ duration: 0.3 }}
-                                    key={skill.name}
-                                    whileHover={{ y: -4, scale: 1.01 }}
-                                    className={`p-5 rounded-2xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl ${skill.bg} transition-all duration-300 shadow-xl shadow-black/60 group cursor-default flex flex-col justify-between`}
-                                >
-                                    <div className="space-y-3">
-                                        <div className="flex items-start justify-between gap-3">
-                                            <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 group-hover:border-white/25 transition-all">
-                                                <IconComp className={skill.color} />
+                    {skillPillars.map((pillar) => {
+                        const IconComponent = pillar.icon;
+                        return (
+                            <motion.div
+                                key={pillar.id}
+                                variants={fadeUp}
+                                whileHover={{ y: -3 }}
+                                className={`p-6 sm:p-7 rounded-3xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl ${pillar.borderColor} transition-all duration-300 shadow-2xl shadow-black/80 flex flex-col justify-between group cursor-default`}
+                            >
+                                <div className="space-y-5">
+                                    {/* Card Header */}
+                                    <div className="flex items-start justify-between gap-3 pb-4 border-b border-white/[0.08]">
+                                        <div className="flex items-center gap-3.5">
+                                            <div className="w-12 h-12 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 group-hover:border-white/25 transition-all">
+                                                <IconComponent className={pillar.color} />
                                             </div>
-
-                                            <span className="text-[10px] font-mono px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.03] text-slate-300 shrink-0">
-                                                {skill.level}
-                                            </span>
+                                            <div>
+                                                <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-rose-200 transition-colors">
+                                                    {pillar.title}
+                                                </h3>
+                                                <p className="text-xs font-mono text-slate-400">
+                                                    {pillar.subtitle}
+                                                </p>
+                                            </div>
                                         </div>
 
-                                        <div>
-                                            <h4 className="text-base font-bold text-white group-hover:text-rose-200 transition-colors">
-                                                {skill.name}
-                                            </h4>
-                                            <p className="text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">
-                                                {skill.desc}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    {/* Bottom Micro Indicator */}
-                                    <div className="pt-3 mt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-slate-500">
-                                        <span className="capitalize">{skill.category}</span>
-                                        <span className="flex items-center gap-1 text-emerald-400">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                                            <span>Verified</span>
+                                        <span className={`text-[11px] font-mono px-2.5 py-1 rounded-full border shrink-0 hidden sm:inline-block ${pillar.badgeColor}`}>
+                                            Verified Domain
                                         </span>
                                     </div>
-                                </motion.div>
-                            );
-                        })}
-                    </AnimatePresence>
+
+                                    {/* Tech Skills Badges Matrix */}
+                                    <div className="flex flex-wrap gap-2">
+                                        {pillar.skills.map((skill, sIdx) => {
+                                            const SkillIcon = skill.icon;
+                                            return (
+                                                <div
+                                                    key={sIdx}
+                                                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.08] hover:border-white/20 text-xs font-mono text-slate-200 transition-all cursor-default group/pill"
+                                                >
+                                                    <SkillIcon className={`${skill.color} text-sm group-hover/pill:scale-110 transition-transform`} />
+                                                    <span>{skill.name}</span>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+
+                                {/* Bottom Capability Summary */}
+                                <div className="pt-4 mt-4 border-t border-white/[0.06] flex items-center justify-between gap-2 text-xs text-slate-400">
+                                    <span className="leading-relaxed line-clamp-1">{pillar.highlight}</span>
+                                    <span className="text-[11px] font-mono text-emerald-400 shrink-0 flex items-center gap-1">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                                        <span>Mastery</span>
+                                    </span>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
                 </motion.div>
-
-                {/* 3 Featured Domain Pillars (Bento Strip) */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                    {/* Pillar 1: Full-Stack Architecture */}
-                    <div className="p-7 rounded-3xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl hover:border-rose-500/30 transition-all duration-300 space-y-4 shadow-2xl shadow-black/80">
-                        <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center text-xl">
-                            <FaCode />
-                        </div>
-                        <h3 className="text-lg font-bold text-white">Full-Stack Architecture</h3>
-                        <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                            Specializing in production-grade MERN stack, Next.js, and high-throughput Python FastAPI microservices with clean code standards and responsive user interfaces.
-                        </p>
-                    </div>
-
-                    {/* Pillar 2: Offensive & Defensive Security */}
-                    <div className="p-7 rounded-3xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl hover:border-emerald-500/30 transition-all duration-300 space-y-4 shadow-2xl shadow-black/80">
-                        <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">
-                            <FaShieldAlt />
-                        </div>
-                        <h3 className="text-lg font-bold text-white">Offensive & Defensive Security</h3>
-                        <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                            Proactive vulnerability discovery, penetration testing, threat hunting, and Secure SDLC implementations. Active contributor with 20+ disclosed vulnerability reports.
-                        </p>
-                    </div>
-
-                    {/* Pillar 3: Applied Machine Learning */}
-                    <div className="p-7 rounded-3xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl hover:border-blue-500/30 transition-all duration-300 space-y-4 shadow-2xl shadow-black/80">
-                        <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-xl">
-                            <FaBrain />
-                        </div>
-                        <h3 className="text-lg font-bold text-white">Applied Machine Learning</h3>
-                        <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                            Designing predictive AI pipelines utilizing XGBoost, LightGBM, CatBoost, and Scikit-learn to classify anomalies and automate cybersecurity threat intelligence.
-                        </p>
-                    </div>
-
-                </div>
 
             </div>
         </section>
