@@ -125,11 +125,17 @@ function Education({ darkMode }) {
     return (
         <section
             id="education"
-            className="relative py-24 sm:py-32 px-4 sm:px-6 md:px-10 lg:px-12 overflow-hidden bg-[#000000] border-t border-white/[0.06]"
+            className={`relative py-24 sm:py-32 px-4 sm:px-6 md:px-10 lg:px-12 overflow-hidden transition-colors duration-500 ${
+                darkMode ? 'bg-[#000000] border-t border-white/[0.06]' : 'bg-[#fcfbf9] border-t border-slate-200'
+            }`}
         >
             {/* Ambient Background Flare */}
-            <div className="absolute top-[20%] right-[-5%] w-[500px] h-[500px] rounded-full bg-rose-500/[0.025] blur-[160px] pointer-events-none" />
-            <div className="absolute bottom-[10%] left-[-5%] w-[450px] h-[450px] rounded-full bg-slate-800/[0.04] blur-[160px] pointer-events-none" />
+            <div className={`absolute top-[20%] right-[-5%] w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none ${
+                darkMode ? 'bg-rose-500/[0.025]' : 'bg-rose-500/[0.04]'
+            }`} />
+            <div className={`absolute bottom-[10%] left-[-5%] w-[450px] h-[450px] rounded-full blur-[160px] pointer-events-none ${
+                darkMode ? 'bg-slate-800/[0.04]' : 'bg-slate-200/[0.5]'
+            }`} />
 
             <div className="w-full max-w-[1350px] mx-auto relative z-10">
 
@@ -141,16 +147,20 @@ function Education({ darkMode }) {
                     variants={staggerContainer}
                     className="space-y-3 mb-16 text-center lg:text-left"
                 >
-                    <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-400 text-xs font-mono tracking-widest uppercase">
+                    <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-500 text-xs font-mono tracking-widest uppercase">
                         <FaGraduationCap className="text-sm" />
                         <span>Academic & Professional Credentials</span>
                     </motion.div>
 
-                    <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-                        Education & <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-rose-300">Certifications</span>
+                    <motion.h2 variants={fadeUp} className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight ${
+                        darkMode ? 'text-white' : 'text-slate-900'
+                    }`}>
+                        Education & <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-rose-400 to-amber-500">Certifications</span>
                     </motion.h2>
 
-                    <motion.p variants={fadeUp} className="text-slate-300 text-base sm:text-lg max-w-2xl font-light leading-relaxed">
+                    <motion.p variants={fadeUp} className={`text-base sm:text-lg max-w-2xl font-normal leading-relaxed ${
+                        darkMode ? 'text-slate-300' : 'text-slate-600'
+                    }`}>
                         Synthesizing formal computer science engineering with industry-recognized offensive security credentials and machine learning specializations.
                     </motion.p>
                 </motion.div>
@@ -169,11 +179,13 @@ function Education({ darkMode }) {
                         className="lg:col-span-7 space-y-6"
                     >
                         <div className="flex items-center justify-between">
-                            <h3 className="text-xs font-mono uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                            <h3 className={`text-xs font-mono uppercase tracking-widest flex items-center gap-2 ${
+                                darkMode ? 'text-slate-400' : 'text-slate-600 font-semibold'
+                            }`}>
                                 <span className="w-2 h-2 rounded-full bg-rose-500" />
                                 <span>Degree & University Journey</span>
                             </h3>
-                            <span className="text-xs font-mono text-rose-400">B.Sc. In CSE</span>
+                            <span className="text-xs font-mono text-rose-500 font-bold">B.Sc. In CSE</span>
                         </div>
 
                         {educationList.map((edu, idx) => (
@@ -181,44 +193,62 @@ function Education({ darkMode }) {
                                 key={idx}
                                 variants={fadeUp}
                                 whileHover={{ y: -3 }}
-                                className="relative rounded-3xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl p-7 sm:p-9 hover:border-rose-500/30 transition-all duration-300 shadow-2xl shadow-black/80 space-y-7 group"
+                                className={`relative rounded-3xl border p-7 sm:p-9 transition-all duration-300 shadow-xl space-y-7 group ${
+                                    darkMode 
+                                        ? 'border-white/10 bg-[#06060a]/90 backdrop-blur-xl shadow-black/80 hover:border-rose-500/30' 
+                                        : 'border-slate-200/90 bg-white shadow-slate-200/60 hover:border-slate-300'
+                                }`}
                             >
                                 {/* Degree Header */}
-                                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-6 border-b border-white/[0.08]">
+                                <div className={`flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-6 border-b ${
+                                    darkMode ? 'border-white/[0.08]' : 'border-slate-100'
+                                }`}>
                                     <div className="flex items-start gap-4">
-                                        <div className="w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 transition-transform">
+                                        <div className={`w-14 h-14 rounded-2xl border flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 transition-transform ${
+                                            darkMode ? 'bg-rose-500/10 border-rose-500/20 text-rose-400' : 'bg-rose-50 border-rose-100 text-rose-500'
+                                        }`}>
                                             <FaUniversity />
                                         </div>
                                         <div>
-                                            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono mb-2">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[11px] font-mono mb-2">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                                                 <span>Undergraduate Program</span>
                                             </div>
-                                            <h4 className="text-xl sm:text-2xl font-bold text-white group-hover:text-rose-200 transition-colors">
+                                            <h4 className={`text-xl sm:text-2xl font-bold transition-colors ${
+                                                darkMode ? 'text-white group-hover:text-rose-200' : 'text-slate-900 group-hover:text-rose-600'
+                                            }`}>
                                                 {edu.degree}
                                             </h4>
-                                            <p className="text-sm font-medium text-slate-300 flex items-center gap-2 mt-1">
-                                                <FaMapMarkerAlt className="text-xs text-rose-400 shrink-0" />
+                                            <p className={`text-sm font-medium flex items-center gap-2 mt-1 ${
+                                                darkMode ? 'text-slate-300' : 'text-slate-600'
+                                            }`}>
+                                                <FaMapMarkerAlt className="text-xs text-rose-500 shrink-0" />
                                                 <span>{edu.institution}</span>
                                             </p>
                                         </div>
                                     </div>
 
-                                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-slate-200 text-xs font-mono shrink-0 self-start">
-                                        <FaCalendarAlt className="text-xs text-rose-400" />
+                                    <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-mono shrink-0 self-start ${
+                                        darkMode ? 'border-white/10 bg-white/[0.04] text-slate-200' : 'border-slate-200 bg-slate-100 text-slate-700'
+                                    }`}>
+                                        <FaCalendarAlt className="text-xs text-rose-500" />
                                         <span>{edu.year}</span>
                                     </span>
                                 </div>
 
                                 {/* Overview Description */}
-                                <p className="text-slate-300 text-sm sm:text-[15px] leading-relaxed font-normal">
+                                <p className={`text-sm sm:text-[15px] leading-relaxed font-normal ${
+                                    darkMode ? 'text-slate-300' : 'text-slate-600'
+                                }`}>
                                     {edu.description}
                                 </p>
 
                                 {/* Structured Academic Modules */}
                                 <div className="space-y-4 pt-2">
-                                    <h5 className="text-xs font-mono uppercase tracking-widest text-slate-400 flex items-center gap-2">
-                                        <FaBookOpen className="text-rose-400" />
+                                    <h5 className={`text-xs font-mono uppercase tracking-widest flex items-center gap-2 ${
+                                        darkMode ? 'text-slate-400' : 'text-slate-500 font-semibold'
+                                    }`}>
+                                        <FaBookOpen className="text-rose-500" />
                                         <span>Core Academic Disciplines</span>
                                     </h5>
 
@@ -228,17 +258,25 @@ function Education({ darkMode }) {
                                             return (
                                                 <div
                                                     key={mIdx}
-                                                    className="p-4 rounded-2xl border border-white/[0.07] bg-[#0c0c14]/60 space-y-2.5"
+                                                    className={`p-4 rounded-2xl border space-y-2.5 ${
+                                                        darkMode ? 'border-white/[0.07] bg-[#0c0c14]/60' : 'border-slate-200 bg-slate-50/80'
+                                                    }`}
                                                 >
                                                     <div className="flex items-center gap-2.5">
                                                         <Icon className={`${mod.color} text-sm`} />
-                                                        <span className="text-xs font-bold text-slate-200 uppercase tracking-wide">{mod.category}</span>
+                                                        <span className={`text-xs font-bold uppercase tracking-wide ${
+                                                            darkMode ? 'text-slate-200' : 'text-slate-800'
+                                                        }`}>{mod.category}</span>
                                                     </div>
                                                     <div className="flex flex-wrap gap-1.5">
                                                         {mod.courses.map((course, cIdx) => (
                                                             <span
                                                                 key={cIdx}
-                                                                className="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/[0.03] border border-white/[0.08] text-slate-300 hover:border-white/20 hover:text-white transition-all"
+                                                                className={`px-2.5 py-1 rounded-lg text-xs font-mono border transition-all ${
+                                                                    darkMode 
+                                                                        ? 'bg-white/[0.03] border-white/[0.08] text-slate-300 hover:border-white/20 hover:text-white' 
+                                                                        : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                                                                }`}
                                                             >
                                                                 {course}
                                                             </span>
@@ -264,11 +302,13 @@ function Education({ darkMode }) {
                         className="lg:col-span-5 space-y-6"
                     >
                         <div className="flex items-center justify-between">
-                            <h3 className="text-xs font-mono uppercase tracking-widest text-slate-400 flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                            <h3 className={`text-xs font-mono uppercase tracking-widest flex items-center gap-2 ${
+                                darkMode ? 'text-slate-400' : 'text-slate-600 font-semibold'
+                            }`}>
+                                <span className="w-2 h-2 rounded-full bg-emerald-500" />
                                 <span>Verified Industry Credentials</span>
                             </h3>
-                            <span className="text-xs font-mono text-emerald-400">5+ Badges</span>
+                            <span className="text-xs font-mono text-emerald-500 font-bold">5+ Badges</span>
                         </div>
 
                         <div className="space-y-4">
@@ -279,18 +319,26 @@ function Education({ darkMode }) {
                                         key={idx}
                                         variants={fadeUp}
                                         whileHover={{ x: 4, scale: 1.01 }}
-                                        className={`p-5 rounded-2xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl ${cert.borderColor} transition-all duration-300 shadow-xl shadow-black/60 space-y-3 group cursor-default`}
+                                        className={`p-5 rounded-2xl border transition-all duration-300 shadow-lg space-y-3 group cursor-default ${
+                                            darkMode 
+                                                ? `border-white/10 bg-[#06060a]/90 backdrop-blur-xl ${cert.borderColor} shadow-black/60` 
+                                                : 'border-slate-200/90 bg-white shadow-slate-200/50 hover:border-slate-300'
+                                        }`}
                                     >
                                         <div className="flex items-start justify-between gap-3">
                                             <div className="flex items-center gap-3 min-w-0">
-                                                <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 text-white flex items-center justify-center text-lg shrink-0 group-hover:border-rose-500/40 transition-colors">
+                                                <div className={`w-10 h-10 rounded-xl border flex items-center justify-center text-lg shrink-0 transition-colors ${
+                                                    darkMode ? 'bg-white/[0.04] border-white/10 text-white' : 'bg-slate-50 border-slate-200 text-slate-800'
+                                                }`}>
                                                     <IconComp className={cert.color} />
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <h4 className="text-sm font-bold text-white group-hover:text-rose-200 transition-colors truncate">
+                                                    <h4 className={`text-sm font-bold transition-colors truncate ${
+                                                        darkMode ? 'text-white group-hover:text-rose-200' : 'text-slate-900 group-hover:text-rose-600'
+                                                    }`}>
                                                         {cert.name}
                                                     </h4>
-                                                    <p className="text-xs text-slate-400 truncate">
+                                                    <p className={`text-xs truncate ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                                                         {cert.issuer}
                                                     </p>
                                                 </div>
@@ -302,11 +350,17 @@ function Education({ darkMode }) {
                                         </div>
 
                                         {/* Skill Tags */}
-                                        <div className="flex flex-wrap gap-1.5 pt-1 border-t border-white/[0.05]">
+                                        <div className={`flex flex-wrap gap-1.5 pt-1 border-t ${
+                                            darkMode ? 'border-white/[0.05]' : 'border-slate-100'
+                                        }`}>
                                             {cert.topics.map((topic, tIdx) => (
                                                 <span
                                                     key={tIdx}
-                                                    className="px-2 py-0.5 rounded text-[11px] font-mono bg-white/[0.02] text-slate-400 border border-white/[0.06]"
+                                                    className={`px-2 py-0.5 rounded text-[11px] font-mono border ${
+                                                        darkMode 
+                                                            ? 'bg-white/[0.02] text-slate-400 border-white/[0.06]' 
+                                                            : 'bg-slate-50 text-slate-600 border-slate-200'
+                                                    }`}
                                                 >
                                                     {topic}
                                                 </span>
@@ -326,23 +380,27 @@ function Education({ darkMode }) {
                     whileInView="show"
                     viewport={{ once: true }}
                     variants={fadeUp}
-                    className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-2xl border border-white/10 bg-[#06060a]/80 backdrop-blur-xl"
+                    className={`grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-2xl border ${
+                        darkMode 
+                            ? 'border-white/10 bg-[#06060a]/80 backdrop-blur-xl' 
+                            : 'border-slate-200 bg-white shadow-md'
+                    }`}
                 >
                     <div className="text-center">
-                        <div className="text-2xl font-bold text-white">B.Sc. CSE</div>
-                        <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Engineering Degree</div>
+                        <div className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>B.Sc. CSE</div>
+                        <div className={`text-[11px] font-mono uppercase tracking-wider ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Engineering Degree</div>
                     </div>
-                    <div className="text-center border-l border-white/10">
-                        <div className="text-2xl font-bold text-rose-400">5+</div>
-                        <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Specialized Certs</div>
+                    <div className={`text-center border-l ${darkMode ? 'border-white/10' : 'border-slate-200'}`}>
+                        <div className="text-2xl font-bold text-rose-500">5+</div>
+                        <div className={`text-[11px] font-mono uppercase tracking-wider ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Specialized Certs</div>
                     </div>
-                    <div className="text-center border-l border-white/10">
-                        <div className="text-2xl font-bold text-emerald-400">20+</div>
-                        <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Security Reports</div>
+                    <div className={`text-center border-l ${darkMode ? 'border-white/10' : 'border-slate-200'}`}>
+                        <div className="text-2xl font-bold text-emerald-500">20+</div>
+                        <div className={`text-[11px] font-mono uppercase tracking-wider ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Security Reports</div>
                     </div>
-                    <div className="text-center border-l border-white/10">
-                        <div className="text-2xl font-bold text-blue-400">2026</div>
-                        <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Target Graduation</div>
+                    <div className={`text-center border-l ${darkMode ? 'border-white/10' : 'border-slate-200'}`}>
+                        <div className="text-2xl font-bold text-blue-500">2026</div>
+                        <div className={`text-[11px] font-mono uppercase tracking-wider ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Target Graduation</div>
                     </div>
                 </motion.div>
 

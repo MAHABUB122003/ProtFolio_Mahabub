@@ -125,7 +125,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                 <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-rose-500 to-rose-700 text-white font-black text-xs flex items-center justify-center shadow-md">
                                     MR
                                 </div>
-                                <span className="text-sm font-bold text-white tracking-tight">MAHABUB</span>
+                                <span className={`text-sm font-bold tracking-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>MAHABUB</span>
                             </div>
 
                             {/* Desktop Left Navigation Links */}
@@ -138,8 +138,12 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                             onClick={() => handleNavClick(item.name)}
                                             className={`text-sm font-medium transition-colors cursor-pointer ${
                                                 isActive
-                                                    ? 'text-white font-semibold'
-                                                    : 'text-slate-400 hover:text-white'
+                                                    ? darkMode
+                                                        ? 'text-white font-semibold'
+                                                        : 'text-rose-600 font-bold'
+                                                    : darkMode
+                                                        ? 'text-slate-400 hover:text-white'
+                                                        : 'text-slate-600 hover:text-slate-950 font-medium'
                                             }`}
                                         >
                                             {item.name}
@@ -156,7 +160,11 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                         href="https://github.com/MAHABUB122003"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs transition-colors"
+                                        className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-colors ${
+                                            darkMode 
+                                                ? 'text-slate-400 hover:text-white hover:bg-white/10' 
+                                                : 'text-slate-600 hover:text-slate-900 hover:bg-black/5'
+                                        }`}
                                         aria-label="GitHub"
                                     >
                                         <FaGithub />
@@ -165,7 +173,11 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                         href="https://linkedin.com/in/md-mahabubur-rahman-41674b33a"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs transition-colors"
+                                        className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-colors ${
+                                            darkMode 
+                                                ? 'text-slate-400 hover:text-white hover:bg-white/10' 
+                                                : 'text-slate-600 hover:text-slate-900 hover:bg-black/5'
+                                        }`}
                                         aria-label="LinkedIn"
                                     >
                                         <FaLinkedinIn />
@@ -174,21 +186,29 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                         href="https://www.facebook.com/md.abrar.ayman.mahabub/"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs transition-colors"
+                                        className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-colors ${
+                                            darkMode 
+                                                ? 'text-slate-400 hover:text-white hover:bg-white/10' 
+                                                : 'text-slate-600 hover:text-slate-900 hover:bg-black/5'
+                                        }`}
                                         aria-label="Facebook"
                                     >
                                         <FaFacebookF />
                                     </a>
                                 </div>
 
-                                <div className="hidden lg:block w-px h-4 bg-white/15" />
+                                <div className={`hidden lg:block w-px h-4 ${darkMode ? 'bg-white/15' : 'bg-gray-300'}`} />
 
                                 {/* Theme Toggle */}
                                 <motion.button
                                     whileHover={{ scale: 1.08 }}
                                     whileTap={{ scale: 0.92 }}
                                     onClick={toggleDarkMode}
-                                    className="p-2 rounded-xl border border-white/10 bg-white/[0.04] text-slate-300 hover:text-white hover:border-white/25 transition-all"
+                                    className={`p-2 rounded-xl border transition-all cursor-pointer ${
+                                        darkMode
+                                            ? 'border-white/10 bg-white/[0.04] text-slate-300 hover:text-white hover:border-white/25'
+                                            : 'border-gray-200 bg-white text-slate-700 hover:text-slate-900 hover:border-gray-300 shadow-sm'
+                                    }`}
                                     aria-label="Toggle theme"
                                 >
                                     <AnimatePresence mode="wait">
@@ -199,7 +219,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                             exit={{ opacity: 0 }}
                                             transition={{ duration: 0.2 }}
                                         >
-                                            {darkMode ? <Sun className="w-4 h-4 text-rose-400" /> : <Moon className="w-4 h-4" />}
+                                            {darkMode ? <Sun className="w-4 h-4 text-rose-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
                                         </motion.div>
                                     </AnimatePresence>
                                 </motion.button>
@@ -208,7 +228,11 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                 <motion.button
                                     whileTap={{ scale: 0.9 }}
                                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                    className="md:hidden p-2 rounded-xl border border-white/10 bg-white/[0.04] text-slate-300 hover:text-white"
+                                    className={`md:hidden p-2 rounded-xl border transition-all ${
+                                        darkMode
+                                            ? 'border-white/10 bg-white/[0.04] text-slate-300 hover:text-white'
+                                            : 'border-gray-200 bg-white text-slate-700 hover:text-slate-900 shadow-sm'
+                                    }`}
                                     aria-label="Toggle menu"
                                 >
                                     <AnimatePresence mode="wait">
@@ -235,7 +259,11 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="md:hidden mt-2 p-3 rounded-2xl border border-white/10 bg-[#06060a]/98 backdrop-blur-2xl shadow-2xl space-y-1 text-white"
+                                className={`md:hidden mt-2 p-3 rounded-2xl border backdrop-blur-2xl shadow-2xl space-y-1 ${
+                                    darkMode 
+                                        ? 'border-white/10 bg-[#06060a]/98 text-white' 
+                                        : 'border-gray-200 bg-white/98 text-slate-900'
+                                }`}
                             >
                                 {navItems.map((item) => (
                                     <button
@@ -243,13 +271,15 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                         onClick={() => handleNavClick(item.name)}
                                         className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all flex items-center justify-between ${
                                             activeSection === item.name.toLowerCase()
-                                                ? 'bg-rose-500/15 text-rose-400 border border-rose-500/20'
-                                                : 'text-slate-300 hover:bg-white/5'
+                                                ? 'bg-rose-500/15 text-rose-500 border border-rose-500/20'
+                                                : darkMode
+                                                    ? 'text-slate-300 hover:bg-white/5'
+                                                    : 'text-slate-700 hover:bg-gray-100'
                                         }`}
                                     >
                                         <span>{item.name}</span>
                                         {activeSection === item.name.toLowerCase() && (
-                                            <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                                            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
                                         )}
                                     </button>
                                 ))}
