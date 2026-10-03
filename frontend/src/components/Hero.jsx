@@ -34,14 +34,14 @@ const scaleIn = {
 function Hero({ darkMode }) {
     const heroData = getSection('hero');
 
-    // Subtle 3D Depth on Mouse Move
+    // Subtle 3D Parallax Tilt for the Portrait
     const containerRef = useRef(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    const springConfig = { damping: 30, stiffness: 150 };
-    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), springConfig);
-    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), springConfig);
+    const springConfig = { damping: 28, stiffness: 160 };
+    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [5, -5]), springConfig);
+    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), springConfig);
 
     const handleMouseMove = (e) => {
         if (!containerRef.current) return;
@@ -120,16 +120,15 @@ function Hero({ darkMode }) {
             id="home"
             className="relative min-h-[92vh] lg:min-h-screen flex items-center pt-24 sm:pt-28 pb-12 sm:pb-20 px-4 sm:px-8 md:px-12 lg:px-16 overflow-hidden bg-[#000000]"
         >
-            {/* ── Soft Ambient Low-Key Studio Lighting ── */}
-            <div className="absolute top-[20%] left-[5%] w-[450px] h-[450px] rounded-full bg-rose-500/[0.03] blur-[150px] pointer-events-none" />
+            {/* ── Soft Ambient Backlight ── */}
+            <div className="absolute top-[20%] left-[8%] w-[480px] h-[480px] rounded-full bg-rose-500/[0.03] blur-[150px] pointer-events-none" />
 
-            {/* ── Main Hero Layout (Matching Template) ── */}
+            {/* ── Main Container ── */}
             <div className="container mx-auto max-w-7xl relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
 
                     {/* ════════════════════════════════════════════
-                        LEFT COLUMN: Cinematic Studio Portrait
-                        (Matching Matt Cannon's Low-Key Lighting)
+                        LEFT COLUMN: Studio Portrait with Hair Rim-Light
                         ════════════════════════════════════════════ */}
                     <motion.div
                         variants={scaleIn}
@@ -146,19 +145,22 @@ function Hero({ darkMode }) {
                                 rotateY,
                                 transformStyle: 'preserve-3d',
                             }}
-                            className="relative w-full max-w-[480px] sm:max-w-[540px] lg:max-w-[580px] flex items-center justify-center cursor-pointer"
+                            className="relative w-full max-w-[480px] sm:max-w-[520px] lg:max-w-[560px] flex items-center justify-center cursor-pointer"
                         >
-                            {/* Subtle Ambient Studio Halo behind face */}
-                            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/[0.03] rounded-full blur-[90px] pointer-events-none" />
+                            {/* Studio Rim-Light Halo directly behind Head and Hair */}
+                            <div className="absolute top-[18%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-b from-white/[0.08] via-rose-500/[0.05] to-transparent rounded-full blur-[65px] pointer-events-none" />
 
-                            {/* Studio Portrait (Low-Key Lighting, Seamless Blend with Black) */}
+                            {/* Hair & Shoulders Ambient Light */}
+                            <div className="absolute top-[30%] left-1/2 -translate-x-1/2 w-96 h-96 bg-slate-700/[0.08] rounded-full blur-[80px] pointer-events-none" />
+
+                            {/* Enhanced Portrait with High Hair & Suit Visibility */}
                             <motion.img
                                 src={myImage}
                                 alt="MD Mahabubur Rahman"
-                                className="relative z-10 w-full h-auto object-contain object-center filter contrast-[1.06] brightness-[1.0] select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.95)]"
-                                initial={{ opacity: 0, scale: 0.96 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.9, ease: "easeOut" }}
+                                className="relative z-10 w-full h-auto object-contain object-center filter contrast-[1.05] brightness-[1.02] select-none drop-shadow-[0_25px_50px_rgba(0,0,0,0.95)]"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
                             />
                         </motion.div>
                     </motion.div>
@@ -187,7 +189,7 @@ function Hero({ darkMode }) {
                             </div>
                         </motion.div>
 
-                        {/* Main Editorial Headline — "I'm MD Mahabubur Rahman" */}
+                        {/* Main Editorial Headline */}
                         <motion.div variants={fadeUp} className="space-y-2">
                             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-bold tracking-tight text-white leading-[1.08]">
                                 I'm <span className="font-extrabold text-white">MD Mahabubur Rahman</span>
@@ -221,7 +223,7 @@ function Hero({ darkMode }) {
 
                         {/* ── Action Buttons ── */}
                         <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center lg:justify-start items-center pt-2">
-                            {/* Primary Button: "Get in touch" (Matching Template Red/Coral Accent) */}
+                            {/* Primary Button: "Get in touch" */}
                             <motion.button
                                 whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(244, 63, 94, 0.45)" }}
                                 whileTap={{ scale: 0.96 }}
