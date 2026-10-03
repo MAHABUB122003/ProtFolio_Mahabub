@@ -7,9 +7,6 @@ import {
     FaInstagram,
     FaArrowRight,
     FaDownload,
-    FaShieldAlt,
-    FaCode,
-    FaCheckCircle,
 } from 'react-icons/fa';
 import { getSection } from '../utils/portfolioData';
 import myImage from '../assets/mahabub.png';
@@ -25,30 +22,32 @@ const staggerContainer = {
 };
 
 const fadeUp = {
-    hidden: { opacity: 0, y: 22 },
+    hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const scaleIn = {
-    hidden: { opacity: 0, scale: 0.95 },
+    hidden: { opacity: 0, scale: 0.94 },
     show: { opacity: 1, scale: 1, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
 function Hero({ darkMode }) {
     const heroData = getSection('hero');
 
-    // 3D Parallax Tilt Effect for the Portrait
-    const cardRef = useRef(null);
+    // Subtle 3D Parallax Tilt for the Portrait
+    const containerRef = useRef(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    const springConfig = { damping: 25, stiffness: 200 };
-    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), springConfig);
-    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), springConfig);
+    const springConfig = { damping: 28, stiffness: 180 };
+    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [6, -6]), springConfig);
+    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-6, 6]), springConfig);
+    const moveX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), springConfig);
+    const moveY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-12, 12]), springConfig);
 
     const handleMouseMove = (e) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
         const width = rect.width;
         const height = rect.height;
         const x = (e.clientX - rect.left) / width - 0.5;
@@ -121,83 +120,57 @@ function Hero({ darkMode }) {
     return (
         <section
             id="home"
-            className="relative min-h-[92vh] lg:min-h-screen flex items-center pt-28 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-8 md:px-12 lg:px-16 overflow-hidden bg-transparent"
+            className="relative min-h-[94vh] lg:min-h-screen flex items-center pt-24 sm:pt-28 pb-12 sm:pb-20 px-4 sm:px-8 md:px-12 lg:px-16 overflow-hidden bg-transparent"
         >
-            {/* ── Soft Cinematic Ambient Lighting (Low-Key Luxury) ── */}
-            <div className="absolute top-[20%] left-[5%] w-[450px] h-[450px] rounded-full bg-rose-500/[0.03] blur-[150px] pointer-events-none" />
-            <div className="absolute bottom-[20%] right-[10%] w-[500px] h-[500px] rounded-full bg-slate-700/[0.04] blur-[160px] pointer-events-none" />
+            {/* ── Soft Ambient Studio Backlight ── */}
+            <div className="absolute top-[20%] left-[8%] w-[480px] h-[480px] rounded-full bg-rose-500/[0.035] blur-[140px] pointer-events-none" />
+            <div className="absolute bottom-[20%] right-[12%] w-[500px] h-[500px] rounded-full bg-slate-800/[0.04] blur-[150px] pointer-events-none" />
 
             {/* ── Main Container ── */}
             <div className="container mx-auto max-w-7xl relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
                     {/* ════════════════════════════════════════════
-                        LEFT COLUMN: Studio Portrait with 3D Depth
-                        (Matching the Matt Cannon Reference Layout)
+                        LEFT COLUMN: Large Free-Standing Studio Portrait
+                        (Seamless Cutout Standing Directly on Canvas)
                         ════════════════════════════════════════════ */}
                     <motion.div
                         variants={scaleIn}
                         initial="hidden"
                         animate="show"
-                        className="lg:col-span-6 flex justify-center lg:justify-start items-center"
+                        className="lg:col-span-6 flex justify-center items-end relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px]"
                     >
+                        {/* 3D Motion Container */}
                         <motion.div
-                            ref={cardRef}
+                            ref={containerRef}
                             onMouseMove={handleMouseMove}
                             onMouseLeave={handleMouseLeave}
                             style={{
                                 rotateX,
                                 rotateY,
+                                x: moveX,
+                                y: moveY,
                                 transformStyle: 'preserve-3d',
                             }}
-                            className="relative w-full max-w-[440px] sm:max-w-[480px] lg:max-w-[500px] group cursor-pointer"
+                            className="relative w-full max-w-[460px] sm:max-w-[500px] lg:max-w-[540px] flex justify-center items-end cursor-pointer"
                         >
-                            {/* Subtle Ambient Backlight Glow behind portrait */}
-                            <div className="absolute -inset-4 bg-gradient-to-tr from-rose-500/10 via-slate-700/15 to-transparent rounded-3xl blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
+                            {/* Subtle Ambient Backlight Halo directly behind the head/shoulders */}
+                            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-84 sm:h-84 bg-gradient-to-tr from-rose-500/10 via-slate-600/10 to-transparent rounded-full blur-[90px] pointer-events-none" />
 
-                            {/* Portrait Frame Container */}
-                            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-[#0a0a0c] to-[#000000] border border-white/[0.06] group-hover:border-white/[0.12] transition-colors duration-500 shadow-2xl shadow-black/90">
-                                
-                                {/* Top corner luxury tag */}
-                                <div className="absolute top-4 left-4 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[11px] font-mono tracking-wider text-slate-300">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping" />
-                                    <span>MD MAHABUB</span>
-                                </div>
-
-                                {/* Studio Portrait (Seamless Low-Key Fade) */}
-                                <div className="relative w-full flex items-end justify-center pt-8 sm:pt-12">
-                                    <motion.img
-                                        src={myImage}
-                                        alt="MD Mahabubur Rahman"
-                                        className="w-full h-auto max-h-[480px] sm:max-h-[520px] lg:max-h-[560px] object-contain object-bottom filter contrast-[1.04] brightness-[1.0] select-none transition-transform duration-700 group-hover:scale-[1.02]"
-                                        initial={{ y: 25, opacity: 0 }}
-                                        animate={{ y: 0, opacity: 1 }}
-                                        transition={{ duration: 0.8, ease: "easeOut" }}
-                                    />
-                                    {/* Bottom soft vignette gradient overlay */}
-                                    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#000000] via-[#000000]/60 to-transparent pointer-events-none" />
-                                </div>
-
-                                {/* Floating 3D Badge on Portrait bottom right */}
-                                <div
-                                    style={{ transform: 'translateZ(30px)' }}
-                                    className="absolute bottom-4 right-4 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/75 backdrop-blur-xl border border-white/10 shadow-xl"
-                                >
-                                    <div className="w-7 h-7 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-xs">
-                                        <FaShieldAlt />
-                                    </div>
-                                    <div className="text-left">
-                                        <p className="text-[10px] uppercase font-mono tracking-widest text-slate-400">Status</p>
-                                        <p className="text-xs font-bold text-white">Full-Stack & Security</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {/* Large High-Contrast Portrait (Free-Standing, Zero Bounding Box) */}
+                            <motion.img
+                                src={myImage}
+                                alt="MD Mahabubur Rahman"
+                                className="relative z-10 w-full h-auto max-h-[520px] sm:max-h-[580px] lg:max-h-[640px] object-contain object-bottom filter contrast-[1.05] brightness-[1.0] select-none drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
+                                initial={{ y: 30, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                            />
                         </motion.div>
                     </motion.div>
 
                     {/* ════════════════════════════════════════════
                         RIGHT COLUMN: High-Contrast Modern Editorial Copy
-                        (Matching the Template Typography & Style)
                         ════════════════════════════════════════════ */}
                     <motion.div
                         variants={staggerContainer}
@@ -220,7 +193,7 @@ function Hero({ darkMode }) {
                             </div>
                         </motion.div>
 
-                        {/* Main Editorial Headline — "I'm MD Mahabubur Rahman" */}
+                        {/* Main Editorial Headline */}
                         <motion.div variants={fadeUp} className="space-y-2">
                             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-bold tracking-tight text-white leading-[1.08]">
                                 I'm <span className="font-extrabold text-white">MD Mahabubur Rahman</span>
@@ -252,9 +225,9 @@ function Hero({ darkMode }) {
                             </p>
                         </motion.div>
 
-                        {/* ── Primary Coral/Crimson CTA Button ("Get in touch") ── */}
+                        {/* ── Action Buttons ── */}
                         <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center lg:justify-start items-center pt-2">
-                            {/* Primary Button: "Get in touch" (Matching Template Red/Coral Accent) */}
+                            {/* Primary Button: "Get in touch" */}
                             <motion.button
                                 whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(244, 63, 94, 0.45)" }}
                                 whileTap={{ scale: 0.96 }}
