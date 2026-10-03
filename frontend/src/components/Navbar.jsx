@@ -15,6 +15,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
     const navItems = [
         { name: 'Home', link: '#home' },
         { name: 'About', link: '#about' },
+        { name: 'Education', link: '#education' },
         { name: 'Skills', link: '#skills' },
         { name: 'Projects', link: '#projects' },
         { name: 'Contact', link: '#contact' },
@@ -36,7 +37,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
             }
             lastScrollY.current = winScroll;
 
-            const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+            const sections = ['home', 'about', 'education', 'skills', 'projects', 'contact'];
             const scrollPosition = winScroll + 100;
             for (const section of sections) {
                 const element = document.getElementById(section);
@@ -116,8 +117,8 @@ function Navbar({ darkMode, toggleDarkMode }) {
                     >
                         <div className="flex items-center justify-between">
 
-                            {/* Left Navigation Links (Matching Template Layout) */}
-                            <div className="hidden md:flex items-center gap-6 lg:gap-8">
+                            {/* Left Navigation Links */}
+                            <div className="flex items-center gap-5 sm:gap-6 lg:gap-8">
                                 {navItems.map((item) => {
                                     const isActive = activeSection === item.name.toLowerCase();
                                     return (
@@ -135,24 +136,6 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                     );
                                 })}
                             </div>
-
-                            {/* Center Crimson Star Emblem (Matching Template Branding) */}
-                            <motion.div
-                                whileHover={{ scale: 1.15, rotate: 90 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => handleNavClick('Home')}
-                                className="cursor-pointer flex items-center justify-center"
-                                aria-label="Mahabub Home"
-                            >
-                                <svg
-                                    className="w-7 h-7 text-rose-500 transition-transform duration-300"
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                >
-                                    {/* 8-point geometric star/asterisk */}
-                                    <path d="M12 2L13.5 8.5L20 7L15.5 12L20 17L13.5 15.5L12 22L10.5 15.5L4 17L8.5 12L4 7L10.5 8.5L12 2Z" />
-                                </svg>
-                            </motion.div>
 
                             {/* Right Controls & Socials (Matching Template Style) */}
                             <div className="flex items-center gap-3 sm:gap-4">

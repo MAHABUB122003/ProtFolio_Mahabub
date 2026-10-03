@@ -1,24 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import {
     FaUserTie,
     FaGraduationCap,
-    FaCertificate,
-    FaBriefcase,
-    FaLaptopCode,
     FaEnvelope,
     FaPhone,
     FaMapMarkerAlt,
     FaDownload,
-    FaCalendarAlt,
-    FaAward,
-    FaLightbulb,
-    FaCheckCircle
+    FaShieldAlt,
+    FaBrain,
+    FaCode,
+    FaArrowRight,
+    FaCheckCircle,
+    FaTerminal,
+    FaServer,
+    FaBug
 } from 'react-icons/fa';
-import { SiMongodb, SiExpress, SiReact, SiNodedotjs, SiTailwindcss, SiJavascript } from 'react-icons/si';
 import { getSection } from '../utils/portfolioData';
-import IslamicPattern from './IslamicPattern';
 import myCV from '../assets/mahabub.pdf';
+import aboutImage from '../assets/mahabub_about.png';
 
 // Animated counter for stats
 function AnimatedStat({ value, visible }) {
@@ -54,6 +54,28 @@ function About({ darkMode }) {
     const [statsVisible, setStatsVisible] = useState(false);
     const statsRef = useRef(null);
 
+    // 3D Parallax tilt for the portrait frame
+    const imgRef = useRef(null);
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+    const springConfig = { damping: 25, stiffness: 150 };
+    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [5, -5]), springConfig);
+    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), springConfig);
+
+    const handleMouseMove = (e) => {
+        if (!imgRef.current) return;
+        const rect = imgRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        mouseX.set(x);
+        mouseY.set(y);
+    };
+
+    const handleMouseLeave = () => {
+        mouseX.set(0);
+        mouseY.set(0);
+    };
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => { if (entry.isIntersecting) setStatsVisible(true); },
@@ -63,33 +85,21 @@ function About({ darkMode }) {
         return () => observer.disconnect();
     }, []);
 
-    const theme = {
-        bg: darkMode ? 'bg-transparent' : 'bg-[#fcfbf9]',
-        textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        textSecondary: darkMode ? 'text-slate-300' : 'text-gray-700',
-        textMuted: darkMode ? 'text-slate-400' : 'text-gray-500',
-        cardBg: darkMode
-            ? 'bg-[#080d1a]/80 backdrop-blur-2xl border-white/[0.08] hover:border-white/20 text-white shadow-xl shadow-black/70'
-            : 'bg-white/95 backdrop-blur-xl border-gray-200/90 hover:border-gray-400 text-gray-900 shadow-xl shadow-gray-200/50',
-        innerCardBg: darkMode ? 'bg-[#0e1424] border-white/[0.06]' : 'bg-gray-50 border-gray-200',
-        border: darkMode ? 'border-white/[0.08]' : 'border-gray-200',
-    };
-
-    const education = aboutData.education || [];
-    const certifications = aboutData.certifications || [];
-    const stats = aboutData.stats || [];
-    const coreValues = aboutData.coreValues || [];
-
-    const techStack = [
-        { name: "React.js", icon: <SiReact className="text-cyan-400" />, level: "Frontend Framework" },
-        { name: "Node.js", icon: <SiNodedotjs className="text-[#34d399]" />, level: "Runtime Environment" },
-        { name: "Express.js", icon: <SiExpress className="text-gray-300" />, level: "Backend Framework" },
-        { name: "MongoDB", icon: <SiMongodb className="text-[#10b981]" />, level: "NoSQL Database" },
-        { name: "Tailwind CSS", icon: <SiTailwindcss className="text-[#38bdf8]" />, level: "Styling Engine" },
-        { name: "JavaScript", icon: <SiJavascript className="text-indigo-400" />, level: "Core Language" }
+    const stats = aboutData.stats || [
+        { number: '9+', label: 'Completed Projects', description: 'Full-stack & Security' },
+        { number: '20+', label: 'Security Reports', description: 'Vulnerabilities Discovered' },
+        { number: '3+', label: 'Years Experience', description: 'Continuous Learning' },
+        { number: '100%', label: 'Commitment', description: 'Quality Assurance' }
     ];
 
-    const coreValueIcons = [FaLightbulb, FaCheckCircle, FaBriefcase, FaGraduationCap];
+    const coreValues = aboutData.coreValues || [
+        { title: 'Clean Architecture', description: 'Writing scalable, maintainable, and documented code.' },
+        { title: 'Security-First Mindset', description: 'Embedding defensive principles into every layer of SDLC.' },
+        { title: 'Intelligent Automation', description: 'Leveraging machine learning models for anomaly & threat detection.' },
+        { title: 'Continuous Growth', description: 'Daily exploration of bug bounty, CTF security, and modern web stacks.' }
+    ];
+
+    const coreValueIcons = [FaCode, FaShieldAlt, FaBrain, FaCheckCircle];
 
     const handleDownloadCV = async () => {
         try {
@@ -114,79 +124,138 @@ function About({ darkMode }) {
     };
 
     return (
-        <section id="about" className="py-20 sm:py-24 md:py-28 px-4 sm:px-6 relative overflow-hidden">
-            {/* Ambient Background */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                <div className="absolute top-1/4 -left-40 w-[550px] h-[550px] rounded-full bg-indigo-500/[0.04] blur-[140px]" />
-                <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-cyan-500/[0.03] blur-[150px]" />
-            </div>
+        <section
+            id="about"
+            className="relative py-24 sm:py-32 px-4 sm:px-6 md:px-10 lg:px-12 overflow-hidden bg-[#000000] border-t border-white/[0.06]"
+        >
+            {/* Subtle Ambient Background Gradients */}
+            <div className="absolute top-[15%] left-[-5%] w-[500px] h-[500px] rounded-full bg-rose-500/[0.02] blur-[160px] pointer-events-none" />
+            <div className="absolute bottom-[15%] right-[-5%] w-[500px] h-[500px] rounded-full bg-slate-800/[0.04] blur-[160px] pointer-events-none" />
 
-            <div className="container mx-auto max-w-7xl relative z-10">
+            <div className="w-full max-w-[1350px] mx-auto relative z-10">
 
                 {/* Section Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: -30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-12 sm:mb-16"
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.6 }}
+                    className="space-y-3 mb-16 text-center lg:text-left"
                 >
-                    <motion.div
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full backdrop-blur-md mb-4 border border-white/10 bg-white/[0.04]"
-                    >
-                        <FaUserTie className="text-cyan-400 text-xs sm:text-sm animate-pulse" />
-                        <span className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-slate-300">
-                            BIOGRAPHY & BACKGROUND
-                        </span>
-                    </motion.div>
-
-                    <h2 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight ${theme.textPrimary} mb-4`}>
-                        Engineering <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Identity & Vision</span>
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-400 text-xs font-mono tracking-widest uppercase">
+                        <FaUserTie className="text-xs" />
+                        <span>About Me & Background</span>
+                    </div>
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
+                        Engineering <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-red-400 to-white">Identity & Vision</span>
                     </h2>
-
-                    <p className={`${theme.textSecondary} max-w-3xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed`}>
-                        {aboutData.tagline}
+                    <p className="text-slate-400 text-sm sm:text-base max-w-2xl leading-relaxed">
+                        {aboutData.tagline || 'Bridging the gap between intelligent systems, secure infrastructure, and modern web applications.'}
                     </p>
                 </motion.div>
 
-                {/* 2-Column Main Layout */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12">
+                {/* Main 2-Column Overview */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-20">
 
-                    {/* ── Left: Bio & Personal Details ── */}
-                    <div className="lg:col-span-7 space-y-8">
-
-                        {/* Who Am I Card */}
+                    {/* Left Column (5 Cols): 100% Authentic Portrait Frame */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-60px" }}
+                        transition={{ duration: 0.7 }}
+                        className="lg:col-span-5 flex flex-col items-center relative"
+                    >
                         <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6 }}
-                            viewport={{ once: true }}
-                            className={`p-6 sm:p-8 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-xl relative overflow-hidden`}
+                            ref={imgRef}
+                            onMouseMove={handleMouseMove}
+                            onMouseLeave={handleMouseLeave}
+                            style={{
+                                rotateX,
+                                rotateY,
+                                transformStyle: 'preserve-3d',
+                            }}
+                            className="relative w-full max-w-[420px] rounded-3xl overflow-hidden border border-white/10 bg-[#06060a] p-3 shadow-2xl shadow-black group cursor-pointer"
                         >
-                            <div className="flex items-center gap-3 mb-5 pb-4 border-b border-gray-200 dark:border-gray-800/60">
-                                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl text-white">
-                                    <FaUserTie />
-                                </div>
+                            {/* Ambient Rim Highlight */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-rose-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl" />
+
+                            <img
+                                src={aboutImage}
+                                alt="MD Mahabubur Rahman - 100% Authentic Portrait"
+                                className="w-full h-auto object-cover rounded-2xl select-none transition-transform duration-500 group-hover:scale-[1.01]"
+                            />
+
+                            {/* Floating Glass Pill: Security & ML Engineer */}
+                            <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl border border-white/15 bg-black/80 backdrop-blur-xl flex items-center justify-between gap-3 shadow-2xl">
                                 <div>
-                                    <h3 className={`text-xl font-bold ${theme.textPrimary}`}>Who Am I?</h3>
-                                    <span className="text-xs text-cyan-400 font-mono font-semibold">Full-Stack & Security Specialist</span>
+                                    <h4 className="text-sm font-bold text-white">MD Mahabubur Rahman</h4>
+                                    <p className="text-xs text-rose-400 font-mono">Full-Stack & Security Specialist</p>
                                 </div>
+                                <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                            </div>
+                        </motion.div>
+                    </motion.div>
+
+                    {/* Right Column (7 Cols): Biography & Core Pillars */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-60px" }}
+                        transition={{ duration: 0.7 }}
+                        className="lg:col-span-7 space-y-6"
+                    >
+                        {/* Who Am I Story Card */}
+                        <div className="p-7 sm:p-8 rounded-3xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl shadow-2xl shadow-black/80 space-y-4">
+                            <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center text-lg">
+                                        <FaBrain />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-bold text-white">Who Am I?</h3>
+                                        <p className="text-xs font-mono text-slate-400">Architecting Secure & Intelligent Systems</p>
+                                    </div>
+                                </div>
+                                <span className="hidden sm:inline-block text-xs font-mono text-emerald-400 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                                    Verified Profile
+                                </span>
                             </div>
 
-                            <div className="space-y-4">
+                            <div className="space-y-3.5 text-slate-300 text-sm sm:text-base leading-relaxed">
                                 {aboutData.bio.map((paragraph, idx) => (
-                                    <p key={idx} className={`${theme.textSecondary} text-sm sm:text-base leading-relaxed`}>
+                                    <p key={idx} className="font-normal">
                                         {paragraph}
                                     </p>
                                 ))}
                             </div>
 
-                            <div className="pt-6 mt-6 border-t border-gray-200 dark:border-gray-800/60 flex flex-wrap gap-4 items-center">
+                            {/* Expertise Badges */}
+                            <div className="flex flex-wrap gap-2 pt-2">
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono bg-white/[0.04] border border-white/10 text-slate-300">
+                                    <FaCode className="text-rose-400 text-[11px]" />
+                                    <span>MERN & FastAPI</span>
+                                </span>
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono bg-white/[0.04] border border-white/10 text-slate-300">
+                                    <FaShieldAlt className="text-emerald-400 text-[11px]" />
+                                    <span>Offensive & Defensive Security</span>
+                                </span>
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono bg-white/[0.04] border border-white/10 text-slate-300">
+                                    <FaBrain className="text-blue-400 text-[11px]" />
+                                    <span>Machine Learning & Threat Detection</span>
+                                </span>
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono bg-white/[0.04] border border-white/10 text-slate-300">
+                                    <FaBug className="text-amber-400 text-[11px]" />
+                                    <span>Bug Bounty & Pentesting</span>
+                                </span>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="pt-4 flex flex-wrap gap-4 items-center">
                                 <motion.button
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.97 }}
+                                    whileHover={{ scale: 1.04 }}
+                                    whileTap={{ scale: 0.96 }}
                                     onClick={handleDownloadCV}
-                                    className="px-7 py-3 rounded-full text-xs sm:text-sm font-bold bg-white text-gray-950 shadow-xl shadow-white/10 hover:bg-slate-200 flex items-center gap-2 transition-all"
+                                    className="px-7 py-3 rounded-xl text-xs sm:text-sm font-bold bg-[#f43f5e] hover:bg-[#e11d48] text-white shadow-lg shadow-rose-900/40 flex items-center gap-2 transition-all cursor-pointer"
                                 >
                                     <FaDownload className="text-xs" />
                                     <span>Download Resume (PDF)</span>
@@ -194,191 +263,45 @@ function About({ darkMode }) {
 
                                 <a
                                     href="#contact"
-                                    className={`px-6 py-3 rounded-full text-xs sm:text-sm font-semibold border flex items-center gap-2 transition-all ${
-                                        darkMode ? 'bg-[#121218] hover:bg-[#1c1c24] text-gray-200 border-white/10 hover:border-white/30' : 'bg-gray-100 hover:bg-gray-200 text-gray-800 border-gray-300'
-                                    }`}
+                                    className="px-6 py-3 rounded-xl text-xs sm:text-sm font-medium border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08] hover:border-white/30 backdrop-blur-xl flex items-center gap-2 transition-all cursor-pointer"
                                 >
-                                    <FaEnvelope className="text-xs text-cyan-400" />
                                     <span>Get In Touch</span>
+                                    <FaArrowRight className="text-xs text-rose-400" />
                                 </a>
                             </div>
-                        </motion.div>
+                        </div>
 
-                        {/* Personal Details Matrix */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, delay: 0.1 }}
-                            viewport={{ once: true }}
-                            className={`p-6 sm:p-8 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-xl`}
-                        >
-                            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-800/60">
-                                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl text-white">
-                                    <FaBriefcase />
-                                </div>
-                                <div>
-                                    <h3 className={`text-xl font-bold ${theme.textPrimary}`}>Personal Profile</h3>
-                                    <span className="text-xs text-cyan-400 font-mono font-semibold">Location & Education Timeline</span>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {[
-                                    { icon: FaMapMarkerAlt, label: "Location", value: aboutData.personalDetails.location, color: "text-cyan-400", bg: "from-cyan-500/10 to-transparent" },
-                                    { icon: FaGraduationCap, label: "Degree", value: aboutData.personalDetails.student, color: "text-indigo-400", bg: "from-indigo-500/10 to-transparent" },
-                                    { icon: FaEnvelope, label: "Email Address", value: aboutData.personalDetails.email, color: "text-purple-400", bg: "from-purple-500/10 to-transparent", full: true },
-                                    { icon: FaPhone, label: "Direct Phone", value: aboutData.personalDetails.phone, color: "text-emerald-400", bg: "from-emerald-500/10 to-transparent" },
-                                    { icon: FaCalendarAlt, label: "Expected Graduation", value: aboutData.personalDetails.graduation, color: "text-blue-400", bg: "from-blue-500/10 to-transparent" },
-                                ].map((item, idx) => {
-                                    const IconComponent = item.icon;
-                                    return (
-                                        <div
-                                            key={idx}
-                                            className={`p-4 rounded-2xl border ${theme.innerCardBg} ${item.full ? 'sm:col-span-2' : ''} bg-gradient-to-br ${item.bg} transition-all hover:scale-[1.01]`}
-                                        >
-                                            <span className={`text-[11px] font-mono ${theme.textMuted} block mb-1.5 uppercase tracking-wide`}>{item.label}</span>
-                                            <div className={`flex items-center gap-2 font-semibold text-xs sm:text-sm ${theme.textPrimary}`}>
-                                                <IconComponent className={`text-sm ${item.color} flex-shrink-0`} />
-                                                <span className="break-all">{item.value}</span>
-                                            </div>
+                        {/* Quick Personal Info Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            {[
+                                { icon: FaMapMarkerAlt, label: "Location", value: aboutData.personalDetails.location || "Dhaka, Bangladesh" },
+                                { icon: FaGraduationCap, label: "Degree", value: aboutData.personalDetails.student || "B.Sc. CSE (Expected 2026)" },
+                                { icon: FaEnvelope, label: "Direct Email", value: aboutData.personalDetails.email || "rahmanmdmahabubur666@gmail.com", full: true },
+                                { icon: FaPhone, label: "Direct Phone", value: aboutData.personalDetails.phone || "+880 1715044575" },
+                            ].map((item, idx) => {
+                                const IconComponent = item.icon;
+                                return (
+                                    <div
+                                        key={idx}
+                                        className={`p-4 rounded-2xl border border-white/10 bg-[#06060a]/70 backdrop-blur-md ${item.full ? 'sm:col-span-2' : ''} flex items-center gap-3.5`}
+                                    >
+                                        <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/10 text-rose-400 flex items-center justify-center text-sm shrink-0">
+                                            <IconComponent />
                                         </div>
-                                    );
-                                })}
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    {/* ── Right: Education, Certs, Tech Stack ── */}
-                    <div className="lg:col-span-5 space-y-8">
-
-                        {/* Education Timeline */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6 }}
-                            viewport={{ once: true }}
-                            className={`p-6 sm:p-8 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-xl card-hover-glow`}
-                        >
-                            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-800/40">
-                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center text-xl text-cyan-500">
-                                    <FaGraduationCap />
-                                </div>
-                                <div>
-                                    <h3 className={`text-xl font-bold ${theme.textPrimary}`}>Academic Background</h3>
-                                    <span className="text-xs text-cyan-500 font-mono font-semibold">B.Sc Computer Science</span>
-                                </div>
-                            </div>
-
-                            <div className="space-y-4 relative">
-                                {/* Timeline bar */}
-                                <div className="absolute left-3 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/50 to-transparent" />
-
-                                {education.map((edu, idx) => (
-                                    <div key={idx} className="pl-8 relative">
-                                        {/* Timeline dot */}
-                                        <div className="absolute left-0 top-2 w-6 h-6 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 border-2 border-gray-900 flex items-center justify-center">
-                                            <div className="w-2 h-2 rounded-full bg-white" />
-                                        </div>
-
-                                        <div className={`p-4 rounded-2xl border ${theme.innerCardBg}`}>
-                                            <div className="flex items-start justify-between gap-2 mb-1">
-                                                <h4 className={`text-sm font-bold ${theme.textPrimary} leading-snug`}>{edu.degree}</h4>
-                                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-500 border border-cyan-500/40 whitespace-nowrap flex-shrink-0">
-                                                    {edu.year}
-                                                </span>
-                                            </div>
-                                            <p className="text-xs text-orange-500 font-semibold mb-2">{edu.institution}</p>
-                                            <p className={`text-xs ${theme.textMuted} leading-relaxed`}>{edu.description}</p>
+                                        <div className="min-w-0">
+                                            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">{item.label}</span>
+                                            <span className="text-xs sm:text-sm font-semibold text-white truncate block">{item.value}</span>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        </motion.div>
+                                );
+                            })}
+                        </div>
+                    </motion.div>
 
-                        {/* Certifications */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, delay: 0.1 }}
-                            viewport={{ once: true }}
-                            className={`p-6 sm:p-8 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-xl`}
-                        >
-                            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-800/60">
-                                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl text-white">
-                                    <FaCertificate />
-                                </div>
-                                <div>
-                                    <h3 className={`text-xl font-bold ${theme.textPrimary}`}>Certifications & Credentials</h3>
-                                    <span className="text-xs text-cyan-400 font-mono font-semibold">Verified Specializations</span>
-                                </div>
-                            </div>
-
-                            <div className="space-y-3">
-                                {certifications.map((cert, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, x: 15 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        transition={{ duration: 0.4, delay: idx * 0.07 }}
-                                        viewport={{ once: true }}
-                                        className={`p-3.5 rounded-2xl border ${theme.innerCardBg} flex items-center justify-between gap-3 hover:border-cyan-500/30 transition-all`}
-                                    >
-                                        <div className="flex items-center gap-3 min-w-0">
-                                            <div className="w-8 h-8 rounded-xl bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
-                                                <FaAward className="text-cyan-400 text-sm" />
-                                            </div>
-                                            <div className="min-w-0">
-                                                <h4 className={`text-xs sm:text-sm font-bold ${theme.textPrimary} truncate`}>{cert.name}</h4>
-                                                <span className={`text-[11px] ${theme.textMuted}`}>{cert.issuer} • {cert.year}</span>
-                                            </div>
-                                        </div>
-                                        <span className="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 flex-shrink-0">
-                                            {cert.level}
-                                        </span>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>
-
-                        {/* Core Tech Stack */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            viewport={{ once: true }}
-                            className={`p-6 sm:p-8 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-xl`}
-                        >
-                            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-800/60">
-                                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl text-white">
-                                    <FaLaptopCode />
-                                </div>
-                                <div>
-                                    <h3 className={`text-xl font-bold ${theme.textPrimary}`}>Core Tech Stack</h3>
-                                    <span className="text-xs text-cyan-400 font-mono font-semibold">Primary Development Stack</span>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                {techStack.map((tech, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        whileHover={{ scale: 1.02, y: -1 }}
-                                        className={`p-3 rounded-2xl border ${theme.innerCardBg} flex items-center gap-3 cursor-default transition-all hover:border-white/20`}
-                                    >
-                                        <div className="text-2xl flex-shrink-0">{tech.icon}</div>
-                                        <div className="min-w-0">
-                                            <h4 className={`text-xs font-bold ${theme.textPrimary} truncate`}>{tech.name}</h4>
-                                            <span className={`text-[10px] ${theme.textMuted} block truncate`}>{tech.level}</span>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </div>
                 </div>
 
-                {/* Stats Grid with animated counters */}
-                <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-12">
+                {/* Animated Stats Bar */}
+                <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-20">
                     {stats.map((stat, idx) => (
                         <motion.div
                             key={idx}
@@ -386,53 +309,54 @@ function About({ darkMode }) {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: idx * 0.1 }}
                             viewport={{ once: true }}
-                            className={`p-6 rounded-3xl border ${theme.border} ${theme.cardBg} text-center relative overflow-hidden group shadow-lg cursor-default`}
+                            className="p-6 rounded-2xl border border-white/10 bg-[#06060a]/80 backdrop-blur-xl text-center shadow-xl shadow-black/60 hover:border-rose-500/30 transition-all group"
                         >
-                            <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent mb-1">
+                            <div className="text-3xl sm:text-4xl font-black text-white group-hover:text-rose-400 transition-colors mb-1">
                                 <AnimatedStat value={stat.number} visible={statsVisible} />
                             </div>
-                            <div className={`text-xs sm:text-sm font-bold ${theme.textPrimary} mb-1`}>{stat.label}</div>
-                            <div className={`text-[11px] ${theme.textMuted}`}>{stat.description}</div>
+                            <div className="text-xs sm:text-sm font-bold text-slate-200 mb-0.5">{stat.label}</div>
+                            <div className="text-[11px] font-mono text-slate-500">{stat.description}</div>
                         </motion.div>
                     ))}
                 </div>
 
-                {/* Core Values */}
+                {/* Engineering Philosophy Cards */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className={`p-6 sm:p-8 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-xl`}
+                    transition={{ duration: 0.6 }}
+                    className="space-y-8"
                 >
-                    <div className="text-center mb-8">
-                        <h3 className={`text-xl sm:text-2xl font-bold ${theme.textPrimary} mb-2`}>
-                            What <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Drives Me</span>
+                    <div className="text-center">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                            What <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-white">Drives Me</span>
                         </h3>
-                        <p className={`text-xs sm:text-sm ${theme.textMuted}`}>
-                            Core engineering principles guiding every project and security research.
+                        <p className="text-xs sm:text-sm text-slate-400 font-mono">
+                            Guiding engineering principles for software craft, security rigor, and intelligent workflows.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         {coreValues.map((val, idx) => {
                             const IconComp = coreValueIcons[idx % coreValueIcons.length];
                             return (
                                 <motion.div
                                     key={idx}
-                                    whileHover={{ scale: 1.03, y: -3 }}
-                                    className={`p-5 rounded-2xl border ${theme.innerCardBg} text-center cursor-default transition-all hover:border-white/20`}
+                                    whileHover={{ y: -4 }}
+                                    className="p-6 rounded-2xl border border-white/10 bg-[#06060a]/80 backdrop-blur-xl hover:border-rose-500/30 transition-all duration-300 shadow-xl shadow-black/50 group"
                                 >
-                                    <div className={`w-12 h-12 rounded-xl bg-white/5 border border-white/10 text-white flex items-center justify-center mx-auto mb-3 shadow-lg`}>
-                                        <IconComp className="text-lg" />
+                                    <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform">
+                                        <IconComp />
                                     </div>
-                                    <h4 className={`text-sm font-bold ${theme.textPrimary} mb-1`}>{val.title}</h4>
-                                    <p className={`text-xs ${theme.textMuted} leading-relaxed`}>{val.description}</p>
+                                    <h4 className="text-base font-bold text-white mb-2 group-hover:text-rose-300 transition-colors">{val.title}</h4>
+                                    <p className="text-xs text-slate-400 leading-relaxed">{val.description}</p>
                                 </motion.div>
                             );
                         })}
                     </div>
                 </motion.div>
+
             </div>
         </section>
     );
