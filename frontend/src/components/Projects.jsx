@@ -56,13 +56,13 @@ function Projects({ darkMode }) {
             ? 'bg-[#080d1a]/70 backdrop-blur-2xl border-white/[0.08] text-white shadow-xl shadow-black/60'
             : 'bg-white/90 backdrop-blur-xl border-gray-200/90 text-gray-900 shadow-lg shadow-gray-200/50',
         pillBg: darkMode
-            ? 'bg-[#080d1a]/80 border-white/[0.08] text-slate-300 hover:text-white hover:border-orange-500/40'
+            ? 'bg-[#0c0c10]/80 border-white/[0.08] text-slate-300 hover:text-white hover:border-[#E5A93C]/40'
             : 'bg-white border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm',
-        pillActive: 'bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-md shadow-orange-500/25 border-transparent font-bold',
-        badgeBg: darkMode ? 'bg-[#050b17]/80 text-slate-300 border-white/[0.06]' : 'bg-gray-100 text-gray-700 border-gray-200',
-        modalBg: darkMode ? 'bg-[#080d1a] border-white/[0.1] text-white shadow-2xl shadow-black/90' : 'bg-white border-gray-200 text-gray-900',
-        searchBg: darkMode ? 'bg-[#080d1a]/90 border-white/[0.08] text-white placeholder-slate-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 shadow-sm',
-        innerCard: darkMode ? 'bg-[#050b17]/80 border-white/[0.06]' : 'bg-gray-50 border-gray-200',
+        pillActive: 'bg-gradient-to-r from-[#FBBF24] via-[#E5A93C] to-[#D4AF37] text-black shadow-md shadow-[#D4AF37]/30 border-transparent font-bold',
+        badgeBg: darkMode ? 'bg-[#121218] text-slate-300 border-white/[0.06]' : 'bg-gray-100 text-gray-700 border-gray-200',
+        modalBg: darkMode ? 'bg-[#0a0a0f] border-white/[0.1] text-white shadow-2xl shadow-black/90' : 'bg-white border-gray-200 text-gray-900',
+        searchBg: darkMode ? 'bg-[#0c0c10]/90 border-white/[0.08] text-white placeholder-slate-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 shadow-sm',
+        innerCard: darkMode ? 'bg-[#121218] border-white/[0.06]' : 'bg-gray-50 border-gray-200',
     };
 
     const categories = [
@@ -91,37 +91,24 @@ function Projects({ darkMode }) {
 
     const getCategoryIcon = (category) => {
         const norm = normalizeCategory(category);
-        if (norm === 'security') return <FaShieldAlt className="text-orange-500" />;
-        if (norm === 'ml') return <FaBrain className="text-purple-500" />;
-        return <FaLaptopCode className="text-cyan-500" />;
+        if (norm === 'security') return <FaShieldAlt className="text-[#E5A93C]" />;
+        if (norm === 'ml') return <FaBrain className="text-[#FBBF24]" />;
+        return <FaLaptopCode className="text-[#D4AF37]" />;
     };
 
     const getCategoryColor = (category) => {
         const norm = normalizeCategory(category);
-        if (norm === 'security') return { text: 'text-orange-400', border: 'border-orange-500/40', bg: 'bg-orange-500/15' };
-        if (norm === 'ml') return { text: 'text-purple-400', border: 'border-purple-500/40', bg: 'bg-purple-500/15' };
-        return { text: 'text-cyan-400', border: 'border-cyan-500/40', bg: 'bg-cyan-500/15' };
+        if (norm === 'security') return { text: 'text-[#E5A93C]', border: 'border-[#E5A93C]/40', bg: 'bg-[#E5A93C]/15' };
+        if (norm === 'ml') return { text: 'text-[#FBBF24]', border: 'border-[#FBBF24]/40', bg: 'bg-[#FBBF24]/15' };
+        return { text: 'text-[#D4AF37]', border: 'border-[#D4AF37]/40', bg: 'bg-[#D4AF37]/15' };
     };
 
     return (
         <section id="projects" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 relative overflow-hidden">
             {/* Ambient Background */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                <div className="absolute top-1/4 -right-40 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-orange-500/8 via-pink-500/6 to-transparent blur-[140px]" />
-                <div className="absolute bottom-10 -left-40 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-purple-500/8 via-cyan-500/6 to-transparent blur-[150px]" />
-                {/* Islamic girih pattern accent */}
-                <div
-                    className={`absolute -top-24 -left-24 w-80 h-80 ${darkMode ? 'text-white' : 'text-gray-900'}`}
-                    style={{ opacity: darkMode ? 0.04 : 0.05 }}
-                >
-                    <IslamicPattern strokeWidth={1} />
-                </div>
-                <div
-                    className={`absolute -bottom-24 -right-24 w-72 h-72 rotate-90 ${darkMode ? 'text-white' : 'text-gray-900'}`}
-                    style={{ opacity: darkMode ? 0.03 : 0.04 }}
-                >
-                    <IslamicPattern strokeWidth={1} />
-                </div>
+                <div className="absolute top-1/4 -right-40 w-[550px] h-[550px] rounded-full bg-[#E5A93C]/[0.06] blur-[140px]" />
+                <div className="absolute bottom-10 -left-40 w-[600px] h-[600px] rounded-full bg-[#D4AF37]/[0.05] blur-[150px]" />
             </div>
 
             <div className="container mx-auto max-w-7xl relative z-10">
@@ -134,15 +121,15 @@ function Projects({ darkMode }) {
                     viewport={{ once: true }}
                     className="text-center mb-10 sm:mb-12"
                 >
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full backdrop-blur-md mb-3 border border-orange-500/30 bg-orange-500/10">
-                        <FaFolderOpen className="text-orange-500 text-xs animate-pulse" />
-                        <span className="text-xs font-semibold tracking-wider uppercase animated-gradient-text">
-                            FEATURED PORTFOLIO
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full backdrop-blur-md mb-3 border border-[#E5A93C]/30 bg-[#E5A93C]/10">
+                        <FaFolderOpen className="text-[#E5A93C] text-xs animate-pulse" />
+                        <span className="text-xs font-semibold tracking-wider uppercase text-[#E5A93C]">
+                            PORTFOLIO SHOWCASE
                         </span>
                     </div>
 
                     <h2 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight ${theme.textPrimary} mb-3`}>
-                        Featured <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 bg-clip-text text-transparent">Projects & Solutions</span>
+                        Featured <span className="bg-gradient-to-r from-[#FBBF24] via-[#E5A93C] to-[#D4AF37] bg-clip-text text-transparent">Projects & Solutions</span>
                     </h2>
 
                     <p className={`${theme.textSecondary} max-w-2xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed`}>
@@ -300,7 +287,7 @@ function Projects({ darkMode }) {
                                             <motion.button
                                                 whileHover={{ x: 3 }}
                                                 onClick={() => setSelectedProject(project)}
-                                                className="text-xs font-bold text-orange-500 hover:text-orange-400 flex items-center gap-1 transition-colors"
+                                                className="text-xs font-bold text-[#E5A93C] hover:text-[#FBBF24] flex items-center gap-1 transition-colors"
                                             >
                                                 <span>View Details</span>
                                                 <FaArrowRight className="text-[9px]" />
@@ -314,7 +301,7 @@ function Projects({ darkMode }) {
                                                         rel="noopener noreferrer"
                                                         whileHover={{ scale: 1.1, y: -1 }}
                                                         className={`w-8 h-8 rounded-lg border flex items-center justify-center text-xs transition-all ${
-                                                            darkMode ? 'bg-gray-900 border-gray-700 text-gray-300 hover:text-white hover:border-gray-600' : 'bg-gray-100 border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm'
+                                                            darkMode ? 'bg-[#121218] border-gray-800 text-gray-300 hover:text-[#E5A93C] hover:border-[#E5A93C]/40' : 'bg-gray-100 border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm'
                                                         }`}
                                                         title="GitHub Repository"
                                                     >
@@ -327,7 +314,7 @@ function Projects({ darkMode }) {
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         whileHover={{ scale: 1.1, y: -1 }}
-                                                        className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-purple-600 text-white flex items-center justify-center text-xs shadow-sm hover:shadow-orange-500/30 transition-all"
+                                                        className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#D4AF37] to-[#FBBF24] text-black font-bold flex items-center justify-center text-xs shadow-sm hover:shadow-[#D4AF37]/30 transition-all"
                                                         title="Live Demo"
                                                     >
                                                         <FaExternalLinkAlt />
@@ -460,7 +447,7 @@ function Projects({ darkMode }) {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 whileHover={{ scale: 1.04 }}
-                                                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-purple-600 text-white text-xs font-bold flex items-center gap-2 shadow-md hover:shadow-orange-500/30 transition-all"
+                                                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#FBBF24] text-black text-xs font-bold flex items-center gap-2 shadow-md hover:shadow-[#D4AF37]/30 transition-all"
                                             >
                                                 <FaGithub /> View Repository
                                             </motion.a>
@@ -471,8 +458,8 @@ function Projects({ darkMode }) {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 whileHover={{ scale: 1.04 }}
-                                                className={`px-4 py-2.5 rounded-xl text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-all ${
-                                                    darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-900 hover:bg-gray-800'
+                                                className={`px-4 py-2.5 rounded-xl text-white text-xs font-bold flex items-center gap-2 border border-[#E5A93C]/40 shadow-sm transition-all ${
+                                                    darkMode ? 'bg-[#181822] hover:bg-[#222230]' : 'bg-gray-900 hover:bg-gray-800'
                                                 }`}
                                             >
                                                 <FaExternalLinkAlt /> Live Demo

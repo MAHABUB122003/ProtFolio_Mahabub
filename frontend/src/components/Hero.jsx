@@ -8,48 +8,36 @@ import {
     FaArrowRight,
     FaDownload,
     FaEnvelope,
-    FaShieldAlt,
-    FaCode,
     FaPlay,
+    FaShieldAlt,
+    FaCheckCircle,
 } from 'react-icons/fa';
 import { getSection } from '../utils/portfolioData';
-import IslamicPattern from './IslamicPattern';
 import myImage from '../assets/mahabub.png';
 import myCV from '../assets/mahabub.pdf';
 
-/* ─────────────────────────────────────────────
-   Stagger animation variants
-   ───────────────────────────────────────────── */
+/* Stagger animation variants */
 const staggerContainer = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
-        transition: { staggerChildren: 0.12, delayChildren: 0.2 },
+        transition: { staggerChildren: 0.12, delayChildren: 0.15 },
     },
 };
 
 const fadeUp = {
-    hidden: { opacity: 0, y: 25 },
+    hidden: { opacity: 0, y: 24 },
     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const fadeRight = {
-    hidden: { opacity: 0, x: -30 },
-    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-};
-
 const scaleIn = {
-    hidden: { opacity: 0, scale: 0.85 },
+    hidden: { opacity: 0, scale: 0.9 },
     show: { opacity: 1, scale: 1, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
 function Hero({ darkMode }) {
     const heroData = getSection('hero');
-    const cardRef = useRef(null);
-    const sectionRef = useRef(null);
-    const [tilt, setTilt] = useState({ x: 0, y: 0 });
-    const [statsVisible, setStatsVisible] = useState(false);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
 
     const socialIconMap = {
         github: FaGithub,
@@ -63,17 +51,7 @@ function Hero({ darkMode }) {
         platform: s.platform,
     }));
 
-    const handleMouseMove = (e) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        setTilt({ x: y * -8, y: x * 8 });
-    };
-
-    const handleMouseLeave = () => setTilt({ x: 0, y: 0 });
-
-    // Track mouse for parallax glow
+    // Track mouse for ambient warm golden bokeh
     useEffect(() => {
         const handleGlobalMouse = (e) => {
             setMousePosition({
@@ -84,19 +62,6 @@ function Hero({ darkMode }) {
         window.addEventListener('mousemove', handleGlobalMouse);
         return () => window.removeEventListener('mousemove', handleGlobalMouse);
     }, []);
-
-    const theme = {
-        textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        textSecondary: darkMode ? 'text-slate-300' : 'text-gray-600',
-        textMuted: darkMode ? 'text-slate-400' : 'text-gray-400',
-        cardBg: darkMode
-            ? 'bg-[#080d1a]/70 backdrop-blur-2xl border-white/[0.08] shadow-2xl shadow-black/60'
-            : 'bg-white/80 backdrop-blur-xl border-gray-200/60 shadow-lg shadow-gray-200/30',
-        border: darkMode ? 'border-white/[0.08]' : 'border-gray-200/50',
-        socialIconBg: darkMode
-            ? 'bg-[#080d1a]/80 border-white/[0.08] text-slate-300 hover:text-orange-400 hover:border-orange-500/50 hover:bg-orange-500/10 shadow-lg shadow-black/40'
-            : 'bg-white/80 border-gray-200/60 text-gray-600 hover:text-purple-600 hover:border-purple-300 shadow-sm',
-    };
 
     const roles = heroData.roles || [
         "Full-Stack Developer",
@@ -109,18 +74,9 @@ function Hero({ darkMode }) {
     useEffect(() => {
         const interval = setInterval(() => {
             setRoleIndex(prev => (prev + 1) % roles.length);
-        }, 2800);
+        }, 3000);
         return () => clearInterval(interval);
     }, [roles.length]);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setStatsVisible(true); },
-            { threshold: 0.3 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
 
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
@@ -154,359 +110,257 @@ function Hero({ darkMode }) {
     return (
         <section
             id="home"
-            ref={sectionRef}
-            className="relative min-h-screen flex items-center pt-24 sm:pt-28 pb-20 px-4 sm:px-6 overflow-hidden"
+            className="relative min-h-[92vh] lg:min-h-screen flex items-center pt-28 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 md:px-12 overflow-hidden bg-transparent"
         >
-            {/* ── Background Layers ── */}
-            {/* Dot grid */}
-            <div className={`absolute inset-0 ${darkMode ? 'dot-grid-dark' : 'dot-grid-light'} opacity-40 pointer-events-none z-0`} />
-
-            {/* Islamic girih pattern overlay */}
+            {/* ── Soft Warm Golden Ambient Bokeh (Matching Template) ── */}
             <div
-                className={`absolute inset-0 pointer-events-none z-0 ${darkMode ? 'text-white' : 'text-gray-900'}`}
-                style={{ opacity: darkMode ? 0.035 : 0.045 }}
-            >
-                <IslamicPattern strokeWidth={1} />
-            </div>
-
-            {/* Mouse-reactive gradient orb */}
-            <div
-                className="absolute w-[600px] h-[600px] rounded-full pointer-events-none z-0 transition-all duration-[2s] ease-out"
+                className="absolute w-[500px] h-[500px] rounded-full pointer-events-none z-0 transition-all duration-[2.5s] ease-out opacity-25 blur-[120px]"
                 style={{
                     left: `${mousePosition.x}%`,
                     top: `${mousePosition.y}%`,
                     transform: 'translate(-50%, -50%)',
-                    background: darkMode
-                        ? 'radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)'
-                        : 'radial-gradient(circle, rgba(168,85,247,0.05) 0%, transparent 70%)',
+                    background: 'radial-gradient(circle, #D4AF37 0%, #E5A93C 40%, transparent 75%)',
                 }}
             />
+            {/* Left Warm Amber Light Orb */}
+            <div className="absolute top-[30%] -left-[10%] w-[420px] h-[420px] rounded-full bg-[#E5A93C]/[0.08] blur-[130px] pointer-events-none" />
+            {/* Right Warm Golden Orb behind photo */}
+            <div className="absolute top-[20%] right-[5%] w-[500px] h-[500px] rounded-full bg-[#D4AF37]/[0.10] blur-[140px] pointer-events-none" />
 
-            {/* Static ambient orbs */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                <div className="absolute top-[15%] left-[5%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-orange-500/6 via-purple-500/3 to-transparent blur-[120px]" />
-                <div className="absolute bottom-[10%] right-[5%] w-[500px] h-[500px] rounded-full bg-gradient-to-tl from-purple-500/6 via-cyan-500/3 to-transparent blur-[120px]" />
-            </div>
-
-            {/* ── Main Content ── */}
+            {/* ── Main Content Container ── */}
             <div className="container mx-auto max-w-7xl relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
-                    {/* ── LEFT COLUMN ── */}
+                    {/* ════════════════════════════════════════════
+                        LEFT COLUMN: Clean Luxury Copy & CTAs
+                        ════════════════════════════════════════════ */}
                     <motion.div
                         variants={staggerContainer}
                         initial="hidden"
                         animate="show"
-                        className="lg:col-span-7 text-center lg:text-left space-y-7"
+                        className="lg:col-span-6 text-center lg:text-left space-y-6 lg:space-y-8"
                     >
-                        {/* Bismillah — Arabic calligraphy accent */}
-                        <motion.div variants={fadeUp} className="flex justify-center lg:justify-start">
+                        {/* Pre-title & Bismillah */}
+                        <motion.div variants={fadeUp} className="space-y-2">
                             <p
                                 dir="rtl"
                                 lang="ar"
-                                className={`font-arabic text-lg sm:text-xl md:text-2xl leading-relaxed tracking-wide ${
-                                    darkMode ? 'text-orange-300/90' : 'text-orange-600/90'
+                                className={`font-arabic text-sm sm:text-base tracking-wide ${
+                                    darkMode ? 'text-[#E5A93C]/80' : 'text-[#B8860B]'
                                 }`}
                             >
                                 بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
                             </p>
-                        </motion.div>
-
-                        {/* Availability badge */}
-                        <motion.div variants={fadeUp}>
-                            <div className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full border backdrop-blur-md text-xs sm:text-sm font-medium tracking-wide ${
-                                darkMode
-                                    ? 'border-emerald-500/20 bg-emerald-500/5 text-emerald-400'
-                                    : 'border-emerald-500/25 bg-emerald-50 text-emerald-600'
-                            }`}>
-                                <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-                                </span>
-                                <span>{heroData.availableText || "Available for opportunities"}</span>
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 text-[#E5A93C] text-xs font-mono tracking-wide">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#E5A93C] animate-pulse" />
+                                <span>{heroData.availableText || "Available For Full-Time & Freelance Roles"}</span>
                             </div>
                         </motion.div>
 
-                        {/* Greeting + Name */}
+                        {/* Hello I'm & Main Headline */}
                         <motion.div variants={fadeUp} className="space-y-2">
-                            <p className={`text-base sm:text-lg font-medium ${theme.textSecondary} tracking-wide`}>
-                                As-salamu alaykum 👋, I'm
-                            </p>
-                            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-black tracking-tight leading-[1.05] bg-gradient-to-r from-orange-500 to-purple-600 bg-clip-text text-transparent`}>
-                                {heroData.name}
+                            <h3 className={`text-xl sm:text-2xl md:text-3xl font-light tracking-wide ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                                Hello I'm
+                            </h3>
+                            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-black uppercase tracking-tight leading-[1.05] ${
+                                darkMode ? 'text-white' : 'text-gray-950'
+                            }`}>
+                                MD MAHABUBUR RAHMAN
                             </h1>
-                            {/* Arabic name signature */}
-                            <p
-                                dir="rtl"
-                                lang="ar"
-                                className={`font-arabic text-xl sm:text-2xl md:text-3xl font-bold ${darkMode ? 'text-purple-300/80' : 'text-purple-600/80'}`}
-                            >
-                                مَحْبُوب
-                            </p>
                         </motion.div>
 
-                        {/* Animated Role */}
-                        <motion.div variants={fadeUp} className="h-10 sm:h-12 flex items-center justify-center lg:justify-start">
-                            <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-lg border ${
-                                darkMode ? 'border-gray-800/50 bg-gray-900/30' : 'border-gray-200/50 bg-gray-50/50'
-                            }`}>
-                                <span className={`text-xs font-mono ${theme.textMuted}`}>role:</span>
+                        {/* Animated Dynamic Role & Tagline */}
+                        <motion.div variants={fadeUp} className="space-y-3">
+                            <div className="flex items-center justify-center lg:justify-start gap-2">
+                                <span className="text-xs font-mono uppercase tracking-widest text-[#E5A93C]">Specialization:</span>
                                 <AnimatePresence mode="wait">
                                     <motion.span
                                         key={roleIndex}
-                                        initial={{ opacity: 0, y: 12 }}
+                                        initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -12 }}
-                                        transition={{ duration: 0.35 }}
-                                        className="text-sm sm:text-base md:text-lg font-semibold bg-gradient-to-r from-orange-400 to-purple-400 bg-clip-text text-transparent typing-cursor"
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="text-base sm:text-lg md:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#E5A93C] to-[#FBBF24]"
                                     >
                                         {roles[roleIndex]}
                                     </motion.span>
                                 </AnimatePresence>
                             </div>
+                            <p className={`text-sm sm:text-base md:text-[15px] leading-relaxed max-w-xl mx-auto lg:mx-0 font-normal ${
+                                darkMode ? 'text-gray-400' : 'text-gray-600'
+                            }`}>
+                                {heroData.description}
+                            </p>
                         </motion.div>
 
-                        {/* Bio */}
-                        <motion.p
-                            variants={fadeUp}
-                            className={`${theme.textSecondary} text-sm sm:text-base md:text-[15px] max-w-xl leading-relaxed mx-auto lg:mx-0`}
-                        >
-                            {heroData.description}
-                        </motion.p>
-
-                        {/* CTA Buttons */}
-                        <motion.div variants={fadeUp} className="flex flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start pt-1">
-                            {/* Primary: Contact Me */}
+                        {/* ── Action Buttons (Matching Template Style) ── */}
+                        <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center lg:justify-start items-center pt-2">
+                            {/* Primary Pill Button: "Let's Get Started" */}
                             <motion.button
-                                whileHover={{ scale: 1.03 }}
-                                whileTap={{ scale: 0.97 }}
+                                whileHover={{ scale: 1.04, boxShadow: "0 0 25px rgba(229, 169, 60, 0.45)" }}
+                                whileTap={{ scale: 0.96 }}
                                 onClick={() => scrollToSection('contact')}
-                                className="group relative px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl text-sm font-bold text-white overflow-hidden transition-all"
+                                className="px-8 py-3.5 rounded-full text-sm font-bold text-black transition-all duration-300 flex items-center gap-2 shadow-lg"
                                 style={{
-                                    background: 'linear-gradient(135deg, #f97316, #a855f7)',
-                                    boxShadow: '0 4px 20px rgba(249,115,22,0.3), 0 2px 8px rgba(168,85,247,0.2)',
+                                    background: 'linear-gradient(135deg, #FBBF24 0%, #E5A93C 50%, #D4AF37 100%)',
                                 }}
                             >
-                                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                <span className="relative z-10 flex items-center gap-2">
-                                    <FaEnvelope className="text-xs" />
-                                    Contact Me
-                                    <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1" />
-                                </span>
+                                <span>Let's Get Started</span>
+                                <FaArrowRight className="text-xs" />
                             </motion.button>
 
-                            {/* Secondary: Download CV */}
+                            {/* Secondary Button: "Download CV" / Video preview */}
                             <motion.button
                                 whileHover={{ scale: 1.03 }}
                                 whileTap={{ scale: 0.97 }}
                                 onClick={handleDownloadCV}
-                                className={`px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl text-sm font-semibold border flex items-center gap-2 transition-all ${
+                                className={`px-6 py-3.5 rounded-full text-sm font-medium border flex items-center gap-2.5 transition-all duration-300 ${
                                     darkMode
-                                        ? 'bg-gray-900/40 border-gray-700/50 text-gray-300 hover:border-purple-500/40 hover:text-white hover:bg-gray-900/60'
-                                        : 'bg-white/70 border-gray-300/60 text-gray-700 hover:border-purple-400/50 shadow-sm'
+                                        ? 'border-gray-800 bg-[#0c0c0f]/80 text-gray-300 hover:border-[#E5A93C]/50 hover:text-white'
+                                        : 'border-gray-300 bg-white/80 text-gray-700 hover:border-[#D4AF37] hover:text-black shadow-sm'
                                 }`}
                             >
-                                <FaDownload className="text-xs text-purple-400" />
-                                Download CV
-                            </motion.button>
-
-                            {/* Tertiary: View Projects */}
-                            <motion.button
-                                whileHover={{ scale: 1.03 }}
-                                whileTap={{ scale: 0.97 }}
-                                onClick={() => scrollToSection('projects')}
-                                className={`px-5 py-3 sm:py-3.5 rounded-xl text-sm font-medium flex items-center gap-2 transition-all ${
-                                    darkMode
-                                        ? 'text-gray-400 hover:text-orange-400'
-                                        : 'text-gray-500 hover:text-purple-600'
-                                }`}
-                            >
-                                <FaPlay className="text-[10px]" />
-                                View Work
+                                <div className="w-6 h-6 rounded-full bg-[#E5A93C]/20 text-[#E5A93C] flex items-center justify-center text-[10px]">
+                                    <FaDownload />
+                                </div>
+                                <span>Download CV</span>
                             </motion.button>
                         </motion.div>
 
-                        {/* Social Icons */}
-                        <motion.div variants={fadeUp} className="flex items-center justify-center lg:justify-start gap-2.5 pt-1">
-                            <span className={`text-[11px] font-mono uppercase tracking-widest mr-2 ${theme.textMuted}`}>Connect</span>
-                            {socialIcons.map((social, idx) => {
-                                const IconComponent = social.icon;
-                                return (
-                                    <motion.a
-                                        key={idx}
-                                        href={social.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        whileHover={{ scale: 1.12, y: -3 }}
-                                        whileTap={{ scale: 0.92 }}
-                                        className={`w-10 h-10 rounded-xl border flex items-center justify-center text-sm transition-all duration-200 ${theme.socialIconBg}`}
-                                        aria-label={social.platform}
-                                    >
-                                        <IconComponent />
-                                    </motion.a>
-                                );
-                            })}
-                        </motion.div>
+                        {/* ── Social Icons & Metrics Row (Template's 325+ Happy Clients style) ── */}
+                        <motion.div variants={fadeUp} className="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
+                            {/* Project Count Metric */}
+                            <div className="flex items-center gap-3">
+                                <div>
+                                    <h4 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FBBF24] to-[#E5A93C]">
+                                        9+
+                                    </h4>
+                                    <p className={`text-[11px] font-mono uppercase tracking-wider ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                                        Completed Projects
+                                    </p>
+                                </div>
+                                <div className="flex -space-x-2 overflow-hidden ml-2">
+                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-[#D4AF37] to-[#F59E0B] text-black font-bold text-xs">
+                                        M
+                                    </span>
+                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-[#3b82f6] to-[#60a5fa] text-white font-bold text-xs">
+                                        R
+                                    </span>
+                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-[#10b981] to-[#34d399] text-black font-bold text-xs">
+                                        ✓
+                                    </span>
+                                </div>
+                            </div>
 
-                        {/* Stats Row */}
-                        <motion.div
-                            variants={fadeUp}
-                            className="grid grid-cols-3 gap-3 pt-3 max-w-md mx-auto lg:mx-0"
-                        >
-                            {heroData.stats.map((stat, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, y: 15 }}
-                                    animate={{ opacity: statsVisible ? 1 : 0, y: statsVisible ? 0 : 15 }}
-                                    transition={{ delay: 0.8 + idx * 0.15, duration: 0.5 }}
-                                    className={`relative p-3 sm:p-4 rounded-xl border text-center overflow-hidden group cursor-default ${theme.border} ${theme.cardBg}`}
-                                >
-                                    {/* Hover shimmer */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 to-purple-500/0 group-hover:from-orange-500/5 group-hover:to-purple-500/5 transition-all duration-500" />
-                                    <div className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-orange-400 to-purple-400 bg-clip-text text-transparent relative z-10">
-                                        {stat.value}
-                                    </div>
-                                    <div className={`text-[10px] sm:text-[11px] font-semibold mt-0.5 uppercase tracking-wider relative z-10 ${theme.textMuted}`}>
-                                        {stat.label}
-                                    </div>
-                                </motion.div>
-                            ))}
+                            <div className={`hidden sm:block w-px h-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-300'}`} />
+
+                            {/* Social Icons */}
+                            <div className="flex items-center gap-2">
+                                {socialIcons.map((social, idx) => {
+                                    const IconComp = social.icon;
+                                    return (
+                                        <a
+                                            key={idx}
+                                            href={social.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            aria-label={social.platform}
+                                            className={`w-9 h-9 rounded-full border flex items-center justify-center text-xs transition-all duration-200 ${
+                                                darkMode
+                                                    ? 'border-gray-800 bg-[#0d0d12]/90 text-gray-400 hover:text-[#E5A93C] hover:border-[#E5A93C]/40 hover:bg-[#E5A93C]/10'
+                                                    : 'border-gray-300 bg-white text-gray-600 hover:text-[#B8860B] hover:border-[#B8860B]'
+                                            }`}
+                                        >
+                                            <IconComp />
+                                        </a>
+                                    );
+                                })}
+                            </div>
                         </motion.div>
                     </motion.div>
 
-                    {/* ── RIGHT COLUMN: Profile Photo ── */}
+                    {/* ════════════════════════════════════════════
+                        RIGHT COLUMN: Geometric Golden Contour Frame & Portrait
+                        ════════════════════════════════════════════ */}
                     <motion.div
                         variants={scaleIn}
                         initial="hidden"
                         animate="show"
-                        className="lg:col-span-5 flex justify-center relative perspective-1000"
+                        className="lg:col-span-6 flex justify-center items-center relative"
                     >
-                        <div
-                            ref={cardRef}
-                            onMouseMove={handleMouseMove}
-                            onMouseLeave={handleMouseLeave}
-                            className="relative w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem]"
-                            style={{
-                                transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-                                transition: 'transform 0.2s ease-out',
-                            }}
-                        >
-                            {/* Glow behind */}
-                            <div className="absolute -inset-16 rounded-full bg-gradient-to-br from-orange-500/10 via-purple-500/6 to-cyan-400/4 blur-[80px] pointer-events-none" />
+                        <div className="relative w-full max-w-[420px] sm:max-w-[480px] aspect-[4/5] flex items-center justify-center">
 
-                            {/* Outer orbit — dashed */}
+                            {/* ── Geometric Rounded Golden Triangle Contour (Exact Match to Template) ── */}
                             <div
-                                className="absolute -inset-8 rounded-full border border-dashed pointer-events-none"
+                                className="absolute inset-4 sm:inset-6 rounded-[42px] pointer-events-none transition-all duration-700"
                                 style={{
-                                    borderColor: darkMode ? 'rgba(249,115,22,0.1)' : 'rgba(249,115,22,0.12)',
-                                    animation: 'spin 35s linear infinite',
+                                    border: '2.5px solid #E5A93C',
+                                    transform: 'rotate(-7deg) scale(0.96)',
+                                    boxShadow: '0 0 35px rgba(229, 169, 60, 0.22), inset 0 0 25px rgba(229, 169, 60, 0.08)',
                                 }}
                             />
 
-                            {/* Inner orbit */}
+                            {/* Second subtle offset contour for luxury depth */}
                             <div
-                                className="absolute -inset-3 rounded-full border pointer-events-none"
+                                className="absolute inset-4 sm:inset-6 rounded-[42px] pointer-events-none opacity-30"
                                 style={{
-                                    borderColor: darkMode ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.1)',
-                                    animation: 'spin 25s linear infinite reverse',
+                                    border: '1px solid #D4AF37',
+                                    transform: 'rotate(-2deg) scale(1.02)',
                                 }}
                             />
 
-                            {/* Orbiting dot */}
-                            <div
-                                className="absolute -inset-8 rounded-full pointer-events-none"
-                                style={{ animation: 'spin 14s linear infinite' }}
-                            >
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-gradient-to-r from-orange-400 to-purple-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]" />
+                            {/* ── Mahabub's Real Portrait (Dark studio background with golden rim lighting) ── */}
+                            <div className="relative z-10 w-full h-full flex items-end justify-center overflow-visible">
+                                <motion.img
+                                    src={myImage}
+                                    alt="MD Mahabubur Rahman"
+                                    className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_35px_rgba(0,0,0,0.8)] filter contrast-[1.05]"
+                                    initial={{ y: 20, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                    }}
+                                />
                             </div>
 
-                            {/* Second orbiting dot — opposite side */}
-                            <div
-                                className="absolute -inset-3 rounded-full pointer-events-none"
-                                style={{ animation: 'spin 10s linear infinite reverse' }}
+                            {/* ── Rotating Circular Stamp Badge: "Hire Me For Your Dreamed Projects ↗" (Exact Match to Template) ── */}
+                            <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
+                                className="absolute -bottom-4 right-0 sm:right-2 z-20 w-28 h-28 sm:w-32 sm:h-32 pointer-events-auto cursor-pointer"
+                                onClick={() => scrollToSection('contact')}
                             >
-                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_6px_rgba(168,85,247,0.5)]" />
-                            </div>
-
-                            {/* Profile image */}
-                            <div className="relative w-full h-full preserve-3d" style={{ transform: 'translateZ(20px)' }}>
-                                <div className="absolute inset-5 rounded-full bg-black/20 blur-2xl translate-y-4 pointer-events-none" />
-
-                                {/* Gradient ring */}
-                                <div className="w-full h-full rounded-full p-[3px] bg-gradient-to-tr from-orange-500 via-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/15">
-                                    <div className={`w-full h-full rounded-full overflow-hidden flex items-center justify-center ${darkMode ? 'bg-gray-950' : 'bg-white'}`}>
-                                        <img
-                                            src={myImage}
-                                            alt="MD MAHABUBUR RAHMAN"
-                                            className="w-full h-full object-cover"
-                                            onError={(e) => {
-                                                e.target.style.display = 'none';
-                                                e.target.parentElement.innerHTML = `
-                                                    <div class="flex items-center justify-center w-full h-full bg-gradient-to-br from-gray-900 to-gray-800">
-                                                        <div class="text-center p-6">
-                                                            <div class="w-20 h-20 mx-auto bg-gradient-to-br from-orange-500/30 to-purple-500/30 rounded-full flex items-center justify-center text-3xl font-black text-white border border-orange-500/40 mb-3">M</div>
-                                                            <p class="text-xs text-gray-400 font-mono">MD MAHABUBUR RAHMAN</p>
-                                                        </div>
-                                                    </div>
-                                                `;
-                                            }}
+                                <div className="relative w-full h-full flex items-center justify-center">
+                                    {/* SVG Circular Curved Text */}
+                                    <svg viewBox="0 0 100 100" className="w-full h-full">
+                                        <path
+                                            id="circlePath"
+                                            d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
+                                            fill="none"
                                         />
+                                        <text
+                                            fontSize="9"
+                                            fontFamily="monospace"
+                                            fontWeight="bold"
+                                            letterSpacing="2.2"
+                                            fill={darkMode ? '#E5A93C' : '#92400E'}
+                                        >
+                                            <textPath href="#circlePath" startOffset="0%">
+                                                • HIRE ME FOR YOUR DREAMED PROJECTS •
+                                            </textPath>
+                                        </text>
+                                    </svg>
+
+                                    {/* Center Golden Arrow Circle Button */}
+                                    <div className="absolute w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#FBBF24] flex items-center justify-center shadow-lg shadow-[#D4AF37]/30 text-black">
+                                        <FaArrowRight className="text-xs -rotate-45" />
                                     </div>
                                 </div>
-
-                                {/* Badge: Security Expert */}
-                                <motion.div
-                                    animate={{ y: [0, -5, 0] }}
-                                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                                    className={`absolute -top-1 -right-4 sm:top-3 sm:-right-3 px-3 py-1.5 rounded-xl border backdrop-blur-xl flex items-center gap-2 shadow-lg ${
-                                        darkMode
-                                            ? 'bg-gray-950/85 border-purple-500/20 text-white shadow-purple-500/8'
-                                            : 'bg-white/85 border-purple-300/30 text-gray-800 shadow-purple-200/20'
-                                    }`}
-                                    style={{ zIndex: 30 }}
-                                >
-                                    <FaShieldAlt className="text-purple-400 text-xs" />
-                                    <span className="text-[11px] font-semibold font-mono">Security Expert</span>
-                                </motion.div>
-
-                                {/* Badge: Full-Stack Dev */}
-                                <motion.div
-                                    animate={{ y: [0, 5, 0] }}
-                                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
-                                    className={`absolute -bottom-1 -left-4 sm:bottom-3 sm:-left-3 px-3 py-1.5 rounded-xl border backdrop-blur-xl flex items-center gap-2 shadow-lg ${
-                                        darkMode
-                                            ? 'bg-gray-950/85 border-orange-500/20 text-white shadow-orange-500/8'
-                                            : 'bg-white/85 border-orange-300/30 text-gray-800 shadow-orange-200/20'
-                                    }`}
-                                    style={{ zIndex: 30 }}
-                                >
-                                    <FaCode className="text-orange-400 text-xs" />
-                                    <span className="text-[11px] font-semibold font-mono">Full-Stack Dev</span>
-                                </motion.div>
-                            </div>
+                            </motion.div>
                         </div>
                     </motion.div>
                 </div>
-
-                {/* Scroll Indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.8 }}
-                    className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer group"
-                    onClick={() => scrollToSection('about')}
-                >
-                    <span className={`text-[10px] font-mono tracking-[0.2em] uppercase ${theme.textMuted} group-hover:text-orange-400 transition-colors`}>
-                        Scroll Down
-                    </span>
-                    <div className={`w-5 h-9 rounded-full border-2 ${darkMode ? 'border-gray-700 group-hover:border-orange-500/40' : 'border-gray-300 group-hover:border-purple-400/50'} flex items-start justify-center p-1 transition-colors`}>
-                        <motion.div
-                            animate={{ y: [0, 10, 0] }}
-                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                            className="w-1 h-2.5 rounded-full bg-gradient-to-b from-orange-500 to-purple-500"
-                        />
-                    </div>
-                </motion.div>
             </div>
         </section>
     );

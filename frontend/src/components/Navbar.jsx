@@ -142,60 +142,35 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                 className="cursor-pointer flex items-center gap-3 group"
                                 aria-label="Mahabub — Home"
                             >
-                                {/* Logo mark — crisp SVG icon */}
-                                <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0">
-                                    <svg viewBox="0 0 40 40" className="w-full h-full" aria-hidden="true">
-                                        <defs>
-                                            <linearGradient id="brandGradient" x1="0" y1="0" x2="1" y2="1">
-                                                <stop offset="0%" stopColor="#f97316" />
-                                                <stop offset="55%" stopColor="#d946ef" />
-                                                <stop offset="100%" stopColor="#a855f7" />
-                                            </linearGradient>
-                                        </defs>
-                                        <rect width="40" height="40" rx="11" fill="url(#brandGradient)" />
-                                        <rect x="0.5" y="0.5" width="39" height="39" rx="10.5" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
-                                        <path d="M 13 16.5 L 19.5 20 L 13 23.5" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        <path d="M 21.5 25.5 H 28" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" />
-                                    </svg>
-                                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-orange-500/40 to-purple-600/40 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300 -z-10" />
-                                </div>
-                                <div className="hidden sm:block leading-none">
-                                    <span className={`text-lg font-extrabold tracking-tight ${theme.textPrimary}`}>
-                                        Mahabub<span className="text-orange-500">.</span>
-                                    </span>
-                                    <span className={`text-[10px] font-mono block mt-0.5 tracking-[0.2em] uppercase ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-                                        developer
+                                <div className="leading-none">
+                                    <span className="text-xl sm:text-2xl font-black tracking-tight text-white">
+                                        Mahabub<span className="text-[#E5A93C]">.</span>
                                     </span>
                                 </div>
                             </motion.div>
 
-                            {/* Desktop Navigation — pill style with indicator */}
-                            <div className={`hidden md:flex items-center gap-0.5 p-1 rounded-full border backdrop-blur-md ${theme.navCapsuleBg}`}>
+                            {/* Desktop Navigation */}
+                            <div className="hidden md:flex items-center gap-1 px-4 py-1.5 rounded-full border border-white/[0.08] bg-[#0c0c10]/70 backdrop-blur-xl">
                                 {navItems.map((item) => {
                                     const isActive = activeSection === item.name.toLowerCase();
                                     return (
                                         <button
                                             key={item.name}
                                             onClick={() => handleNavClick(item.name)}
-                                            className={`relative px-4 lg:px-5 py-1.5 rounded-full text-[13px] font-semibold transition-all duration-200 ${
+                                            className={`relative px-4 py-1.5 rounded-full text-[13px] font-medium transition-all duration-200 ${
                                                 isActive
-                                                    ? 'text-white'
-                                                    : darkMode
-                                                        ? 'text-gray-400 hover:text-gray-200'
-                                                        : 'text-gray-500 hover:text-gray-900'
+                                                    ? 'text-[#E5A93C] font-semibold'
+                                                    : 'text-gray-300 hover:text-white'
                                             }`}
                                         >
                                             {isActive && (
                                                 <motion.div
                                                     layoutId="activePill"
-                                                    className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500 to-purple-600"
-                                                    style={{
-                                                        boxShadow: '0 4px 15px rgba(249,115,22,0.3), 0 2px 8px rgba(168,85,247,0.2)',
-                                                    }}
+                                                    className="absolute inset-0 rounded-full bg-[#E5A93C]/10 border border-[#E5A93C]/30"
                                                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                                                 />
                                             )}
-                                            <span className="relative z-10 flex items-center gap-1.5">
+                                            <span className="relative z-10">
                                                 {item.name}
                                             </span>
                                         </button>
@@ -204,26 +179,25 @@ function Navbar({ darkMode, toggleDarkMode }) {
                             </div>
 
                             {/* Right Controls */}
-                            <div className="flex items-center gap-2 sm:gap-2.5">
-
+                            <div className="flex items-center gap-3">
                                 {/* Theme Toggle */}
                                 <motion.button
-                                    whileHover={{ scale: 1.08, rotate: 15 }}
+                                    whileHover={{ scale: 1.08 }}
                                     whileTap={{ scale: 0.92 }}
                                     onClick={toggleDarkMode}
-                                    className={`relative p-2.5 sm:p-2 rounded-xl border transition-all duration-300 overflow-hidden ${
+                                    className={`p-2 rounded-full border transition-all duration-300 ${
                                         darkMode
-                                            ? 'bg-gray-900/80 border-gray-800/60 text-amber-400 hover:border-amber-500/40'
-                                            : 'bg-white/80 border-gray-200/60 text-gray-700 hover:border-purple-300/60 shadow-sm'
+                                            ? 'bg-[#121218] border-gray-800 text-[#E5A93C] hover:border-[#E5A93C]/50'
+                                            : 'bg-white border-gray-300 text-gray-800 shadow-sm'
                                     }`}
                                     aria-label="Toggle theme"
                                 >
                                     <AnimatePresence mode="wait">
                                         <motion.div
                                             key={darkMode ? 'sun' : 'moon'}
-                                            initial={{ y: -20, opacity: 0, rotate: -90 }}
-                                            animate={{ y: 0, opacity: 1, rotate: 0 }}
-                                            exit={{ y: 20, opacity: 0, rotate: 90 }}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
                                             transition={{ duration: 0.2 }}
                                         >
                                             {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -231,26 +205,14 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                     </AnimatePresence>
                                 </motion.button>
 
-                                {/* Hire Me — Desktop */}
+                                {/* Contact Me Button (Matching Template Pill Outline) */}
                                 <motion.button
-                                    whileHover={{ scale: 1.04 }}
+                                    whileHover={{ scale: 1.04, backgroundColor: '#E5A93C', color: '#000000' }}
                                     whileTap={{ scale: 0.96 }}
                                     onClick={handleHireMeClick}
-                                    className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-bold text-white transition-all relative overflow-hidden group"
-                                    style={{
-                                        background: 'linear-gradient(135deg, #f97316, #a855f7)',
-                                        boxShadow: '0 4px 20px rgba(249,115,22,0.25), 0 2px 8px rgba(168,85,247,0.15)',
-                                    }}
+                                    className="hidden sm:flex items-center gap-2 px-6 py-2 rounded-full text-[13px] font-semibold text-white border border-[#E5A93C] transition-all duration-300 bg-transparent"
                                 >
-                                    {/* Shimmer effect on hover */}
-                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                                        style={{
-                                            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)',
-                                            animation: 'shimmer 2s infinite',
-                                        }}
-                                    />
-                                    <FaPaperPlane className="text-xs relative z-10" />
-                                    <span className="relative z-10">Hire Me</span>
+                                    <span>Contact Me</span>
                                 </motion.button>
 
                                 {/* Mobile Hamburger */}
