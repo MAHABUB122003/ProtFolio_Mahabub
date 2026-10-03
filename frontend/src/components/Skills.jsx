@@ -1,826 +1,272 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-    FaCode, 
-    FaShieldAlt, 
-    FaTools, 
-    FaLanguage,
-    FaReact,
-    FaNodeJs,
-    FaPython,
-    FaGitAlt,
-    FaDocker,
-    FaDatabase,
-    FaCloud,
+import {
+    FaCode,
+    FaShieldAlt,
     FaBrain,
-    FaServer
+    FaTools,
+    FaServer,
+    FaTerminal,
+    FaBug,
+    FaDatabase,
+    FaLock,
+    FaSearch,
+    FaLayerGroup,
+    FaCheckCircle,
+    FaFire
 } from 'react-icons/fa';
-import { 
-    SiMongodb, 
-    SiExpress, 
-    SiTailwindcss, 
+import {
+    SiReact,
+    SiNodedotjs,
+    SiExpress,
+    SiMongodb,
+    SiFastapi,
+    SiTailwindcss,
     SiJavascript,
+    SiPython,
+    SiGnubash,
+    SiDocker,
+    SiGit,
+    SiLinux,
     SiSplunk,
     SiWireshark,
-    SiGnubash,
-    SiCplusplus,
-    SiFastapi
+    SiKalilinux,
+    SiPostgresql,
+    SiRedis,
+    SiNextdotjs,
+    SiGraphql
 } from 'react-icons/si';
-import { getSection } from '../utils/portfolioData';
-import IslamicPattern from './IslamicPattern';
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+    },
+};
+
+const categories = [
+    { id: 'all', label: 'All Disciplines', icon: FaLayerGroup },
+    { id: 'fullstack', label: 'Full-Stack & Web', icon: FaCode },
+    { id: 'security', label: 'Cybersecurity & Pentesting', icon: FaShieldAlt },
+    { id: 'ml', label: 'Machine Learning & AI', icon: FaBrain },
+    { id: 'devops', label: 'DevOps & Linux', icon: FaTools },
+];
+
+const allSkills = [
+    // Full-Stack
+    { name: 'React.js', category: 'fullstack', level: 'Advanced', icon: SiReact, color: 'text-cyan-400', bg: 'hover:border-cyan-500/40', desc: 'SPA, Hooks, Context, State Architecture' },
+    { name: 'Node.js', category: 'fullstack', level: 'Advanced', icon: SiNodedotjs, color: 'text-emerald-400', bg: 'hover:border-emerald-500/40', desc: 'Asynchronous event-driven backend services' },
+    { name: 'Express.js', category: 'fullstack', level: 'Advanced', icon: SiExpress, color: 'text-slate-300', bg: 'hover:border-slate-500/40', desc: 'RESTful API routing & custom middleware' },
+    { name: 'MongoDB', category: 'fullstack', level: 'Advanced', icon: SiMongodb, color: 'text-green-500', bg: 'hover:border-green-500/40', desc: 'Document schemas, aggregations & indexing' },
+    { name: 'FastAPI', category: 'fullstack', level: 'Proficient', icon: SiFastapi, color: 'text-teal-400', bg: 'hover:border-teal-500/40', desc: 'High-speed Python asynchronous APIs & Pydantic' },
+    { name: 'Next.js', category: 'fullstack', level: 'Proficient', icon: SiNextdotjs, color: 'text-white', bg: 'hover:border-white/40', desc: 'SSR, App Router & Server Components' },
+    { name: 'Tailwind CSS', category: 'fullstack', level: 'Expert', icon: SiTailwindcss, color: 'text-sky-400', bg: 'hover:border-sky-500/40', desc: 'Responsive design systems & bespoke styling' },
+    { name: 'JavaScript (ES6+)', category: 'fullstack', level: 'Advanced', icon: SiJavascript, color: 'text-yellow-400', bg: 'hover:border-yellow-500/40', desc: 'Async/await, closures, prototypes, DOM engine' },
+    { name: 'PostgreSQL', category: 'fullstack', level: 'Proficient', icon: SiPostgresql, color: 'text-blue-400', bg: 'hover:border-blue-500/40', desc: 'Relational design, queries & ACID transactions' },
+
+    // Cybersecurity
+    { name: 'Web Pentesting', category: 'security', level: 'Expert', icon: FaShieldAlt, color: 'text-rose-400', bg: 'hover:border-rose-500/40', desc: 'OWASP Top 10, Auth bypass, SSRF, XSS, SQLi' },
+    { name: 'Burp Suite Pro', category: 'security', level: 'Expert', icon: FaBug, color: 'text-orange-400', bg: 'hover:border-orange-500/40', desc: 'Repeater, Intruder, Match/Replace, Proxy audits' },
+    { name: 'Network Security', category: 'security', level: 'Advanced', icon: SiWireshark, color: 'text-cyan-400', bg: 'hover:border-cyan-500/40', desc: 'Packet dissection, traffic analysis & MITM analysis' },
+    { name: 'SOC & SIEM (Splunk/Wazuh)', category: 'security', level: 'Proficient', icon: SiSplunk, color: 'text-amber-400', bg: 'hover:border-amber-500/40', desc: 'Log correlation, incident response & alert triage' },
+    { name: 'Digital Forensics', category: 'security', level: 'Proficient', icon: FaSearch, color: 'text-indigo-400', bg: 'hover:border-indigo-500/40', desc: 'Autopsy, disk artifact recovery, memory inspection' },
+    { name: 'Bug Bounty Hunting', category: 'security', level: 'Active Hunter', icon: FaLock, color: 'text-emerald-400', bg: 'hover:border-emerald-500/40', desc: '20+ verified vulnerability disclosures & reporting' },
+    { name: 'Metasploit & Nmap', category: 'security', level: 'Advanced', icon: FaTools, color: 'text-red-400', bg: 'hover:border-red-500/40', desc: 'Port scanning, service discovery & exploit payloads' },
+
+    // Machine Learning
+    { name: 'Python Data Science', category: 'ml', level: 'Advanced', icon: SiPython, color: 'text-blue-400', bg: 'hover:border-blue-500/40', desc: 'NumPy, Pandas, Matplotlib, Seaborn workflows' },
+    { name: 'Scikit-learn', category: 'ml', level: 'Advanced', icon: FaBrain, color: 'text-cyan-400', bg: 'hover:border-cyan-500/40', desc: 'Supervised classification, regression & clustering' },
+    { name: 'XGBoost & CatBoost', category: 'ml', level: 'Advanced', icon: FaFire, color: 'text-rose-400', bg: 'hover:border-rose-500/40', desc: 'Gradient boosted trees for high-accuracy prediction' },
+    { name: 'LightGBM & Random Forest', category: 'ml', level: 'Proficient', icon: FaBrain, color: 'text-emerald-400', bg: 'hover:border-emerald-500/40', desc: 'Ensemble modeling & hyperparameter tuning' },
+    { name: 'Predictive Threat ML', category: 'ml', level: 'Specialized', icon: FaShieldAlt, color: 'text-purple-400', bg: 'hover:border-purple-500/40', desc: 'Anomaly detection for malicious traffic & security telemetry' },
+
+    // DevOps & Linux
+    { name: 'Kali Linux & Ubuntu', category: 'devops', level: 'Advanced', icon: SiKalilinux, color: 'text-cyan-400', bg: 'hover:border-cyan-500/40', desc: 'Kernel administration, security toolchains & hardening' },
+    { name: 'Docker', category: 'devops', level: 'Proficient', icon: SiDocker, color: 'text-blue-400', bg: 'hover:border-blue-500/40', desc: 'Containerization, Dockerfile recipes & multi-stage builds' },
+    { name: 'Git & GitHub', category: 'devops', level: 'Advanced', icon: SiGit, color: 'text-orange-400', bg: 'hover:border-orange-500/40', desc: 'Version control, branching strategies & CI/CD workflows' },
+    { name: 'Bash & PowerShell', category: 'devops', level: 'Advanced', icon: SiGnubash, color: 'text-emerald-400', bg: 'hover:border-emerald-500/40', desc: 'Automated shell scripting & administrative tooling' },
+];
 
 function Skills({ darkMode }) {
-    const skillsData = getSection('skills');
-    
-    const theme = {
-        textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        textSecondary: darkMode ? 'text-slate-300' : 'text-gray-600',
-        textMuted: darkMode ? 'text-slate-400' : 'text-gray-500',
-        cardBg: darkMode ? 'bg-[#080d1a]/80 backdrop-blur-2xl border-white/[0.08] hover:border-white/20 text-white shadow-xl shadow-black/70' : 'bg-white/95 backdrop-blur-xl border-gray-200/60 shadow-lg shadow-gray-200/30',
-        border: darkMode ? 'border-white/[0.08]' : 'border-gray-200/50',
-    };
+    const [selectedCategory, setSelectedCategory] = useState('all');
+    const [searchQuery, setSearchQuery] = useState('');
 
-    const categoryIcons = {
-        "Frontend": <FaReact className="text-xl text-cyan-400" />,
-        "Backend": <FaNodeJs className="text-xl text-[#34d399]" />,
-        "Machine Learning": <FaBrain className="text-xl text-purple-400" />,
-        "Cybersecurity": <FaShieldAlt className="text-xl text-blue-400" />,
-        "DevOps & Tools": <FaTools className="text-xl text-indigo-400" />,
-        "Languages": <FaLanguage className="text-xl text-cyan-300" />,
-        "Security Tools": <FaShieldAlt className="text-xl text-emerald-400" />
-    };
-
-    const skillIcons = {
-        "React.js": <FaReact className="text-cyan-400" />,
-        "JavaScript": <SiJavascript className="text-indigo-400" />,
-        "Tailwind CSS": <SiTailwindcss className="text-cyan-400" />,
-        "HTML/CSS": <FaCode className="text-blue-400" />,
-        "Node.js": <FaNodeJs className="text-[#34d399]" />,
-        "Express.js": <SiExpress className="text-gray-400" />,
-        "MongoDB": <SiMongodb className="text-[#10b981]" />,
-        "FastAPI": <SiFastapi className="text-[#34d399]" />,
-        "XGBoost": <FaBrain className="text-purple-400" />,
-        "CatBoost": <FaBrain className="text-indigo-400" />,
-        "LightGBM": <FaBrain className="text-[#34d399]" />,
-        "Scikit-learn": <FaPython className="text-cyan-400" />,
-        "Pen Testing": <FaShieldAlt className="text-red-400" />,
-        "SOC/SIEM": <SiSplunk className="text-[#34d399]" />,
-        "Network Security": <SiWireshark className="text-cyan-400" />,
-        "Digital Forensics": <FaShieldAlt className="text-blue-400" />,
-        "Git/GitHub": <FaGitAlt className="text-slate-300" />,
-        "Docker": <FaDocker className="text-cyan-400" />,
-        "REST APIs": <FaDatabase className="text-indigo-400" />,
-        "JWT Auth": <FaShieldAlt className="text-[#34d399]" />,
-        "Python": <FaPython className="text-blue-400" />,
-        "Bash": <SiGnubash className="text-[#34d399]" />,
-        "PowerShell": <FaCode className="text-cyan-400" />,
-        "Metasploit": <FaShieldAlt className="text-red-400" />,
-        "Nmap": <FaTools className="text-[#34d399]" />,
-        "YARA/Snort": <FaShieldAlt className="text-cyan-400" />,
-        "OWASP Tools": <FaShieldAlt className="text-emerald-400" />
-    };
-
-    const categoryGradients = {
-        "Frontend": "from-cyan-400 to-blue-500",
-        "Backend": "from-emerald-400 to-teal-500",
-        "Machine Learning": "from-purple-400 to-indigo-400",
-        "Cybersecurity": "from-blue-400 to-cyan-400",
-        "DevOps & Tools": "from-indigo-400 to-blue-400",
-        "Languages": "from-cyan-400 to-indigo-400",
-        "Security Tools": "from-emerald-400 to-cyan-400"
-    };
-
-    const skillCategories = (skillsData?.categories || []).map(cat => ({
-        ...cat,
-        icon: categoryIcons[cat.name] || <FaCode className="text-xl text-cyan-400" />,
-        gradient: cat.gradient || categoryGradients[cat.name] || "from-cyan-400 to-indigo-400",
-        skills: (cat.skills || []).map(s => ({
-            ...s,
-            icon: skillIcons[s.name] || <FaCode className="text-cyan-400" />
-        }))
-    }));
-
-    // Smooth card variants with spring physics for fluid motion
-    const cardVariants = {
-        hidden: { 
-            opacity: 0, 
-            scale: 0.92, 
-            y: 40,
-            rotateX: 15,
-            rotateY: -10
-        },
-        visible: (i) => ({
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            rotateX: 0,
-            rotateY: 0,
-            transition: {
-                delay: i * 0.06,
-                duration: 0.7,
-                type: "spring",
-                stiffness: 120,
-                damping: 18,
-                mass: 0.8
-            }
-        }),
-        hover: {
-            y: -6,
-            scale: 1.01,
-            rotateX: 2,
-            rotateY: 2,
-            transition: {
-                duration: 0.35,
-                type: "spring",
-                stiffness: 300,
-                damping: 20
-            }
-        }
-    };
-
-    // Smooth skill bar animation
-    const skillBarVariants = {
-        hidden: { width: "0%", opacity: 0 },
-        visible: (level) => ({
-            width: `${level}%`,
-            opacity: 1,
-            transition: {
-                duration: 1.2,
-                delay: 0.15,
-                ease: [0.25, 0.1, 0.25, 1],
-                type: "tween"
-            }
-        })
-    };
-
-    // Smooth skill item animation
-    const skillItemVariants = {
-        hidden: { opacity: 0, x: -15 },
-        visible: (i) => ({
-            opacity: 1,
-            x: 0,
-            transition: {
-                delay: i * 0.04,
-                duration: 0.5,
-                ease: [0.25, 0.1, 0.25, 1]
-            }
-        }),
-        hover: {
-            x: 6,
-            transition: {
-                duration: 0.25,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    // Smooth character animation for title
-    const charVariants = {
-        hidden: { opacity: 0, y: 30 },
-        visible: (i) => ({
-            opacity: 1,
-            y: 0,
-            transition: {
-                delay: i * 0.03,
-                duration: 0.5,
-                ease: [0.25, 0.1, 0.25, 1]
-            }
-        })
-    };
-
-    // Smooth tag variants
-    const tagVariants = {
-        hidden: { opacity: 0, scale: 0.9 },
-        visible: (i) => ({
-            opacity: 1,
-            scale: 1,
-            transition: {
-                delay: i * 0.003,
-                duration: 0.3,
-                ease: "easeOut"
-            }
-        }),
-        hover: {
-            scale: 1.05,
-            y: -2,
-            transition: {
-                duration: 0.2,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    // Smooth floating background shapes
-    const floatingShapeVariants = {
-        animate: {
-            y: [0, -25, 0],
-            x: [0, 20, 0],
-            transition: {
-                duration: 18,
-                repeat: Infinity,
-                ease: "easeInOut",
-                repeatType: "mirror"
-            }
-        }
-    };
-
-    const getLevelColor = (level) => {
-        if (level >= 90) return 'from-cyan-400 to-blue-500';
-        if (level >= 80) return 'from-indigo-400 to-purple-500';
-        if (level >= 70) return 'from-emerald-400 to-teal-500';
-        return 'from-gray-500 to-slate-400';
-    };
-
-    // Smooth progress indicator component
-    const ProgressIndicator = ({ level }) => {
-        const [progress, setProgress] = React.useState(0);
-        
-        React.useEffect(() => {
-            const timer = setTimeout(() => {
-                setProgress(level);
-            }, 300);
-            return () => clearTimeout(timer);
-        }, [level]);
-
-        return (
-            <div className="relative w-12 h-12">
-                <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                    <circle
-                        cx="18"
-                        cy="18"
-                        r="16"
-                        fill="none"
-                        stroke={darkMode ? "#1e293b" : "#e5e7eb"}
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                    />
-                    <motion.circle
-                        cx="18"
-                        cy="18"
-                        r="16"
-                        fill="none"
-                        stroke="url(#progressGradient)"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        initial={{ strokeDasharray: "0, 100" }}
-                        animate={{ strokeDasharray: `${progress}, 100` }}
-                        transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-                    />
-                </svg>
-                <defs>
-                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#38bdf8" />
-                        <stop offset="100%" stopColor="#6366f1" />
-                    </linearGradient>
-                </defs>
-                <motion.div 
-                    className="absolute inset-0 flex items-center justify-center"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.5, duration: 0.3, type: "spring", stiffness: 200 }}
-                >
-                    <span className="text-[10px] font-bold text-cyan-400">{level}%</span>
-                </motion.div>
-            </div>
-        );
-    };
-
-    const subgroupMapping = {
-        "Backend & APIs": ["FastAPI", "GraphQL", "REST APIs", "JWT", "Bcrypt", "Node.js", "Express.js"],
-        "Frontend & UI": ["Next.js", "Tailwind CSS", "React.js", "HTML/CSS", "JavaScript"],
-        "Databases & Cloud": ["Redis", "PostgreSQL", "MongoDB", "Docker", "Firebase"],
-        "Offensive Tools": ["Burp Suite", "Nessus", "Nmap", "Wireshark", "Metasploit", "Sqlmap", "Hydra", "John the Ripper", "Hashcat", "Gobuster", "Nikto", "OWASP ZAP"],
-        "Defensive & Forensics": ["Splunk", "Wazuh", "Autopsy", "Snort", "YARA"],
-        "Algorithms": ["XGBoost", "CatBoost", "LightGBM", "Random Forest", "Decision Trees", "SVM", "Logistic Regression", "Linear Regression", "KNN", "Naïve Bayes"],
-        "Data Science & NLP": ["Python", "NumPy", "Pandas", "Matplotlib", "Seaborn", "Scikit-learn", "TF-IDF", "Count Vectorization", "PCA", "Feature Selection", "Dimensionality Reduction", "One-Hot Encoding", "Standardization", "Normalization"],
-        "Model Optimization": ["GridSearchCV", "RandomizedSearchCV", "Cross-Validation", "Hyperparameter Tuning", "Ensemble Methods"],
-        "Web Application Sec": ["XSS", "SQLi", "LFI", "RFI", "CSRF", "SSRF", "XXE", "IDOR", "Path Traversal", "Command Injection", "JWT Attacks", "Open Redirect", "Clickjacking", "SSTI", "NoSQLi"],
-        "Infrastructure & Network": ["AD Exploitation", "Privilege Escalation", "CVE Exploits", "Pivoting", "RATs", "MITM", "Phishing", "Social Engineering"],
-        "Security OS": ["Kali Linux"],
-        "Server & Desktop OS": ["Ubuntu", "Windows Server", "Windows 10/11"]
-    };
-
-    const getGroupedTags = (tags, mapping) => {
-        const result = {};
-        const groupedSet = new Set();
-        
-        Object.entries(mapping).forEach(([subcat, matchTags]) => {
-            const matches = (tags || []).filter(t => matchTags.some(mt => mt.toLowerCase() === t.toLowerCase()));
-            if (matches.length > 0) {
-                result[subcat] = matches;
-                matches.forEach(t => groupedSet.add(t));
-            }
-        });
-        
-        const remaining = (tags || []).filter(t => !groupedSet.has(t));
-        if (remaining.length > 0) {
-            result["General"] = remaining;
-        }
-        return result;
-    };
-
-    const normalPart = "My ";
-    const highlightPart = "Expertise";
+    const filteredSkills = allSkills.filter(skill => {
+        const matchesCategory = selectedCategory === 'all' || skill.category === selectedCategory;
+        const matchesSearch = skill.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                              skill.desc.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
 
     return (
-        <section id="skills" className="py-16 px-4 relative overflow-hidden">
-            {/* Smooth Background Animations */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-40 -right-40 w-96 h-96 bg-cyan-500/[0.04] rounded-full blur-3xl" />
-                <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-500/[0.04] rounded-full blur-3xl" />
-            </div>
+        <section
+            id="skills"
+            className="relative py-24 sm:py-32 px-4 sm:px-6 md:px-10 lg:px-12 overflow-hidden bg-[#000000] border-t border-white/[0.06]"
+        >
+            {/* Ambient Background Flare */}
+            <div className="absolute top-[25%] left-[-5%] w-[520px] h-[520px] rounded-full bg-rose-500/[0.025] blur-[170px] pointer-events-none" />
+            <div className="absolute bottom-[20%] right-[-5%] w-[520px] h-[520px] rounded-full bg-blue-500/[0.02] blur-[170px] pointer-events-none" />
 
-            <div className="container mx-auto max-w-6xl relative z-10">
-                {/* Section Header with Smooth Animations */}
+            <div className="w-full max-w-[1350px] mx-auto relative z-10">
+
+                {/* Section Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: 25 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    className="text-center mb-10"
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-80px" }}
+                    variants={staggerContainer}
+                    className="space-y-3 mb-14 text-center lg:text-left"
                 >
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.15, duration: 0.5, type: "spring", stiffness: 200 }}
-                        viewport={{ once: true }}
-                        className="inline-block mb-3"
-                    >
-                        <div className="px-4 py-1.5 border border-white/10 bg-white/[0.04] rounded-full">
-                            <motion.span 
-                                className="text-xs font-semibold text-slate-300 tracking-wider uppercase"
-                            >
-                                TECHNICAL SKILLS
-                            </motion.span>
-                        </div>
+                    <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-400 text-xs font-mono tracking-widest uppercase">
+                        <FaCode className="text-xs" />
+                        <span>Technical Proficiency & Toolchain</span>
                     </motion.div>
-                    
-                    <motion.h2 
-                        className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-3 ${theme.textPrimary}`}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                    >
-                        <span className="inline-block">
-                            {normalPart.split("").map((char, index) => (
-                                <motion.span
-                                    key={`normal-${index}`}
-                                    custom={index}
-                                    variants={charVariants}
-                                    style={{ display: 'inline-block' }}
-                                >
-                                    {char === ' ' ? '\u00A0' : char}
-                                </motion.span>
-                            ))}
-                        </span>
-                        <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent inline-block">
-                            {highlightPart.split("").map((char, index) => (
-                                <motion.span
-                                    key={`highlight-${index}`}
-                                    custom={index + normalPart.length}
-                                    variants={charVariants}
-                                    style={{ display: 'inline-block' }}
-                                >
-                                    {char}
-                                </motion.span>
-                            ))}
-                        </span>
+
+                    <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                        Skills & <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-rose-300">Technology Stack</span>
                     </motion.h2>
-                    
-                    <motion.div 
-                        className="w-16 h-0.5 bg-gradient-to-r from-cyan-400 to-indigo-500 mx-auto rounded-full mb-4"
-                        initial={{ width: 0, opacity: 0 }}
-                        whileInView={{ width: "4rem", opacity: 1 }}
-                        transition={{ delay: 0.4, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-                        viewport={{ once: true }}
-                    />
-                    
-                    <motion.p 
-                        className={`${theme.textSecondary} max-w-2xl mx-auto text-sm md:text-base`}
-                        initial={{ opacity: 0, y: 15 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5, duration: 0.5 }}
-                        viewport={{ once: true }}
-                    >
-                        Comprehensive skills in development, cybersecurity, machine learning, and modern technologies
+
+                    <motion.p variants={fadeUp} className="text-slate-300 text-base sm:text-lg max-w-2xl font-light leading-relaxed">
+                        A multidimensional arsenal spanning modern full-stack web engineering, offensive and defensive cybersecurity, and predictive machine learning.
                     </motion.p>
                 </motion.div>
 
-                {/* Skills Grid with Smooth Card Animations */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {skillCategories.map((category, idx) => (
-                        <motion.div
-                            key={idx}
-                            custom={idx}
-                            variants={cardVariants}
-                            initial="hidden"
-                            whileInView="visible"
-                            whileHover="hover"
-                            viewport={{ once: true, amount: 0.2 }}
-                            className={`rounded-xl p-4 ${theme.cardBg} backdrop-blur-sm border ${theme.border} transition-shadow duration-300 cursor-pointer`}
-                            style={{ transformStyle: "preserve-3d" }}
-                        >
-                            <motion.div 
-                                className="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200/50 dark:border-gray-700/50"
-                                whileHover={{ x: 4 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <motion.div 
-                                    className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500/20 to-purple-500/20 flex items-center justify-center"
-                                    animate={{ 
-                                        rotate: [0, 8, -8, 0],
-                                        scale: [1, 1.05, 1]
-                                    }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
-                                >
-                                    {category.icon}
-                                </motion.div>
-                                <div>
-                                    <motion.h3 
-                                        className={`text-base font-bold bg-gradient-to-r ${category.gradient} bg-clip-text text-transparent`}
-                                    >
-                                        {category.name}
-                                    </motion.h3>
-                                </div>
-                            </motion.div>
+                {/* Filter Controls & Search Bar */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-12">
 
-                            <div className="space-y-3">
-                                {(category.skills || []).map((skill, skillIdx) => (
-                                    <motion.div 
-                                        key={skillIdx}
-                                        custom={skillIdx}
-                                        variants={skillItemVariants}
-                                        initial="hidden"
-                                        whileInView="visible"
-                                        whileHover="hover"
-                                        className="space-y-1"
-                                        viewport={{ once: true }}
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-2">
-                                                <motion.div 
-                                                    className="w-5 h-5 flex items-center justify-center"
-                                                    whileHover={{ scale: 1.15, rotate: 360 }}
-                                                    transition={{ duration: 0.4, type: "spring", stiffness: 200 }}
-                                                >
-                                                    {skill.icon}
-                                                </motion.div>
-                                                <span className={`text-sm font-medium ${theme.textSecondary}`}>{skill.name}</span>
-                                            </div>
-                                            <ProgressIndicator level={skill.level} />
-                                        </div>
-                                        <div className="relative h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                            <motion.div
-                                                custom={skill.level}
-                                                variants={skillBarVariants}
-                                                initial="hidden"
-                                                whileInView="visible"
-                                                viewport={{ once: true }}
-                                                className={`absolute h-full rounded-full bg-gradient-to-r ${getLevelColor(skill.level)}`}
-                                            />
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    ))}
+                    {/* Category Filter Tabs */}
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 p-1.5 rounded-2xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl">
+                        {categories.map((cat) => {
+                            const IconComp = cat.icon;
+                            const isActive = selectedCategory === cat.id;
+                            return (
+                                <button
+                                    key={cat.id}
+                                    onClick={() => setSelectedCategory(cat.id)}
+                                    className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 flex items-center gap-2 cursor-pointer ${
+                                        isActive
+                                            ? 'text-white bg-[#f43f5e] shadow-lg shadow-rose-900/40 font-semibold'
+                                            : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
+                                    }`}
+                                >
+                                    <IconComp className="text-xs" />
+                                    <span>{cat.label}</span>
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    {/* Quick Search Input */}
+                    <div className="relative w-full md:w-72">
+                        <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs" />
+                        <input
+                            type="text"
+                            placeholder="Filter skills & tools..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500/50 transition-colors"
+                        />
+                    </div>
                 </div>
 
-                {/* Additional Technologies Section with Smooth Entrance */}
-                {skillsData?.additional && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                        viewport={{ once: true, amount: 0.15 }}
-                        className="mt-20 relative"
-                    >
-                        {/* Background subtle blur ring for section */}
-                        <div className="absolute inset-0 -z-10 flex items-center justify-center">
-                            <div className="w-[500px] h-[250px] bg-gradient-to-r from-orange-500/5 to-purple-500/5 rounded-full blur-[100px]" />
+                {/* Skills Interactive Grid */}
+                <motion.div
+                    layout
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 mb-16"
+                >
+                    <AnimatePresence>
+                        {filteredSkills.map((skill) => {
+                            const IconComp = skill.icon;
+                            return (
+                                <motion.div
+                                    layout
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 0.3 }}
+                                    key={skill.name}
+                                    whileHover={{ y: -4, scale: 1.01 }}
+                                    className={`p-5 rounded-2xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl ${skill.bg} transition-all duration-300 shadow-xl shadow-black/60 group cursor-default flex flex-col justify-between`}
+                                >
+                                    <div className="space-y-3">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 group-hover:border-white/25 transition-all">
+                                                <IconComp className={skill.color} />
+                                            </div>
+
+                                            <span className="text-[10px] font-mono px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.03] text-slate-300 shrink-0">
+                                                {skill.level}
+                                            </span>
+                                        </div>
+
+                                        <div>
+                                            <h4 className="text-base font-bold text-white group-hover:text-rose-200 transition-colors">
+                                                {skill.name}
+                                            </h4>
+                                            <p className="text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">
+                                                {skill.desc}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Bottom Micro Indicator */}
+                                    <div className="pt-3 mt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-slate-500">
+                                        <span className="capitalize">{skill.category}</span>
+                                        <span className="flex items-center gap-1 text-emerald-400">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                                            <span>Verified</span>
+                                        </span>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
+                    </AnimatePresence>
+                </motion.div>
+
+                {/* 3 Featured Domain Pillars (Bento Strip) */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    {/* Pillar 1: Full-Stack Architecture */}
+                    <div className="p-7 rounded-3xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl hover:border-rose-500/30 transition-all duration-300 space-y-4 shadow-2xl shadow-black/80">
+                        <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center text-xl">
+                            <FaCode />
                         </div>
+                        <h3 className="text-lg font-bold text-white">Full-Stack Architecture</h3>
+                        <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Specializing in production-grade MERN stack, Next.js, and high-throughput Python FastAPI microservices with clean code standards and responsive user interfaces.
+                        </p>
+                    </div>
 
-                        <div className="text-center mb-12">
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 0.1, duration: 0.4 }}
-                                viewport={{ once: true }}
-                                className="inline-block mb-3"
-                            >
-                                <span className="px-3 py-1 bg-gradient-to-r from-purple-500/10 to-orange-500/10 border border-purple-500/20 rounded-full text-xs font-semibold text-purple-400 tracking-wider">
-                                    COMPLEMENTARY STACK
-                                </span>
-                            </motion.div>
-                            
-                            <h3 className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-3 ${theme.textPrimary}`}>
-                                Additional Stack & Methodologies
-                            </h3>
-                            <p className={`${theme.textSecondary} text-sm max-w-xl mx-auto leading-relaxed`}>
-                                Auxiliary libraries, security assessment tools, machine learning frameworks, and execution environments supporting my engineering lifecycle.
-                            </p>
+                    {/* Pillar 2: Offensive & Defensive Security */}
+                    <div className="p-7 rounded-3xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl hover:border-emerald-500/30 transition-all duration-300 space-y-4 shadow-2xl shadow-black/80">
+                        <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">
+                            <FaShieldAlt />
                         </div>
+                        <h3 className="text-lg font-bold text-white">Offensive & Defensive Security</h3>
+                        <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Proactive vulnerability discovery, penetration testing, threat hunting, and Secure SDLC implementations. Active contributor with 20+ disclosed vulnerability reports.
+                        </p>
+                    </div>
 
-                        <div className="columns-1 md:columns-2 xl:columns-3 gap-6">
-                            
-                            {/* Development & Cloud */}
-                            {skillsData.additional.development && skillsData.additional.development.length > 0 && (
-                                <motion.div 
-                                    initial={{ opacity: 0, y: 25 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: 0.1 }}
-                                    whileHover={{ 
-                                        y: -6,
-                                        boxShadow: "0 15px 30px -10px rgba(6,182,212,0.15)",
-                                        borderColor: "rgba(6,182,212,0.3)"
-                                    }}
-                                    className={`mb-6 break-inside-avoid rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md transition-all duration-300`}
-                                >
-                                    <div>
-                                        <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-500 border border-cyan-500/20">
-                                                    <FaCloud className="text-lg" />
-                                                </div>
-                                                <h4 className={`text-sm font-bold ${theme.textPrimary}`}>Development & Cloud</h4>
-                                            </div>
-                                            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-cyan-500/10 text-cyan-500 dark:text-cyan-400 font-semibold border border-cyan-500/20">
-                                                {skillsData.additional.development.length} Items
-                                            </span>
-                                        </div>
-                                        <div className="space-y-4">
-                                            {Object.entries(getGroupedTags(skillsData.additional.development, subgroupMapping)).map(([subcat, tags]) => (
-                                                <div key={subcat} className="space-y-1.5">
-                                                    <span className="text-[10px] font-bold tracking-wider text-cyan-500/80 uppercase block">
-                                                        {subcat}
-                                                    </span>
-                                                    <div className="flex flex-wrap gap-1.5">
-                                                        {tags.map((tech, idx) => (
-                                                            <motion.span
-                                                                key={idx}
-                                                                custom={idx}
-                                                                variants={tagVariants}
-                                                                initial="hidden"
-                                                                whileInView="visible"
-                                                                whileHover="hover"
-                                                                viewport={{ once: true }}
-                                                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer ${
-                                                                    darkMode 
-                                                                        ? 'bg-cyan-950/20 text-cyan-300 border-cyan-500/10 hover:bg-cyan-500/20 hover:text-white hover:border-cyan-400' 
-                                                                        : 'bg-cyan-50/60 text-cyan-700 border-cyan-200/80 hover:bg-cyan-100 hover:text-cyan-900 hover:border-cyan-400'
-                                                                }`}
-                                                            >
-                                                                {tech}
-                                                            </motion.span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            )}
-
-                            {/* Security & Pentesting Tools */}
-                            {skillsData.additional.security && skillsData.additional.security.length > 0 && (
-                                <motion.div 
-                                    initial={{ opacity: 0, y: 25 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: 0.15 }}
-                                    whileHover={{ 
-                                        y: -6,
-                                        boxShadow: "0 15px 30px -10px rgba(239,68,68,0.15)",
-                                        borderColor: "rgba(239,68,68,0.3)"
-                                    }}
-                                    className={`mb-6 break-inside-avoid rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md transition-all duration-300`}
-                                >
-                                    <div>
-                                        <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20">
-                                                    <FaShieldAlt className="text-lg" />
-                                                </div>
-                                                <h4 className={`text-sm font-bold ${theme.textPrimary}`}>Security & Pentesting</h4>
-                                            </div>
-                                            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-red-500/10 text-red-500 dark:text-red-400 font-semibold border border-red-500/20">
-                                                {skillsData.additional.security.length} Items
-                                            </span>
-                                        </div>
-                                        <div className="space-y-4">
-                                            {Object.entries(getGroupedTags(skillsData.additional.security, subgroupMapping)).map(([subcat, tags]) => (
-                                                <div key={subcat} className="space-y-1.5">
-                                                    <span className="text-[10px] font-bold tracking-wider text-red-500/80 uppercase block">
-                                                        {subcat}
-                                                    </span>
-                                                    <div className="flex flex-wrap gap-1.5">
-                                                        {tags.map((tech, idx) => (
-                                                            <motion.span
-                                                                key={idx}
-                                                                custom={idx}
-                                                                variants={tagVariants}
-                                                                initial="hidden"
-                                                                whileInView="visible"
-                                                                whileHover="hover"
-                                                                viewport={{ once: true }}
-                                                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer ${
-                                                                    darkMode 
-                                                                        ? 'bg-red-950/20 text-red-300 border-red-500/10 hover:bg-red-500/20 hover:text-white hover:border-red-400' 
-                                                                        : 'bg-red-50/60 text-red-700 border-red-200/80 hover:bg-red-100 hover:text-red-900 hover:border-red-400'
-                                                                }`}
-                                                            >
-                                                                {tech}
-                                                            </motion.span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            )}
-
-                            {/* Machine Learning & Data Science */}
-                            {skillsData.additional.ml && skillsData.additional.ml.length > 0 && (
-                                <motion.div 
-                                    initial={{ opacity: 0, y: 25 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: 0.2 }}
-                                    whileHover={{ 
-                                        y: -6,
-                                        boxShadow: "0 15px 30px -10px rgba(168,85,247,0.15)",
-                                        borderColor: "rgba(168,85,247,0.3)"
-                                    }}
-                                    className={`mb-6 break-inside-avoid rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md transition-all duration-300`}
-                                >
-                                    <div>
-                                        <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500 border border-purple-500/20">
-                                                    <FaBrain className="text-lg" />
-                                                </div>
-                                                <h4 className={`text-sm font-bold ${theme.textPrimary}`}>Machine Learning & DS</h4>
-                                            </div>
-                                            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-purple-500/10 text-purple-500 dark:text-purple-400 font-semibold border border-purple-500/20">
-                                                {skillsData.additional.ml.length} Items
-                                            </span>
-                                        </div>
-                                        <div className="space-y-4">
-                                            {Object.entries(getGroupedTags(skillsData.additional.ml, subgroupMapping)).map(([subcat, tags]) => (
-                                                <div key={subcat} className="space-y-1.5">
-                                                    <span className="text-[10px] font-bold tracking-wider text-purple-500/80 uppercase block">
-                                                        {subcat}
-                                                    </span>
-                                                    <div className="flex flex-wrap gap-1.5">
-                                                        {tags.map((tech, idx) => (
-                                                            <motion.span
-                                                                key={idx}
-                                                                custom={idx}
-                                                                variants={tagVariants}
-                                                                initial="hidden"
-                                                                whileInView="visible"
-                                                                whileHover="hover"
-                                                                viewport={{ once: true }}
-                                                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer ${
-                                                                    darkMode 
-                                                                        ? 'bg-purple-950/20 text-purple-300 border-purple-500/10 hover:bg-purple-500/20 hover:text-white hover:border-purple-400' 
-                                                                        : 'bg-purple-50/60 text-purple-700 border-purple-200/80 hover:bg-purple-100 hover:text-purple-900 hover:border-purple-400'
-                                                                }`}
-                                                            >
-                                                                {tech}
-                                                            </motion.span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            )}
-
-                            {/* Vulnerabilities */}
-                            {skillsData.additional.vulnerabilities && skillsData.additional.vulnerabilities.length > 0 && (
-                                <motion.div 
-                                    initial={{ opacity: 0, y: 25 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: 0.25 }}
-                                    whileHover={{ 
-                                        y: -6,
-                                        boxShadow: "0 15px 30px -10px rgba(245,158,11,0.15)",
-                                        borderColor: "rgba(245,158,11,0.3)"
-                                    }}
-                                    className={`mb-6 break-inside-avoid rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md transition-all duration-300`}
-                                >
-                                    <div>
-                                        <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 border border-amber-500/20">
-                                                    <FaCode className="text-lg" />
-                                                </div>
-                                                <h4 className={`text-sm font-bold ${theme.textPrimary}`}>Vulnerability Vectors</h4>
-                                            </div>
-                                            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-amber-500/10 text-amber-500 dark:text-amber-400 font-semibold border border-amber-500/20">
-                                                {skillsData.additional.vulnerabilities.length} Items
-                                            </span>
-                                        </div>
-                                        <div className="space-y-4">
-                                            {Object.entries(getGroupedTags(skillsData.additional.vulnerabilities, subgroupMapping)).map(([subcat, tags]) => (
-                                                <div key={subcat} className="space-y-1.5">
-                                                    <span className="text-[10px] font-bold tracking-wider text-amber-500/80 uppercase block">
-                                                        {subcat}
-                                                    </span>
-                                                    <div className="flex flex-wrap gap-1.5">
-                                                        {tags.map((tech, idx) => (
-                                                            <motion.span
-                                                                key={idx}
-                                                                custom={idx}
-                                                                variants={tagVariants}
-                                                                initial="hidden"
-                                                                whileInView="visible"
-                                                                whileHover="hover"
-                                                                viewport={{ once: true }}
-                                                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer ${
-                                                                    darkMode 
-                                                                        ? 'bg-amber-950/20 text-amber-300 border-amber-500/10 hover:bg-amber-500/20 hover:text-white hover:border-amber-400' 
-                                                                        : 'bg-amber-50/60 text-amber-700 border-amber-200/80 hover:bg-amber-100 hover:text-amber-900 hover:border-amber-400'
-                                                                }`}
-                                                            >
-                                                                {tech}
-                                                            </motion.span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            )}
-
-                            {/* Operating Systems */}
-                            {skillsData.additional.os && skillsData.additional.os.length > 0 && (
-                                <motion.div 
-                                    initial={{ opacity: 0, y: 25 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: 0.3 }}
-                                    whileHover={{ 
-                                        y: -6,
-                                        boxShadow: "0 15px 30px -10px rgba(16,185,129,0.15)",
-                                        borderColor: "rgba(16,185,129,0.3)"
-                                    }}
-                                    className={`mb-6 break-inside-avoid rounded-2xl p-6 border ${theme.border} ${theme.cardBg} backdrop-blur-md transition-all duration-300`}
-                                >
-                                    <div>
-                                        <div className="flex items-center justify-between mb-5 pb-3.5 border-b border-gray-200/50 dark:border-gray-700/50">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 border border-emerald-500/20">
-                                                    <SiGnubash className="text-lg" />
-                                                </div>
-                                                <h4 className={`text-sm font-bold ${theme.textPrimary}`}>Operating Systems</h4>
-                                            </div>
-                                            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-emerald-500/10 text-emerald-400/80 font-semibold border border-emerald-500/20">
-                                                {skillsData.additional.os.length} Items
-                                            </span>
-                                        </div>
-                                        <div className="space-y-4">
-                                            {Object.entries(getGroupedTags(skillsData.additional.os, subgroupMapping)).map(([subcat, tags]) => (
-                                                <div key={subcat} className="space-y-1.5">
-                                                    <span className="text-[10px] font-bold tracking-wider text-emerald-500/80 uppercase block">
-                                                        {subcat}
-                                                    </span>
-                                                    <div className="flex flex-wrap gap-1.5">
-                                                        {tags.map((tech, idx) => (
-                                                            <motion.span
-                                                                key={idx}
-                                                                custom={idx}
-                                                                variants={tagVariants}
-                                                                initial="hidden"
-                                                                whileInView="visible"
-                                                                whileHover="hover"
-                                                                viewport={{ once: true }}
-                                                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer ${
-                                                                    darkMode 
-                                                                        ? 'bg-emerald-950/20 text-emerald-300 border-emerald-500/10 hover:bg-emerald-500/20 hover:text-white hover:border-emerald-400' 
-                                                                        : 'bg-emerald-50/60 text-emerald-700 border-emerald-200/80 hover:bg-emerald-100 hover:text-emerald-900 hover:border-emerald-400'
-                                                                }`}
-                                                            >
-                                                                {tech}
-                                                            </motion.span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            )}
-
+                    {/* Pillar 3: Applied Machine Learning */}
+                    <div className="p-7 rounded-3xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl hover:border-blue-500/30 transition-all duration-300 space-y-4 shadow-2xl shadow-black/80">
+                        <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-xl">
+                            <FaBrain />
                         </div>
-                    </motion.div>
-                )}
+                        <h3 className="text-lg font-bold text-white">Applied Machine Learning</h3>
+                        <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Designing predictive AI pipelines utilizing XGBoost, LightGBM, CatBoost, and Scikit-learn to classify anomalies and automate cybersecurity threat intelligence.
+                        </p>
+                    </div>
+
+                </div>
+
             </div>
         </section>
     );
