@@ -61,15 +61,15 @@ function Footer({ darkMode }) {
     ];
 
     const theme = {
-        footerBg: darkMode ? 'bg-gray-950' : 'bg-gray-50',
+        footerBg: darkMode ? 'bg-transparent' : 'bg-gray-50',
         text: darkMode ? 'text-white' : 'text-gray-900',
-        textMuted: darkMode ? 'text-gray-400' : 'text-gray-600',
-        textFaint: darkMode ? 'text-gray-500' : 'text-gray-400',
-        textDimmer: darkMode ? 'text-gray-600' : 'text-gray-300',
-        cardBg: darkMode ? 'bg-gray-900/50 border-gray-800/50' : 'bg-white/60 border-gray-200/50',
-        borderColor: darkMode ? 'border-gray-800/60' : 'border-gray-200/60',
+        textMuted: darkMode ? 'text-slate-300' : 'text-gray-600',
+        textFaint: darkMode ? 'text-slate-400' : 'text-gray-400',
+        textDimmer: darkMode ? 'text-slate-500' : 'text-gray-300',
+        cardBg: darkMode ? 'bg-[#080d1a]/70 backdrop-blur-2xl border-white/[0.08] shadow-lg shadow-black/40' : 'bg-white/60 border-gray-200/50',
+        borderColor: darkMode ? 'border-white/[0.08]' : 'border-gray-200/60',
         socialBg: darkMode
-            ? 'bg-gray-900/60 border-gray-800/50 text-gray-400 hover:text-white hover:border-orange-500/40 hover:bg-orange-500/8'
+            ? 'bg-[#080d1a]/80 border-white/[0.08] text-slate-300 hover:text-white hover:border-orange-500/50 hover:bg-orange-500/10 shadow-md shadow-black/40'
             : 'bg-white border-gray-200/50 text-gray-500 hover:text-purple-600 hover:border-purple-300/50 shadow-sm',
         sectionDot: darkMode ? 'bg-opacity-100' : 'bg-opacity-80',
     };

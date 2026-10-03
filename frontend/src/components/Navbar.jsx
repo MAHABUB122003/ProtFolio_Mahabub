@@ -91,20 +91,20 @@ function Navbar({ darkMode, toggleDarkMode }) {
     const theme = {
         navBg: darkMode
             ? scrolled
-                ? 'bg-gray-950/80 backdrop-blur-2xl border-gray-800/50 shadow-2xl shadow-black/40'
-                : 'bg-gray-950/40 backdrop-blur-xl border-gray-800/30'
+                ? 'bg-[#030712]/85 backdrop-blur-2xl border-white/[0.08] shadow-2xl shadow-black/80'
+                : 'bg-[#030712]/50 backdrop-blur-xl border-white/[0.05]'
             : scrolled
                 ? 'bg-white/85 backdrop-blur-2xl border-gray-200/60 shadow-xl shadow-gray-300/30'
                 : 'bg-white/50 backdrop-blur-xl border-gray-200/40',
         textPrimary: darkMode ? 'text-white' : 'text-gray-900',
         navCapsuleBg: darkMode
-            ? 'bg-gray-900/50 border-gray-800/60'
+            ? 'bg-[#080d1a]/80 border-white/[0.08]'
             : 'bg-gray-100/60 border-gray-200/60',
         mobileDropdownBg: darkMode
-            ? 'bg-gray-950/98 backdrop-blur-2xl border-gray-800/60 text-white'
+            ? 'bg-[#030712]/98 backdrop-blur-2xl border-white/[0.1] text-white shadow-2xl shadow-black/90'
             : 'bg-white/98 backdrop-blur-2xl border-gray-200/60 text-gray-900',
         mobileButtonBg: darkMode
-            ? 'bg-gray-900/80 border-gray-800/60 text-gray-200'
+            ? 'bg-[#080d1a]/90 border-white/[0.08] text-slate-200'
             : 'bg-gray-100/80 border-gray-200/60 text-gray-800',
     };
 

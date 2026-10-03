@@ -92,14 +92,14 @@ function Contact({ darkMode }) {
 
     const theme = {
         textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        textSecondary: darkMode ? 'text-gray-300' : 'text-gray-700',
-        textMuted: darkMode ? 'text-gray-400' : 'text-gray-500',
+        textSecondary: darkMode ? 'text-slate-300' : 'text-gray-700',
+        textMuted: darkMode ? 'text-slate-400' : 'text-gray-500',
         cardBg: darkMode
-            ? 'bg-gray-900/70 backdrop-blur-xl border-gray-800/80 hover:border-orange-500/30 text-white'
+            ? 'bg-[#080d1a]/70 backdrop-blur-2xl border-white/[0.08] hover:border-orange-500/40 text-white shadow-xl shadow-black/60'
             : 'bg-white/90 backdrop-blur-xl border-gray-200/90 text-gray-900 shadow-xl shadow-gray-200/50 hover:border-orange-500/30',
-        border: darkMode ? 'border-gray-800' : 'border-gray-200',
+        border: darkMode ? 'border-white/[0.08]' : 'border-gray-200',
         inputBg: darkMode
-            ? 'bg-gray-900/90 border-gray-800 text-white placeholder-gray-600'
+            ? 'bg-[#050b17]/90 border-white/[0.08] text-white placeholder-slate-500'
             : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 shadow-sm',
     };
 

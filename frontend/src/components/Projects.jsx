@@ -15,35 +15,54 @@ import {
     FaStar,
     FaCode
 } from 'react-icons/fa';
-import { getProjects } from '../utils/projectStorage';
+import { getProjects, syncProjectsFromBackend } from '../utils/projectStorage';
 import IslamicPattern from './IslamicPattern';
 
 function Projects({ darkMode }) {
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState(() => getProjects());
     const [activeCategory, setActiveCategory] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedProject, setSelectedProject] = useState(null);
 
     useEffect(() => {
         setProjects(getProjects());
+
+        const handleUpdate = () => {
+            setProjects(getProjects());
+        };
+
+        window.addEventListener('portfolio_projects_updated', handleUpdate);
+        window.addEventListener('storage', handleUpdate);
+
+        // Fetch fresh list from backend
+        syncProjectsFromBackend().then((res) => {
+            if (res) {
+                setProjects(getProjects());
+            }
+        }).catch(() => {});
+
+        return () => {
+            window.removeEventListener('portfolio_projects_updated', handleUpdate);
+            window.removeEventListener('storage', handleUpdate);
+        };
     }, []);
 
     const theme = {
-        bg: darkMode ? 'bg-gray-950' : 'bg-slate-50',
+        bg: darkMode ? 'bg-transparent' : 'bg-slate-50',
         textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        textSecondary: darkMode ? 'text-gray-300' : 'text-gray-700',
-        textMuted: darkMode ? 'text-gray-400' : 'text-gray-500',
+        textSecondary: darkMode ? 'text-slate-300' : 'text-gray-700',
+        textMuted: darkMode ? 'text-slate-400' : 'text-gray-500',
         cardBg: darkMode
-            ? 'bg-gray-900/70 backdrop-blur-xl border-gray-800/80 text-white'
+            ? 'bg-[#080d1a]/70 backdrop-blur-2xl border-white/[0.08] text-white shadow-xl shadow-black/60'
             : 'bg-white/90 backdrop-blur-xl border-gray-200/90 text-gray-900 shadow-lg shadow-gray-200/50',
         pillBg: darkMode
-            ? 'bg-gray-900/80 border-gray-800 text-gray-300 hover:text-white'
+            ? 'bg-[#080d1a]/80 border-white/[0.08] text-slate-300 hover:text-white hover:border-orange-500/40'
             : 'bg-white border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm',
         pillActive: 'bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-md shadow-orange-500/25 border-transparent font-bold',
-        badgeBg: darkMode ? 'bg-gray-950/60 text-gray-300 border-gray-800' : 'bg-gray-100 text-gray-700 border-gray-200',
-        modalBg: darkMode ? 'bg-gray-900 border-gray-800 text-white' : 'bg-white border-gray-200 text-gray-900',
-        searchBg: darkMode ? 'bg-gray-900/90 border-gray-800 text-white placeholder-gray-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 shadow-sm',
-        innerCard: darkMode ? 'bg-gray-950/60 border-gray-800' : 'bg-gray-50 border-gray-200',
+        badgeBg: darkMode ? 'bg-[#050b17]/80 text-slate-300 border-white/[0.06]' : 'bg-gray-100 text-gray-700 border-gray-200',
+        modalBg: darkMode ? 'bg-[#080d1a] border-white/[0.1] text-white shadow-2xl shadow-black/90' : 'bg-white border-gray-200 text-gray-900',
+        searchBg: darkMode ? 'bg-[#080d1a]/90 border-white/[0.08] text-white placeholder-slate-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 shadow-sm',
+        innerCard: darkMode ? 'bg-[#050b17]/80 border-white/[0.06]' : 'bg-gray-50 border-gray-200',
     };
 
     const categories = [

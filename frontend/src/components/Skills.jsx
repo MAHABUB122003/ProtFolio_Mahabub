@@ -34,10 +34,10 @@ function Skills({ darkMode }) {
     
     const theme = {
         textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        textSecondary: darkMode ? 'text-gray-300' : 'text-gray-600',
-        textMuted: darkMode ? 'text-gray-400' : 'text-gray-500',
-        cardBg: darkMode ? 'bg-gray-800/50' : 'bg-white/60',
-        border: darkMode ? 'border-gray-700/50' : 'border-gray-200/50',
+        textSecondary: darkMode ? 'text-slate-300' : 'text-gray-600',
+        textMuted: darkMode ? 'text-slate-400' : 'text-gray-500',
+        cardBg: darkMode ? 'bg-[#080d1a]/70 backdrop-blur-2xl border-white/[0.08] shadow-xl shadow-black/50' : 'bg-white/80 backdrop-blur-xl border-gray-200/60 shadow-lg shadow-gray-200/30',
+        border: darkMode ? 'border-white/[0.08]' : 'border-gray-200/50',
     };
 
     const categoryIcons = {

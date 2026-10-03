@@ -2,15 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaFolderOpen, FaPlus, FaShieldAlt, FaCode, FaBrain, FaEye, FaEdit, FaTrash, FaArrowUp, FaArrowDown } from 'react-icons/fa';
-import { getProjects, deleteProject, moveProjectUp, moveProjectDown } from '../../utils/projectStorage';
+import { getProjects, deleteProject, moveProjectUp, moveProjectDown, syncProjectsFromBackend } from '../../utils/projectStorage';
 import { getCurrentUser } from '../../utils/adminAuth';
 
 function AdminDashboard() {
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState(() => getProjects());
     const user = getCurrentUser();
 
     useEffect(() => {
         setProjects(getProjects());
+
+        const handleUpdate = () => {
+            setProjects(getProjects());
+        };
+
+        window.addEventListener('portfolio_projects_updated', handleUpdate);
+        window.addEventListener('storage', handleUpdate);
+
+        syncProjectsFromBackend().then((res) => {
+            if (res) setProjects(getProjects());
+        }).catch(() => {});
+
+        return () => {
+            window.removeEventListener('portfolio_projects_updated', handleUpdate);
+            window.removeEventListener('storage', handleUpdate);
+        };
     }, []);
 
     const handleDelete = async (id, title) => {

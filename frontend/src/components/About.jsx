@@ -64,15 +64,15 @@ function About({ darkMode }) {
     }, []);
 
     const theme = {
-        bg: darkMode ? 'bg-gray-950' : 'bg-slate-50',
+        bg: darkMode ? 'bg-transparent' : 'bg-slate-50',
         textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        textSecondary: darkMode ? 'text-gray-300' : 'text-gray-700',
-        textMuted: darkMode ? 'text-gray-400' : 'text-gray-500',
+        textSecondary: darkMode ? 'text-slate-300' : 'text-gray-700',
+        textMuted: darkMode ? 'text-slate-400' : 'text-gray-500',
         cardBg: darkMode
-            ? 'bg-gray-900/70 backdrop-blur-xl border-gray-800/80 hover:border-orange-500/40 text-white'
+            ? 'bg-[#080d1a]/70 backdrop-blur-2xl border-white/[0.08] hover:border-orange-500/40 text-white shadow-xl shadow-black/50'
             : 'bg-white/90 backdrop-blur-xl border-gray-200/90 hover:border-orange-500/40 text-gray-900 shadow-xl shadow-gray-200/50',
-        innerCardBg: darkMode ? 'bg-gray-950/60 border-gray-800/80' : 'bg-gray-50/90 border-gray-200/80',
-        border: darkMode ? 'border-gray-800' : 'border-gray-200',
+        innerCardBg: darkMode ? 'bg-[#050b17]/80 border-white/[0.06]' : 'bg-gray-50/90 border-gray-200/80',
+        border: darkMode ? 'border-white/[0.08]' : 'border-gray-200',
     };
 
     const education = aboutData.education || [];
@@ -91,13 +91,26 @@ function About({ darkMode }) {
 
     const coreValueIcons = [FaLightbulb, FaCheckCircle, FaBriefcase, FaGraduationCap];
 
-    const handleDownloadCV = () => {
-        const link = document.createElement('a');
-        link.href = myCV;
-        link.download = 'MD_Mahabubur_Rahman_CV.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    const handleDownloadCV = async () => {
+        try {
+            const response = await fetch(myCV);
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'MD_Mahabubur_Rahman_CV.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        } catch {
+            const link = document.createElement('a');
+            link.href = myCV;
+            link.download = 'MD_Mahabubur_Rahman_CV.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     };
 
     return (
