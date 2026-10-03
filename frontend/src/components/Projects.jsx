@@ -149,7 +149,7 @@ function Projects({ darkMode }) {
                 {/* Filter Controls & Instant Search */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-12">
                     {/* Category Filter Tabs */}
-                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 p-1.5 rounded-2xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl">
+                    <div className="w-full md:w-auto flex flex-wrap items-center justify-center md:justify-start gap-1.5 sm:gap-2 p-1.5 rounded-2xl border border-white/10 bg-[#06060a]/90 backdrop-blur-xl">
                         {categories.map((cat) => {
                             const IconComp = cat.icon;
                             const isActive = activeCategory === cat.id;
@@ -157,7 +157,7 @@ function Projects({ darkMode }) {
                                 <button
                                     key={cat.id}
                                     onClick={() => setActiveCategory(cat.id)}
-                                    className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 flex items-center gap-2 cursor-pointer ${
+                                    className={`relative px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 flex items-center gap-1.5 sm:gap-2 cursor-pointer ${
                                         isActive
                                             ? 'text-white bg-[#f43f5e] shadow-lg shadow-rose-900/40 font-semibold'
                                             : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
@@ -361,7 +361,7 @@ function Projects({ darkMode }) {
                                 animate={{ scale: 1, y: 0, opacity: 1 }}
                                 exit={{ scale: 0.94, y: 30, opacity: 0 }}
                                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                                className="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-3xl border border-white/15 bg-[#06060a] p-6 sm:p-9 shadow-2xl shadow-black space-y-7 text-white custom-scrollbar my-auto"
+                                className="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-3xl border border-white/15 bg-[#06060a] p-4 sm:p-7 md:p-9 shadow-2xl shadow-black space-y-6 sm:space-y-7 text-white custom-scrollbar my-auto"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 {/* Modal Header Area */}

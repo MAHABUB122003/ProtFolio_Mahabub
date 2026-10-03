@@ -217,13 +217,13 @@ function Hero({ darkMode }) {
                         </motion.div>
 
                         {/* ── Action Buttons ── */}
-                        <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center lg:justify-start items-center pt-2">
+                        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-stretch sm:items-center pt-2">
                             {/* Primary Button: "Get in touch" */}
                             <motion.button
                                 whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(244, 63, 94, 0.45)" }}
                                 whileTap={{ scale: 0.96 }}
                                 onClick={() => scrollToSection('contact')}
-                                className="px-8 py-3.5 rounded-xl text-sm font-bold bg-[#f43f5e] hover:bg-[#e11d48] text-white transition-all duration-300 flex items-center gap-2.5 shadow-lg shadow-rose-900/40 cursor-pointer"
+                                className="w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold bg-[#f43f5e] hover:bg-[#e11d48] text-white transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg shadow-rose-900/40 cursor-pointer"
                             >
                                 <span>Get in touch</span>
                                 <FaArrowRight className="text-xs" />
@@ -234,7 +234,7 @@ function Hero({ darkMode }) {
                                 whileHover={{ scale: 1.03 }}
                                 whileTap={{ scale: 0.97 }}
                                 onClick={handleDownloadCV}
-                                className="px-7 py-3.5 rounded-xl text-sm font-medium border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08] hover:border-white/30 backdrop-blur-xl flex items-center gap-2.5 transition-all duration-300 cursor-pointer"
+                                className="w-full sm:w-auto px-7 py-3.5 rounded-xl text-sm font-medium border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08] hover:border-white/30 backdrop-blur-xl flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer"
                             >
                                 <div className="w-6 h-6 rounded-lg bg-white/10 text-slate-200 flex items-center justify-center text-[10px]">
                                     <FaDownload />

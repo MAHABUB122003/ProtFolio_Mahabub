@@ -38,7 +38,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
             lastScrollY.current = winScroll;
 
             const sections = ['home', 'about', 'education', 'skills', 'projects', 'contact'];
-            const scrollPosition = winScroll + 100;
+            const scrollPosition = winScroll + 120;
             for (const section of sections) {
                 const element = document.getElementById(section);
                 if (element) {
@@ -78,26 +78,26 @@ function Navbar({ darkMode, toggleDarkMode }) {
         const sectionId = itemName.toLowerCase();
         setActiveSection(sectionId);
         setIsMenuOpen(false);
-        setTimeout(() => scrollToSection(sectionId), 100);
+        setTimeout(() => scrollToSection(sectionId), 80);
     };
 
     const theme = {
         navBg: darkMode
             ? scrolled
                 ? 'bg-[#000000]/90 backdrop-blur-2xl border-white/[0.08] shadow-2xl shadow-black/90'
-                : 'bg-transparent border-transparent'
+                : 'bg-[#000000]/40 backdrop-blur-md border-white/5'
             : scrolled
                 ? 'bg-white/90 backdrop-blur-2xl border-gray-200/60 shadow-xl'
-                : 'bg-transparent border-transparent',
+                : 'bg-white/40 backdrop-blur-md border-gray-200/40',
         textPrimary: darkMode ? 'text-white' : 'text-gray-900',
     };
 
     return (
         <>
-            {/* Scroll Progress Bar — Coral/Crimson glow */}
+            {/* Scroll Progress Bar — Rose glow */}
             <div className="fixed top-0 left-0 z-[9999] h-[2px]" style={{ width: `${scrollProgress}%` }}>
                 <div
-                    className="w-full h-full bg-gradient-to-r from-rose-500 via-red-500 to-white"
+                    className="w-full h-full bg-gradient-to-r from-rose-500 via-rose-400 to-white"
                     style={{
                         boxShadow: '0 0 12px rgba(244,63,94,0.8)',
                     }}
@@ -108,17 +108,28 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 initial={{ y: 0 }}
                 animate={{ y: isVisible ? 0 : -100 }}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 lg:px-16 pt-4"
+                className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-8 lg:px-16 pt-3 sm:pt-4"
             >
                 <div className="container mx-auto max-w-7xl">
                     <nav
                         ref={menuRef}
-                        className={`rounded-2xl px-4 sm:px-6 py-3 transition-all duration-300 border ${theme.navBg}`}
+                        className={`rounded-2xl px-3.5 sm:px-6 py-2.5 sm:py-3 transition-all duration-300 border ${theme.navBg}`}
                     >
                         <div className="flex items-center justify-between">
 
-                            {/* Left Navigation Links */}
-                            <div className="flex items-center gap-5 sm:gap-6 lg:gap-8">
+                            {/* Mobile Brand Logo */}
+                            <div
+                                onClick={() => handleNavClick('home')}
+                                className="flex md:hidden items-center gap-2 cursor-pointer"
+                            >
+                                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-rose-500 to-rose-700 text-white font-black text-xs flex items-center justify-center shadow-md">
+                                    MR
+                                </div>
+                                <span className="text-sm font-bold text-white tracking-tight">MAHABUB</span>
+                            </div>
+
+                            {/* Desktop Left Navigation Links */}
+                            <div className="hidden md:flex items-center gap-5 sm:gap-6 lg:gap-8">
                                 {navItems.map((item) => {
                                     const isActive = activeSection === item.name.toLowerCase();
                                     return (
@@ -137,10 +148,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                 })}
                             </div>
 
-                            {/* Right Controls & Socials (Matching Template Style) */}
-                            <div className="flex items-center gap-3 sm:gap-4">
-                                {/* Social Icons */}
-                                <div className="hidden sm:flex items-center gap-2">
+                            {/* Right Controls & Socials */}
+                            <div className="flex items-center gap-2.5 sm:gap-4">
+                                {/* Social Icons on Desktop */}
+                                <div className="hidden lg:flex items-center gap-2">
                                     <a
                                         href="https://github.com/MAHABUB122003"
                                         target="_blank"
@@ -151,7 +162,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                         <FaGithub />
                                     </a>
                                     <a
-                                        href="https://linkedin.com"
+                                        href="https://linkedin.com/in/md-mahabubur-rahman-41674b33a"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs transition-colors"
@@ -160,7 +171,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                         <FaLinkedinIn />
                                     </a>
                                     <a
-                                        href="https://facebook.com"
+                                        href="https://www.facebook.com/md.abrar.ayman.mahabub/"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs transition-colors"
@@ -168,18 +179,9 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                     >
                                         <FaFacebookF />
                                     </a>
-                                    <a
-                                        href="https://instagram.com"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs transition-colors"
-                                        aria-label="Instagram"
-                                    >
-                                        <FaInstagram />
-                                    </a>
                                 </div>
 
-                                <div className="hidden sm:block w-px h-4 bg-white/15" />
+                                <div className="hidden lg:block w-px h-4 bg-white/15" />
 
                                 {/* Theme Toggle */}
                                 <motion.button
@@ -206,7 +208,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                 <motion.button
                                     whileTap={{ scale: 0.9 }}
                                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                    className="md:hidden p-2 rounded-xl border border-white/10 bg-white/[0.04] text-slate-300"
+                                    className="md:hidden p-2 rounded-xl border border-white/10 bg-white/[0.04] text-slate-300 hover:text-white"
                                     aria-label="Toggle menu"
                                 >
                                     <AnimatePresence mode="wait">
@@ -225,7 +227,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                         </div>
                     </nav>
 
-                    {/* Mobile Dropdown */}
+                    {/* Mobile Dropdown Menu */}
                     <AnimatePresence>
                         {isMenuOpen && (
                             <motion.div
@@ -233,19 +235,22 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="md:hidden mt-2 p-3 rounded-2xl border border-white/10 bg-[#050508]/98 backdrop-blur-2xl shadow-2xl space-y-1 text-white"
+                                className="md:hidden mt-2 p-3 rounded-2xl border border-white/10 bg-[#06060a]/98 backdrop-blur-2xl shadow-2xl space-y-1 text-white"
                             >
                                 {navItems.map((item) => (
                                     <button
                                         key={item.name}
                                         onClick={() => handleNavClick(item.name)}
-                                        className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                                        className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all flex items-center justify-between ${
                                             activeSection === item.name.toLowerCase()
                                                 ? 'bg-rose-500/15 text-rose-400 border border-rose-500/20'
                                                 : 'text-slate-300 hover:bg-white/5'
                                         }`}
                                     >
-                                        {item.name}
+                                        <span>{item.name}</span>
+                                        {activeSection === item.name.toLowerCase() && (
+                                            <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                                        )}
                                     </button>
                                 ))}
                             </motion.div>
