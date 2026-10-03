@@ -496,19 +496,21 @@ function Contact({ darkMode = true }) {
                                     disabled={isSubmitting}
                                     whileHover={!isSubmitting ? { scale: 1.01 } : {}}
                                     whileTap={!isSubmitting ? { scale: 0.99 } : {}}
-                                    className={`w-full py-4 rounded-2xl font-bold text-sm tracking-wide bg-gradient-to-r from-rose-600 via-rose-500 to-rose-600 text-white hover:brightness-110 shadow-xl shadow-rose-600/20 border border-rose-400/30 flex items-center justify-center gap-2.5 transition-all ${
+                                    className={`w-full py-3.5 rounded-2xl font-medium text-sm tracking-wide border border-white/15 bg-white/[0.05] hover:bg-white/[0.09] hover:border-rose-500/40 text-white backdrop-blur-xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-black/40 cursor-pointer ${
                                         isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
                                     }`}
                                 >
                                     {isSubmitting ? (
                                         <>
-                                            <FaSpinner className="animate-spin text-base" />
+                                            <FaSpinner className="animate-spin text-base text-rose-400" />
                                             <span>Transmitting Inquiry...</span>
                                         </>
                                     ) : (
                                         <>
-                                            <FaPaperPlane className="text-sm" />
-                                            <span>Send Message</span>
+                                            <div className="w-7 h-7 rounded-lg bg-rose-500/15 border border-rose-500/25 text-rose-400 flex items-center justify-center text-xs">
+                                                <FaPaperPlane />
+                                            </div>
+                                            <span className="font-semibold">Send Message</span>
                                         </>
                                     )}
                                 </motion.button>
