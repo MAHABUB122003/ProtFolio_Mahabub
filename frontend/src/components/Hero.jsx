@@ -27,7 +27,7 @@ const fadeUp = {
 };
 
 const scaleIn = {
-    hidden: { opacity: 0, scale: 0.95 },
+    hidden: { opacity: 0, scale: 0.96 },
     show: { opacity: 1, scale: 1, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
@@ -40,8 +40,8 @@ function Hero({ darkMode }) {
     const mouseY = useMotionValue(0);
 
     const springConfig = { damping: 28, stiffness: 160 };
-    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [5, -5]), springConfig);
-    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), springConfig);
+    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), springConfig);
+    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), springConfig);
 
     const handleMouseMove = (e) => {
         if (!containerRef.current) return;
@@ -125,10 +125,11 @@ function Hero({ darkMode }) {
 
             {/* ── Main Container ── */}
             <div className="container mx-auto max-w-7xl relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
                     {/* ════════════════════════════════════════════
-                        LEFT COLUMN: Studio Portrait with Hair Rim-Light
+                        LEFT COLUMN: Clean Studio Portrait
+                        (Exact Artwork & Lighting Provided by User)
                         ════════════════════════════════════════════ */}
                     <motion.div
                         variants={scaleIn}
@@ -145,21 +146,15 @@ function Hero({ darkMode }) {
                                 rotateY,
                                 transformStyle: 'preserve-3d',
                             }}
-                            className="relative w-full max-w-[480px] sm:max-w-[520px] lg:max-w-[560px] flex items-center justify-center cursor-pointer"
+                            className="relative w-full max-w-[500px] sm:max-w-[560px] lg:max-w-[620px] flex items-center justify-center cursor-pointer"
                         >
-                            {/* Studio Rim-Light Halo directly behind Head and Hair */}
-                            <div className="absolute top-[18%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-b from-white/[0.08] via-rose-500/[0.05] to-transparent rounded-full blur-[65px] pointer-events-none" />
-
-                            {/* Hair & Shoulders Ambient Light */}
-                            <div className="absolute top-[30%] left-1/2 -translate-x-1/2 w-96 h-96 bg-slate-700/[0.08] rounded-full blur-[80px] pointer-events-none" />
-
-                            {/* Enhanced Portrait with High Hair & Suit Visibility */}
+                            {/* The Exact Clean Studio Portrait */}
                             <motion.img
                                 src={myImage}
                                 alt="MD Mahabubur Rahman"
-                                className="relative z-10 w-full h-auto object-contain object-center filter contrast-[1.05] brightness-[1.02] select-none drop-shadow-[0_25px_50px_rgba(0,0,0,0.95)]"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
+                                className="relative z-10 w-full h-auto object-contain object-center select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.95)]"
+                                initial={{ opacity: 0, scale: 0.96 }}
+                                animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, ease: "easeOut" }}
                             />
                         </motion.div>
