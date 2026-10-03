@@ -263,69 +263,68 @@ function Hero({ darkMode }) {
                     </motion.div>
 
                     {/* ════════════════════════════════════════════
-                        RIGHT COLUMN: Luxury Seamless Obsidian Portrait Presentation
+                        RIGHT COLUMN: Free-Standing Portrait with Ambient Studio Bokeh
                         ════════════════════════════════════════════ */}
                     <motion.div
                         variants={scaleIn}
                         initial="hidden"
                         animate="show"
-                        className="lg:col-span-6 flex justify-center items-center relative"
+                        className="lg:col-span-6 flex justify-center items-end relative min-h-[460px] sm:min-h-[520px] lg:min-h-[580px]"
                     >
-                        <div className="relative w-full max-w-[380px] sm:max-w-[420px] lg:max-w-[460px]">
+                        {/* ── Soft Ambient Bokeh Light Orbs Behind Portrait (Matching Template) ── */}
+                        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-96 sm:h-96 bg-gradient-to-tr from-indigo-500/20 via-cyan-500/15 to-transparent rounded-full blur-[90px] pointer-events-none" />
+                        <div className="absolute bottom-1/3 -right-6 w-60 h-60 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none" />
+                        <div className="absolute top-1/3 -left-10 w-52 h-52 bg-slate-500/10 rounded-full blur-[70px] pointer-events-none" />
 
-                            {/* ── Ambient Studio Backlight Glow Behind Frame ── */}
-                            <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-600/20 via-cyan-500/15 to-transparent rounded-[44px] blur-2xl opacity-60 pointer-events-none" />
+                        {/* ── Portrait Standing Directly on Canvas ── */}
+                        <div className="relative w-full max-w-[420px] sm:max-w-[480px] lg:max-w-[540px] flex items-end justify-center">
+                            <motion.img
+                                src={myImage}
+                                alt="MD Mahabubur Rahman"
+                                className="w-full h-auto max-h-[540px] sm:max-h-[580px] lg:max-h-[620px] object-contain object-bottom filter contrast-[1.04] brightness-[0.98] select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)]"
+                                style={{
+                                    maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 78%, rgba(0,0,0,0.5) 90%, rgba(0,0,0,0) 100%)',
+                                    WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 78%, rgba(0,0,0,0.5) 90%, rgba(0,0,0,0) 100%)',
+                                }}
+                                initial={{ y: 35, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ duration: 0.9, ease: "easeOut" }}
+                                onError={(e) => {
+                                    e.target.style.display = 'none';
+                                }}
+                            />
 
-                            {/* ── High-Tech Obsidian Luxury Rounded Glass Frame ── */}
-                            <div className="relative rounded-[36px] border border-white/[0.12] bg-gradient-to-b from-[#0b101f]/90 via-[#060913]/95 to-[#020408] backdrop-blur-3xl shadow-2xl shadow-black/95 overflow-hidden">
-
-                                {/* Studio Ambient Spotlight directly behind head/torso */}
-                                <div className="absolute top-12 left-1/2 -translate-x-1/2 w-72 h-72 bg-gradient-to-b from-indigo-500/25 via-cyan-500/15 to-transparent rounded-full blur-[70px] pointer-events-none" />
-                                <div className="absolute inset-0 cyber-dot-matrix opacity-10 pointer-events-none" />
-
-                                {/* ── Seamless Portrait Area with Natural Bottom Fade ── */}
-                                <div className="relative w-full h-[440px] sm:h-[490px] lg:h-[530px] flex items-end justify-center overflow-hidden pt-6">
-                                    <motion.img
-                                        src={myImage}
-                                        alt="MD Mahabubur Rahman"
-                                        className="w-full h-full object-contain object-bottom filter contrast-[1.03] brightness-[0.98] select-none"
-                                        style={{
-                                            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 68%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%)',
-                                            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 68%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%)',
-                                        }}
-                                        initial={{ y: 25, opacity: 0 }}
-                                        animate={{ y: 0, opacity: 1 }}
-                                        transition={{ duration: 0.9, ease: "easeOut" }}
-                                        onError={(e) => {
-                                            e.target.style.display = 'none';
-                                        }}
+                            {/* ── Floating Rotating Stamp Badge (Directly Matching Reference Template) ── */}
+                            <motion.div
+                                onClick={() => scrollToSection('contact')}
+                                className="absolute bottom-4 right-0 sm:bottom-6 sm:-right-4 w-28 h-28 sm:w-32 sm:h-32 cursor-pointer z-20 group"
+                                whileHover={{ scale: 1.08 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                {/* Rotating circular text */}
+                                <motion.svg
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                                    className="w-full h-full"
+                                    viewBox="0 0 100 100"
+                                >
+                                    <path
+                                        id="circlePath"
+                                        d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
+                                        fill="none"
                                     />
+                                    <text className="text-[8.5px] font-mono font-bold tracking-[0.19em] fill-slate-400 uppercase group-hover:fill-white transition-colors">
+                                        <textPath href="#circlePath" startOffset="0%">
+                                            • HIRE ME FOR YOUR PROJECTS •
+                                        </textPath>
+                                    </text>
+                                </motion.svg>
 
-                                    {/* Subtle Bottom Ambient Shadow to guarantee 100% seamless blend with card base */}
-                                    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#020408] via-[#020408]/70 to-transparent pointer-events-none" />
+                                {/* Center arrow button */}
+                                <div className="absolute inset-0 m-auto w-11 h-11 rounded-full bg-white text-gray-950 flex items-center justify-center shadow-2xl group-hover:bg-cyan-400 group-hover:scale-110 transition-all duration-300">
+                                    <FaArrowRight className="text-xs -rotate-45" />
                                 </div>
-
-                                {/* Floating Glass Badges */}
-                                {/* Top-right Badge: Security Specialist */}
-                                <motion.div
-                                    animate={{ y: [0, -5, 0] }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                    className="absolute top-5 right-5 px-3.5 py-1.5 rounded-full border border-white/20 bg-black/60 backdrop-blur-xl flex items-center gap-2 text-white shadow-xl text-[11px] font-mono font-semibold"
-                                >
-                                    <FaShieldAlt className="text-cyan-400 text-xs" />
-                                    <span>Security Specialist</span>
-                                </motion.div>
-
-                                {/* Bottom-left Badge: Full-Stack & ML */}
-                                <motion.div
-                                    animate={{ y: [0, 5, 0] }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                                    className="absolute bottom-5 left-5 px-3.5 py-1.5 rounded-full border border-white/20 bg-black/60 backdrop-blur-xl flex items-center gap-2 text-white shadow-xl text-[11px] font-mono font-semibold z-10"
-                                >
-                                    <FaCode className="text-indigo-400 text-xs" />
-                                    <span>Full-Stack & ML</span>
-                                </motion.div>
-                            </div>
+                            </motion.div>
                         </div>
                     </motion.div>
                 </div>
