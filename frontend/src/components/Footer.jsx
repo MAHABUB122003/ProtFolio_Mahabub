@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     FaGithub,
     FaLinkedinIn,
-    FaTwitter,
-    FaInstagram,
+    FaWhatsapp,
+    FaFacebookF,
     FaEnvelope,
     FaPhone,
     FaMapMarkerAlt,
@@ -13,15 +13,11 @@ import {
     FaShieldAlt,
     FaServer,
     FaBrain,
-    FaFacebookF,
-    FaHeart,
-    FaStar,
+    FaHeart
 } from 'react-icons/fa';
-import IslamicPattern from './IslamicPattern';
 
-function Footer({ darkMode }) {
+function Footer({ darkMode = true }) {
     const [showScrollTop, setShowScrollTop] = useState(false);
-    const [hoveredService, setHoveredService] = useState(null);
     const currentYear = new Date().getFullYear();
 
     useEffect(() => {
@@ -34,283 +30,230 @@ function Footer({ darkMode }) {
 
     const scrollToSection = (href) => {
         const element = document.querySelector(href);
-        if (element) element.scrollIntoView({ behavior: 'smooth' });
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     const quickLinks = [
         { name: 'Home', href: '#home' },
         { name: 'About', href: '#about' },
+        { name: 'Education', href: '#education' },
         { name: 'Skills', href: '#skills' },
         { name: 'Projects', href: '#projects' },
         { name: 'Contact', href: '#contact' },
     ];
 
-    const services = [
-        { name: 'Web Development', icon: <FaCode />, desc: 'Full-stack MERN applications', color: 'text-cyan-400', borderHover: 'hover:border-cyan-500/30', bgHover: 'hover:bg-cyan-500/5' },
-        { name: 'Cybersecurity', icon: <FaShieldAlt />, desc: 'Security auditing & pentesting', color: 'text-blue-400', borderHover: 'hover:border-blue-500/30', bgHover: 'hover:bg-blue-500/5' },
-        { name: 'Machine Learning', icon: <FaBrain />, desc: 'ML-powered solutions', color: 'text-purple-400', borderHover: 'hover:border-purple-500/30', bgHover: 'hover:bg-purple-500/5' },
-        { name: 'API Development', icon: <FaServer />, desc: 'FastAPI & REST APIs', color: 'text-emerald-400', borderHover: 'hover:border-emerald-500/30', bgHover: 'hover:bg-emerald-500/5' },
+    const coreServices = [
+        { name: 'Full-Stack Architecture', icon: <FaCode className="text-rose-400" />, desc: 'MERN & FastAPI scalable web platforms' },
+        { name: 'Security & Pentesting', icon: <FaShieldAlt className="text-rose-400" />, desc: 'Vulnerability audits & threat mitigation' },
+        { name: 'Applied Machine Learning', icon: <FaBrain className="text-rose-400" />, desc: 'Predictive models & intelligent systems' },
+        { name: 'Cloud & API Infrastructure', icon: <FaServer className="text-rose-400" />, desc: 'Robust RESTful microservices & pipelines' },
     ];
 
     const socialLinks = [
         { icon: <FaGithub />, url: "https://github.com/MAHABUB122003", label: "GitHub" },
         { icon: <FaLinkedinIn />, url: "https://linkedin.com/in/md-mahabubur-rahman-41674b33a", label: "LinkedIn" },
-        { icon: <FaTwitter />, url: "https://twitter.com", label: "Twitter" },
-        { icon: <FaInstagram />, url: "https://instagram.com", label: "Instagram" },
-        { icon: <FaFacebookF />, url: "https://facebook.com", label: "Facebook" },
+        { icon: <FaWhatsapp />, url: "https://wa.me/8801715044575", label: "WhatsApp" },
+        { icon: <FaFacebookF />, url: "https://www.facebook.com/md.abrar.ayman.mahabub/", label: "Facebook" },
     ];
 
-    const theme = {
-        footerBg: darkMode ? 'bg-transparent' : 'bg-gray-50',
-        text: darkMode ? 'text-white' : 'text-gray-900',
-        textMuted: darkMode ? 'text-slate-300' : 'text-gray-600',
-        textFaint: darkMode ? 'text-slate-400' : 'text-gray-400',
-        textDimmer: darkMode ? 'text-slate-500' : 'text-gray-300',
-        cardBg: darkMode ? 'bg-[#080d1a]/80 backdrop-blur-2xl border-white/[0.08] shadow-lg shadow-black/40' : 'bg-white/60 border-gray-200/50',
-        borderColor: darkMode ? 'border-white/[0.08]' : 'border-gray-200/60',
-        socialBg: darkMode
-            ? 'bg-[#0e1424] border-white/[0.08] text-slate-300 hover:text-white hover:border-white/30 hover:bg-white/10 shadow-md shadow-black/40'
-            : 'bg-white border-gray-200/50 text-gray-500 hover:text-gray-950 hover:border-gray-300 shadow-sm',
-        sectionDot: darkMode ? 'bg-opacity-100' : 'bg-opacity-80',
-    };
-
     return (
-        <footer className={`relative overflow-hidden ${theme.footerBg} ${theme.text}`}>
-            {/* ── Gradient Top Line ── */}
-            <div
-                className="h-[1px] w-full"
-                style={{
-                    background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 20%, #38bdf8 50%, #6366f1 80%, transparent 100%)',
-                    boxShadow: '0 0 15px rgba(56,189,248,0.3), 0 0 30px rgba(99,102,241,0.15)',
-                }}
-            />
+        <footer className="relative bg-black text-white overflow-hidden border-t border-white/10 selection:bg-rose-500/30 selection:text-white">
+            {/* Top Accent Gradient Border */}
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-rose-500/60 to-transparent" />
 
-            {/* ── Background Ambiance ── */}
+            {/* Subtle Ambient Lights */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className={`absolute bottom-0 left-[20%] w-[500px] h-[300px] rounded-full blur-[100px] ${
-                    darkMode ? 'bg-gradient-to-t from-cyan-500/5 to-transparent' : 'bg-gradient-to-t from-cyan-500/3 to-transparent'
-                }`} />
-                <div className={`absolute top-0 right-[20%] w-[500px] h-[300px] rounded-full blur-[100px] ${
-                    darkMode ? 'bg-gradient-to-b from-indigo-500/5 to-transparent' : 'bg-gradient-to-b from-indigo-500/3 to-transparent'
-                }`} />
-                {/* Subtle Islamic girih pattern watermark */}
-                <div
-                    className={`absolute bottom-0 right-0 w-[420px] h-[420px] ${darkMode ? 'text-white' : 'text-gray-900'}`}
-                    style={{ opacity: darkMode ? 0.03 : 0.04 }}
-                >
-                    <IslamicPattern strokeWidth={1} />
-                </div>
-                <div
-                    className={`absolute -top-24 -left-24 w-96 h-96 rotate-90 ${darkMode ? 'text-white' : 'text-gray-900'}`}
-                    style={{ opacity: darkMode ? 0.025 : 0.03 }}
-                >
-                    <IslamicPattern strokeWidth={1} />
-                </div>
+                <div className="absolute -bottom-20 left-1/4 w-[500px] h-[300px] bg-rose-950/15 rounded-full blur-[140px]" />
+                <div className="absolute top-0 right-1/4 w-[400px] h-[300px] bg-rose-600/5 rounded-full blur-[120px]" />
             </div>
 
-            {/* ── Main Content ── */}
-            <div className="container mx-auto max-w-7xl px-4 sm:px-6 pt-14 pb-8 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-6">
+            {/* Main Content */}
+            <div className="container mx-auto max-w-7xl px-4 sm:px-6 pt-16 pb-10 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-14">
 
-                    {/* ── Brand Column ── */}
+                    {/* ── 1. Brand / Identity Column ── */}
                     <div className="lg:col-span-4 space-y-5">
-                        {/* Logo */}
-                        <div className="cursor-pointer inline-block group" onClick={scrollToTop}>
-                            <div className="flex items-center gap-2.5">
-                                <div className="w-9 h-9 rounded-xl bg-white text-gray-950 flex items-center justify-center shadow-lg shadow-white/10 group-hover:scale-105 transition-all">
-                                    <svg viewBox="0 0 40 40" className="w-6 h-6" aria-hidden="true">
-                                        <path d="M 13 16.5 L 19.5 20 L 13 23.5" fill="none" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        <path d="M 21.5 25.5 H 28" fill="none" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h2 className={`text-xl font-black tracking-tight ${theme.text}`}>
-                                        MAHABUB<span className="text-cyan-400">.</span>
-                                    </h2>
-                                    <p className={`text-[9px] font-mono uppercase tracking-[0.2em] -mt-0.5 ${theme.textFaint}`}>
-                                        developer & security
-                                    </p>
-                                </div>
+                        {/* Logo Monogram */}
+                        <div className="cursor-pointer inline-flex items-center gap-3 group" onClick={scrollToTop}>
+                            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 text-white font-black text-sm flex items-center justify-center shadow-lg shadow-rose-500/25 border border-rose-400/30 group-hover:scale-105 transition-all">
+                                MR
+                            </div>
+                            <div>
+                                <h3 className="text-base font-extrabold tracking-tight text-white leading-tight">
+                                    MD MAHABUBUR RAHMAN
+                                </h3>
+                                <p className="text-[10px] font-mono tracking-widest uppercase text-rose-400">
+                                    ENGINEER & RESEARCHER
+                                </p>
                             </div>
                         </div>
 
-                        {/* Tagline */}
-                        <p className={`text-xs ${theme.textMuted} leading-relaxed max-w-xs`}>
-                            Building secure, scalable, and intelligent digital solutions with MERN stack, cybersecurity, and machine learning expertise.
+                        {/* Bio / Summary */}
+                        <p className="text-xs text-slate-300 leading-relaxed max-w-sm">
+                            Building resilient, high-performance web systems engineered with Secure SDLC principles and integrated with state-of-the-art machine learning models.
                         </p>
 
-                        {/* Availability */}
-                        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-semibold ${
-                            darkMode
-                                ? 'bg-emerald-500/8 border-emerald-500/20 text-emerald-400'
-                                : 'bg-emerald-50 border-emerald-200 text-emerald-600'
-                        }`}>
+                        {/* Availability Pill */}
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
                             </span>
-                            Available for work
+                            <span>Available for Worldwide Contracts</span>
                         </div>
 
-                        {/* Social Icons */}
-                        <div className="flex items-center gap-2 pt-1">
+                        {/* Social Media Row */}
+                        <div className="flex items-center gap-2.5 pt-1">
                             {socialLinks.map((social, idx) => (
-                                <motion.a
+                                <a
                                     key={idx}
                                     href={social.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    whileHover={{ scale: 1.12, y: -2 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    className={`w-9 h-9 rounded-xl border flex items-center justify-center text-sm transition-all duration-200 ${theme.socialBg}`}
                                     aria-label={social.label}
+                                    className="w-9 h-9 rounded-xl bg-[#0c0d14] border border-white/10 hover:border-rose-500/50 hover:bg-rose-500/10 hover:text-rose-400 text-slate-300 flex items-center justify-center text-sm transition-all duration-200 shadow-sm"
                                 >
                                     {social.icon}
-                                </motion.a>
+                                </a>
                             ))}
                         </div>
                     </div>
 
-                    {/* ── Navigation ── */}
+                    {/* ── 2. Navigation Column ── */}
                     <div className="lg:col-span-2">
-                        <h3 className={`text-xs font-bold uppercase tracking-[0.15em] font-mono mb-5 flex items-center gap-2 ${theme.text}`}>
-                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                            Navigate
-                        </h3>
+                        <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-slate-400 mb-5 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                            NAVIGATION
+                        </h4>
                         <ul className="space-y-2.5">
                             {quickLinks.map((link, idx) => (
                                 <li key={idx}>
-                                    <motion.button
-                                        whileHover={{ x: 5 }}
+                                    <button
+                                        type="button"
                                         onClick={() => scrollToSection(link.href)}
-                                        className={`text-[13px] font-medium flex items-center gap-2 transition-colors ${theme.textMuted} hover:text-white`}
+                                        className="text-xs text-slate-300 hover:text-white hover:translate-x-1 transition-all flex items-center gap-2 group"
                                     >
-                                        <span className={`text-[8px] ${theme.textDimmer}`}>◆</span>
-                                        {link.name}
-                                    </motion.button>
+                                        <span className="text-[8px] text-rose-500/60 group-hover:text-rose-400 transition-colors">◆</span>
+                                        <span>{link.name}</span>
+                                    </button>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
-                    {/* ── Services ── */}
+                    {/* ── 3. Core Domains Column ── */}
                     <div className="lg:col-span-3">
-                        <h3 className={`text-xs font-bold uppercase tracking-[0.15em] font-mono mb-5 flex items-center gap-2 ${theme.text}`}>
-                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
-                            Services
-                        </h3>
-                        <div className="space-y-2">
-                            {services.map((serv, idx) => (
-                                <motion.div
+                        <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-slate-400 mb-5 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                            SPECIALIZATIONS
+                        </h4>
+                        <div className="space-y-2.5">
+                            {coreServices.map((item, idx) => (
+                                <div
                                     key={idx}
-                                    whileHover={{ x: 3 }}
-                                    onMouseEnter={() => setHoveredService(idx)}
-                                    onMouseLeave={() => setHoveredService(null)}
-                                    className={`p-2.5 rounded-xl border flex items-center gap-3 cursor-default transition-all duration-300 ${theme.cardBg} ${serv.borderHover} ${serv.bgHover}`}
+                                    className="p-2.5 rounded-2xl bg-[#06060a] border border-white/5 hover:border-rose-500/30 transition-all duration-200"
                                 >
-                                    <div className={`text-sm ${serv.color} transition-transform duration-300 ${hoveredService === idx ? 'scale-110' : ''}`}>
-                                        {serv.icon}
+                                    <div className="flex items-center gap-2.5">
+                                        <div className="w-6 h-6 rounded-lg bg-rose-500/10 flex items-center justify-center text-xs flex-shrink-0">
+                                            {item.icon}
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className="text-xs font-semibold text-white truncate">{item.name}</p>
+                                            <p className="text-[10px] text-slate-400 truncate">{item.desc}</p>
+                                        </div>
                                     </div>
-                                    <div className="min-w-0">
-                                        <h4 className={`text-xs font-bold ${theme.text}`}>{serv.name}</h4>
-                                        <p className={`text-[10px] ${theme.textFaint} truncate`}>{serv.desc}</p>
-                                    </div>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* ── Contact Info ── */}
+                    {/* ── 4. Direct Contact Matrix Column ── */}
                     <div className="lg:col-span-3">
-                        <h3 className={`text-xs font-bold uppercase tracking-[0.15em] font-mono mb-5 flex items-center gap-2 ${theme.text}`}>
-                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                            Get in Touch
-                        </h3>
+                        <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-slate-400 mb-5 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                            DIRECT CONTACT
+                        </h4>
                         <div className="space-y-2.5">
-                            <motion.a
+                            <a
                                 href="mailto:rahmanmdmahabubur666@gmail.com"
-                                whileHover={{ x: 3 }}
-                                className={`p-3 rounded-xl border flex items-center gap-3 transition-all group ${theme.cardBg} hover:border-cyan-500/30`}
+                                className="p-3 rounded-2xl bg-[#06060a] border border-white/5 hover:border-rose-500/40 transition-all flex items-center gap-3 group"
                             >
-                                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 transition-all">
-                                    <FaEnvelope className="text-cyan-400 text-xs" />
+                                <div className="w-8 h-8 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400 text-xs flex-shrink-0 group-hover:scale-105 transition-all">
+                                    <FaEnvelope />
                                 </div>
                                 <div className="min-w-0">
-                                    <p className={`text-[10px] font-mono ${theme.textFaint}`}>Email</p>
-                                    <p className={`text-[11px] font-medium ${theme.textMuted} group-hover:text-cyan-400 truncate transition-colors`}>
+                                    <p className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Email</p>
+                                    <p className="text-xs font-medium text-white group-hover:text-rose-300 truncate transition-colors">
                                         rahmanmdmahabubur666@gmail.com
                                     </p>
                                 </div>
-                            </motion.a>
+                            </a>
 
-                            <motion.a
-                                href="tel:+8801715044575"
-                                whileHover={{ x: 3 }}
-                                className={`p-3 rounded-xl border flex items-center gap-3 transition-all group ${theme.cardBg} hover:border-indigo-500/30`}
+                            <a
+                                href="https://wa.me/8801715044575"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-3 rounded-2xl bg-[#06060a] border border-white/5 hover:border-emerald-500/40 transition-all flex items-center gap-3 group"
                             >
-                                <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0 transition-all">
-                                    <FaPhone className="text-indigo-400 text-xs" />
+                                <div className="w-8 h-8 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-xs flex-shrink-0 group-hover:scale-105 transition-all">
+                                    <FaPhone />
                                 </div>
-                                <div>
-                                    <p className={`text-[10px] font-mono ${theme.textFaint}`}>Phone</p>
-                                    <p className={`text-[11px] font-medium ${theme.textMuted} group-hover:text-indigo-400 transition-colors`}>
+                                <div className="min-w-0">
+                                    <p className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">WhatsApp / Call</p>
+                                    <p className="text-xs font-medium text-white group-hover:text-emerald-300 truncate transition-colors">
                                         +880 1715044575
                                     </p>
                                 </div>
-                            </motion.a>
+                            </a>
 
-                            <div className={`p-3 rounded-xl border flex items-center gap-3 ${theme.cardBg}`}>
-                                <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                                    <FaMapMarkerAlt className="text-blue-400 text-xs" />
+                            <div className="p-3 rounded-2xl bg-[#06060a] border border-white/5 flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center text-rose-400 text-xs flex-shrink-0">
+                                    <FaMapMarkerAlt />
                                 </div>
-                                <div>
-                                    <p className={`text-[10px] font-mono ${theme.textFaint}`}>Location</p>
-                                    <p className={`text-[11px] font-medium ${theme.textMuted}`}>Dhaka, Bangladesh</p>
+                                <div className="min-w-0">
+                                    <p className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Location</p>
+                                    <p className="text-xs font-medium text-white">Dhaka, Bangladesh (Remote/Relocation)</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* ── Bottom Bar ── */}
-                <div className={`mt-12 pt-5 border-t ${theme.borderColor}`}>
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-                        <div className={`flex items-center gap-1.5 text-[11px] font-mono ${theme.textFaint}`}>
-                            <span>© {currentYear}</span>
-                            <span className={`font-semibold ${theme.text}`}>MD MAHABUBUR RAHMAN</span>
-                            <span className={theme.textDimmer}>·</span>
-                            <span>All rights reserved</span>
-                        </div>
-
-                        {/* 8-pointed star ornament */}
-                        <div className={`flex items-center gap-3 ${theme.textDimmer}`}>
-                            <span className="h-px w-12 bg-gradient-to-r from-transparent to-current opacity-40" />
-                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-cyan-400/70" aria-hidden="true">
-                                <polygon points="12,2 14.5,9.5 22,12 14.5,14.5 12,22 9.5,14.5 2,12 9.5,9.5" fill="currentColor" />
-                                <polygon points="12,6 13.5,10.5 18,12 13.5,13.5 12,18 10.5,13.5 6,12 10.5,10.5" fill="currentColor" opacity="0.5" />
-                            </svg>
-                            <span className="h-px w-12 bg-gradient-to-r from-current to-transparent opacity-40" />
-                        </div>
+                {/* ── Bottom Section Bar ── */}
+                <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+                        <span>© {currentYear}</span>
+                        <span className="text-white font-semibold">MD MAHABUBUR RAHMAN</span>
+                        <span>•</span>
+                        <span>All Rights Reserved</span>
                     </div>
 
-                    {/* Bismillah watermark */}
-                    <p dir="rtl" lang="ar" className={`text-center mt-5 text-[13px] font-arabic ${theme.textDimmer}`}>
-                        بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-                    </p>
+                    <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                        <span>Crafted with passion, precision & security</span>
+                    </div>
+
+                    {/* Bismillah Inscription */}
+                    <div className="text-right">
+                        <p dir="rtl" lang="ar" className="text-xs font-arabic text-slate-500 hover:text-slate-300 transition-colors">
+                            بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            {/* ── Scroll to Top Button ── */}
+            {/* ── Floating Scroll to Top ── */}
             <AnimatePresence>
                 {showScrollTop && (
                     <motion.button
-                        initial={{ opacity: 0, scale: 0.5, y: 20 }}
+                        initial={{ opacity: 0, scale: 0.6, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.5, y: 20 }}
+                        exit={{ opacity: 0, scale: 0.6, y: 20 }}
                         whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                        whileTap={{ scale: 0.92 }}
                         onClick={scrollToTop}
-                        className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-xl flex items-center justify-center text-gray-950 bg-white hover:bg-slate-200 transition-all border border-white/20 shadow-xl shadow-white/10"
+                        className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-2xl flex items-center justify-center bg-gradient-to-br from-rose-600 to-rose-700 text-white shadow-2xl shadow-rose-600/40 border border-rose-400/40 backdrop-blur-md transition-all cursor-pointer"
                         title="Scroll to Top"
                     >
                         <FaArrowUp className="text-xs" />

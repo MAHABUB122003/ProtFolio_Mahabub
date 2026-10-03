@@ -246,26 +246,13 @@ function Hero({ darkMode }) {
                         {/* ── Metrics & Social Links ── */}
                         <motion.div variants={fadeUp} className="pt-3 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
                             {/* Project Count Metric */}
-                            <div className="flex items-center gap-3">
-                                <div>
-                                    <h4 className="text-2xl sm:text-3xl font-black text-white">
-                                        9+
-                                    </h4>
-                                    <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
-                                        Completed Projects
-                                    </p>
-                                </div>
-                                <div className="flex -space-x-2 overflow-hidden ml-2">
-                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-slate-700 to-slate-500 text-white font-bold text-xs">
-                                        M
-                                    </span>
-                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-rose-600 to-red-600 text-white font-bold text-xs">
-                                        R
-                                    </span>
-                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-emerald-600 to-teal-600 text-white font-bold text-xs">
-                                        ✓
-                                    </span>
-                                </div>
+                            <div>
+                                <h4 className="text-2xl sm:text-3xl font-black text-white">
+                                    9+
+                                </h4>
+                                <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
+                                    Completed Projects
+                                </p>
                             </div>
 
                             <div className="hidden sm:block w-px h-8 bg-white/10" />
