@@ -110,13 +110,13 @@ function Navbar({ darkMode, toggleDarkMode }) {
 
     return (
         <>
-            {/* Scroll Progress Bar — gradient with glow */}
+            {/* Scroll Progress Bar — luxury silver/cyan glow */}
             <div className="fixed top-0 left-0 z-[9999] h-[2px]" style={{ width: `${scrollProgress}%` }}>
                 <div
                     className="w-full h-full"
                     style={{
-                        background: 'linear-gradient(90deg, #f97316, #ec4899, #a855f7, #06b6d4)',
-                        boxShadow: '0 0 12px rgba(249,115,22,0.8), 0 0 24px rgba(168,85,247,0.4)',
+                        background: 'linear-gradient(90deg, #6366f1, #38bdf8, #ffffff)',
+                        boxShadow: '0 0 12px rgba(56,189,248,0.8), 0 0 24px rgba(255,255,255,0.4)',
                     }}
                 />
             </div>
@@ -144,7 +144,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                             >
                                 <div className="leading-none">
                                     <span className="text-xl sm:text-2xl font-black tracking-tight text-white">
-                                        Mahabub<span className="text-[#E5A93C]">.</span>
+                                        Mahabub<span className="text-cyan-400">.</span>
                                     </span>
                                 </div>
                             </motion.div>
@@ -159,14 +159,14 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                             onClick={() => handleNavClick(item.name)}
                                             className={`relative px-4 py-1.5 rounded-full text-[13px] font-medium transition-all duration-200 ${
                                                 isActive
-                                                    ? 'text-[#E5A93C] font-semibold'
-                                                    : 'text-gray-300 hover:text-white'
+                                                    ? 'text-white font-semibold'
+                                                    : 'text-gray-400 hover:text-white'
                                             }`}
                                         >
                                             {isActive && (
                                                 <motion.div
                                                     layoutId="activePill"
-                                                    className="absolute inset-0 rounded-full bg-[#E5A93C]/10 border border-[#E5A93C]/30"
+                                                    className="absolute inset-0 rounded-full bg-white/10 border border-white/20"
                                                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                                                 />
                                             )}
@@ -187,7 +187,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                     onClick={toggleDarkMode}
                                     className={`p-2 rounded-full border transition-all duration-300 ${
                                         darkMode
-                                            ? 'bg-[#121218] border-gray-800 text-[#E5A93C] hover:border-[#E5A93C]/50'
+                                            ? 'bg-[#121218] border-white/10 text-white hover:border-white/30'
                                             : 'bg-white border-gray-300 text-gray-800 shadow-sm'
                                     }`}
                                     aria-label="Toggle theme"
@@ -200,17 +200,17 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                             exit={{ opacity: 0 }}
                                             transition={{ duration: 0.2 }}
                                         >
-                                            {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                                            {darkMode ? <Sun className="w-4 h-4 text-cyan-400" /> : <Moon className="w-4 h-4" />}
                                         </motion.div>
                                     </AnimatePresence>
                                 </motion.button>
 
-                                {/* Contact Me Button (Matching Template Pill Outline) */}
+                                {/* Contact Me Button (Luxury White Pill) */}
                                 <motion.button
-                                    whileHover={{ scale: 1.04, backgroundColor: '#E5A93C', color: '#000000' }}
+                                    whileHover={{ scale: 1.04 }}
                                     whileTap={{ scale: 0.96 }}
                                     onClick={handleHireMeClick}
-                                    className="hidden sm:flex items-center gap-2 px-6 py-2 rounded-full text-[13px] font-semibold text-white border border-[#E5A93C] transition-all duration-300 bg-transparent"
+                                    className="hidden sm:flex items-center gap-2 px-6 py-2 rounded-full text-[13px] font-bold text-gray-950 bg-white hover:bg-slate-200 border border-white transition-all duration-300 shadow-lg shadow-white/10"
                                 >
                                     <span>Contact Me</span>
                                 </motion.button>
@@ -257,7 +257,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                         onClick={() => handleNavClick(item.name)}
                                         className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all flex items-center gap-3 ${
                                             activeSection === item.name.toLowerCase()
-                                                ? 'bg-gradient-to-r from-orange-500/15 to-purple-500/15 text-orange-500 border border-orange-500/20'
+                                                ? 'bg-white/10 text-white border border-white/20'
                                                 : darkMode ? 'text-gray-300 hover:bg-gray-900/60' : 'text-gray-700 hover:bg-gray-100/80'
                                         }`}
                                     >
@@ -275,7 +275,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                     transition={{ delay: 0.3 }}
                                     whileTap={{ scale: 0.97 }}
                                     onClick={handleHireMeClick}
-                                    className="w-full py-3 rounded-xl text-sm font-bold bg-gradient-to-r from-orange-500 to-purple-600 text-white shadow-lg shadow-orange-500/20 flex items-center justify-center gap-2"
+                                    className="w-full py-3 rounded-xl text-sm font-bold bg-white text-gray-950 shadow-lg shadow-white/10 flex items-center justify-center gap-2"
                                 >
                                     <FaPaperPlane className="text-xs" />
                                     <span>Hire Me</span>

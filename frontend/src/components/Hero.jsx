@@ -8,8 +8,8 @@ import {
     FaArrowRight,
     FaDownload,
     FaEnvelope,
-    FaPlay,
     FaShieldAlt,
+    FaCode,
     FaCheckCircle,
 } from 'react-icons/fa';
 import { getSection } from '../utils/portfolioData';
@@ -31,7 +31,7 @@ const fadeUp = {
 };
 
 const scaleIn = {
-    hidden: { opacity: 0, scale: 0.9 },
+    hidden: { opacity: 0, scale: 0.92 },
     show: { opacity: 1, scale: 1, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
@@ -51,7 +51,7 @@ function Hero({ darkMode }) {
         platform: s.platform,
     }));
 
-    // Track mouse for ambient warm golden bokeh
+    // Track mouse for subtle ambient lighting
     useEffect(() => {
         const handleGlobalMouse = (e) => {
             setMousePosition({
@@ -112,20 +112,20 @@ function Hero({ darkMode }) {
             id="home"
             className="relative min-h-[92vh] lg:min-h-screen flex items-center pt-28 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 md:px-12 overflow-hidden bg-transparent"
         >
-            {/* ── Soft Warm Golden Ambient Bokeh (Matching Template) ── */}
+            {/* ── Soft Ambient Lighting (No yellow) ── */}
             <div
-                className="absolute w-[500px] h-[500px] rounded-full pointer-events-none z-0 transition-all duration-[2.5s] ease-out opacity-25 blur-[120px]"
+                className="absolute w-[600px] h-[600px] rounded-full pointer-events-none z-0 transition-all duration-[2.5s] ease-out opacity-20 blur-[130px]"
                 style={{
                     left: `${mousePosition.x}%`,
                     top: `${mousePosition.y}%`,
                     transform: 'translate(-50%, -50%)',
-                    background: 'radial-gradient(circle, #D4AF37 0%, #E5A93C 40%, transparent 75%)',
+                    background: 'radial-gradient(circle, rgba(99,102,241,0.25) 0%, rgba(59,130,246,0.1) 40%, transparent 75%)',
                 }}
             />
-            {/* Left Warm Amber Light Orb */}
-            <div className="absolute top-[30%] -left-[10%] w-[420px] h-[420px] rounded-full bg-[#E5A93C]/[0.08] blur-[130px] pointer-events-none" />
-            {/* Right Warm Golden Orb behind photo */}
-            <div className="absolute top-[20%] right-[5%] w-[500px] h-[500px] rounded-full bg-[#D4AF37]/[0.10] blur-[140px] pointer-events-none" />
+            {/* Left Indigo Aura */}
+            <div className="absolute top-[25%] -left-[10%] w-[480px] h-[480px] rounded-full bg-indigo-500/[0.06] blur-[140px] pointer-events-none" />
+            {/* Right Silver/Blue Aura behind photo */}
+            <div className="absolute top-[20%] right-[5%] w-[520px] h-[520px] rounded-full bg-blue-500/[0.06] blur-[150px] pointer-events-none" />
 
             {/* ── Main Content Container ── */}
             <div className="container mx-auto max-w-7xl relative z-10">
@@ -145,26 +145,22 @@ function Hero({ darkMode }) {
                             <p
                                 dir="rtl"
                                 lang="ar"
-                                className={`font-arabic text-sm sm:text-base tracking-wide ${
-                                    darkMode ? 'text-[#E5A93C]/80' : 'text-[#B8860B]'
-                                }`}
+                                className="font-arabic text-sm sm:text-base tracking-wide text-slate-400"
                             >
                                 بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
                             </p>
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 text-[#E5A93C] text-xs font-mono tracking-wide">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#E5A93C] animate-pulse" />
+                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-mono tracking-wide">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                                 <span>{heroData.availableText || "Available For Full-Time & Freelance Roles"}</span>
                             </div>
                         </motion.div>
 
                         {/* Hello I'm & Main Headline */}
                         <motion.div variants={fadeUp} className="space-y-2">
-                            <h3 className={`text-xl sm:text-2xl md:text-3xl font-light tracking-wide ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                            <h3 className="text-xl sm:text-2xl md:text-3xl font-light tracking-wide text-slate-300">
                                 Hello I'm
                             </h3>
-                            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-black uppercase tracking-tight leading-[1.05] ${
-                                darkMode ? 'text-white' : 'text-gray-950'
-                            }`}>
+                            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-black uppercase tracking-tight leading-[1.05] bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
                                 MD MAHABUBUR RAHMAN
                             </h1>
                         </motion.div>
@@ -172,7 +168,7 @@ function Hero({ darkMode }) {
                         {/* Animated Dynamic Role & Tagline */}
                         <motion.div variants={fadeUp} className="space-y-3">
                             <div className="flex items-center justify-center lg:justify-start gap-2">
-                                <span className="text-xs font-mono uppercase tracking-widest text-[#E5A93C]">Specialization:</span>
+                                <span className="text-xs font-mono uppercase tracking-widest text-slate-400">Specialization:</span>
                                 <AnimatePresence mode="wait">
                                     <motion.span
                                         key={roleIndex}
@@ -180,79 +176,70 @@ function Hero({ darkMode }) {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -10 }}
                                         transition={{ duration: 0.3 }}
-                                        className="text-base sm:text-lg md:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#E5A93C] to-[#FBBF24]"
+                                        className="text-base sm:text-lg md:text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent"
                                     >
                                         {roles[roleIndex]}
                                     </motion.span>
                                 </AnimatePresence>
                             </div>
-                            <p className={`text-sm sm:text-base md:text-[15px] leading-relaxed max-w-xl mx-auto lg:mx-0 font-normal ${
-                                darkMode ? 'text-gray-400' : 'text-gray-600'
-                            }`}>
+                            <p className="text-sm sm:text-base md:text-[15px] leading-relaxed max-w-xl mx-auto lg:mx-0 font-normal text-slate-400">
                                 {heroData.description}
                             </p>
                         </motion.div>
 
-                        {/* ── Action Buttons (Matching Template Style) ── */}
+                        {/* ── Action Buttons (Clean High-Contrast Executive Style) ── */}
                         <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center lg:justify-start items-center pt-2">
-                            {/* Primary Pill Button: "Let's Get Started" */}
+                            {/* Primary Button: "Let's Get Started" */}
                             <motion.button
-                                whileHover={{ scale: 1.04, boxShadow: "0 0 25px rgba(229, 169, 60, 0.45)" }}
+                                whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(255, 255, 255, 0.3)" }}
                                 whileTap={{ scale: 0.96 }}
                                 onClick={() => scrollToSection('contact')}
-                                className="px-8 py-3.5 rounded-full text-sm font-bold text-black transition-all duration-300 flex items-center gap-2 shadow-lg"
-                                style={{
-                                    background: 'linear-gradient(135deg, #FBBF24 0%, #E5A93C 50%, #D4AF37 100%)',
-                                }}
+                                className="px-8 py-3.5 rounded-full text-sm font-bold bg-white text-gray-950 transition-all duration-300 flex items-center gap-2 shadow-xl hover:bg-slate-100"
                             >
                                 <span>Let's Get Started</span>
                                 <FaArrowRight className="text-xs" />
                             </motion.button>
 
-                            {/* Secondary Button: "Download CV" / Video preview */}
+                            {/* Secondary Button: "Download CV" */}
                             <motion.button
                                 whileHover={{ scale: 1.03 }}
                                 whileTap={{ scale: 0.97 }}
                                 onClick={handleDownloadCV}
-                                className={`px-6 py-3.5 rounded-full text-sm font-medium border flex items-center gap-2.5 transition-all duration-300 ${
-                                    darkMode
-                                        ? 'border-gray-800 bg-[#0c0c0f]/80 text-gray-300 hover:border-[#E5A93C]/50 hover:text-white'
-                                        : 'border-gray-300 bg-white/80 text-gray-700 hover:border-[#D4AF37] hover:text-black shadow-sm'
-                                }`}
+                                className="px-7 py-3.5 rounded-full text-sm font-medium border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08] hover:border-white/30 backdrop-blur-xl flex items-center gap-2.5 transition-all duration-300"
                             >
-                                <div className="w-6 h-6 rounded-full bg-[#E5A93C]/20 text-[#E5A93C] flex items-center justify-center text-[10px]">
+                                <div className="w-6 h-6 rounded-full bg-white/10 text-cyan-400 flex items-center justify-center text-[10px]">
                                     <FaDownload />
                                 </div>
                                 <span>Download CV</span>
                             </motion.button>
                         </motion.div>
 
-                        {/* ── Social Icons & Metrics Row (Template's 325+ Happy Clients style) ── */}
+                        {/* ── Social Icons & Metrics Row ── */}
                         <motion.div variants={fadeUp} className="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
                             {/* Project Count Metric */}
                             <div className="flex items-center gap-3">
                                 <div>
-                                    <h4 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FBBF24] to-[#E5A93C]">
+                                    <h4 className="text-2xl sm:text-3xl font-black text-white">
                                         9+
                                     </h4>
-                                    <p className={`text-[11px] font-mono uppercase tracking-wider ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                                    <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
                                         Completed Projects
                                     </p>
                                 </div>
                                 <div className="flex -space-x-2 overflow-hidden ml-2">
-                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-[#D4AF37] to-[#F59E0B] text-black font-bold text-xs">
+                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-slate-700 to-slate-500 text-white font-bold text-xs">
                                         M
                                     </span>
-                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-[#3b82f6] to-[#60a5fa] text-white font-bold text-xs">
+                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold text-xs">
                                         R
                                     </span>
-                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-[#10b981] to-[#34d399] text-black font-bold text-xs">
+                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-black bg-gradient-to-tr from-emerald-600 to-teal-600 text-white font-bold text-xs">
                                         ✓
                                     </span>
                                 </div>
                             </div>
 
-                            <div className={`hidden sm:block w-px h-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-300'}`} />
+                            <div className="hidden sm:block w-px h-8 bg-slate-800" />
 
                             {/* Social Icons */}
                             <div className="flex items-center gap-2">
@@ -265,11 +252,7 @@ function Hero({ darkMode }) {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             aria-label={social.platform}
-                                            className={`w-9 h-9 rounded-full border flex items-center justify-center text-xs transition-all duration-200 ${
-                                                darkMode
-                                                    ? 'border-gray-800 bg-[#0d0d12]/90 text-gray-400 hover:text-[#E5A93C] hover:border-[#E5A93C]/40 hover:bg-[#E5A93C]/10'
-                                                    : 'border-gray-300 bg-white text-gray-600 hover:text-[#B8860B] hover:border-[#B8860B]'
-                                            }`}
+                                            className="w-9 h-9 rounded-full border border-slate-800 bg-[#0d1322]/80 text-slate-400 hover:text-white hover:border-white/30 hover:bg-white/10 flex items-center justify-center text-xs transition-all duration-200"
                                         >
                                             <IconComp />
                                         </a>
@@ -280,7 +263,7 @@ function Hero({ darkMode }) {
                     </motion.div>
 
                     {/* ════════════════════════════════════════════
-                        RIGHT COLUMN: Geometric Golden Contour Frame & Portrait
+                        RIGHT COLUMN: Luxury Seamless Obsidian Portrait Presentation
                         ════════════════════════════════════════════ */}
                     <motion.div
                         variants={scaleIn}
@@ -288,81 +271,61 @@ function Hero({ darkMode }) {
                         animate="show"
                         className="lg:col-span-6 flex justify-center items-center relative"
                     >
-                        <div className="relative w-full max-w-[420px] sm:max-w-[480px] lg:max-w-[500px] h-[480px] sm:h-[540px] flex items-center justify-center">
+                        <div className="relative w-full max-w-[380px] sm:max-w-[420px] lg:max-w-[460px]">
 
-                            {/* ── Geometric Rounded Golden Triangle Contour (Exact Match to Template) ── */}
-                            <svg 
-                                viewBox="0 0 500 560" 
-                                className="absolute inset-0 w-full h-full pointer-events-none drop-shadow-[0_0_25px_rgba(229,169,60,0.35)]"
-                                fill="none"
-                            >
-                                <path
-                                    d="M 230 40 Q 250 20 270 40 L 460 380 Q 480 415 450 435 L 70 470 Q 35 475 35 440 L 210 50 Z"
-                                    stroke="#E5A93C"
-                                    strokeWidth="3.5"
-                                    strokeLinejoin="round"
-                                    strokeLinecap="round"
-                                    fill="rgba(229, 169, 60, 0.02)"
-                                />
-                                <path
-                                    d="M 230 40 Q 250 20 270 40 L 460 380 Q 480 415 450 435 L 70 470 Q 35 475 35 440 L 210 50 Z"
-                                    stroke="#FBBF24"
-                                    strokeWidth="1"
-                                    strokeOpacity="0.4"
-                                    strokeLinejoin="round"
-                                    transform="translate(-6, -6) scale(1.02)"
-                                />
-                            </svg>
+                            {/* ── Ambient Studio Backlight Glow Behind Frame ── */}
+                            <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-600/20 via-cyan-500/15 to-transparent rounded-[44px] blur-2xl opacity-60 pointer-events-none" />
 
-                            {/* ── Mahabub's Real Portrait (Clean transparent cutout with golden rim lighting) ── */}
-                            <div className="relative z-10 w-full h-full flex items-end justify-center overflow-visible pb-2">
-                                <motion.img
-                                    src={myImage}
-                                    alt="MD Mahabubur Rahman"
-                                    className="w-auto h-[90%] sm:h-[95%] max-h-[500px] object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.9)] filter contrast-[1.05]"
-                                    initial={{ y: 20, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ duration: 0.8, ease: "easeOut" }}
-                                    onError={(e) => {
-                                        e.target.style.display = 'none';
-                                    }}
-                                />
-                            </div>
+                            {/* ── High-Tech Obsidian Luxury Rounded Glass Frame ── */}
+                            <div className="relative rounded-[36px] border border-white/[0.12] bg-gradient-to-b from-[#0b101f]/90 via-[#060913]/95 to-[#020408] backdrop-blur-3xl shadow-2xl shadow-black/95 overflow-hidden">
 
-                            {/* ── Rotating Circular Stamp Badge: "Hire Me For Your Dreamed Projects ↗" (Exact Match to Template) ── */}
-                            <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-                                className="absolute -bottom-2 right-2 sm:right-4 z-20 w-28 h-28 sm:w-32 sm:h-32 pointer-events-auto cursor-pointer"
-                                onClick={() => scrollToSection('contact')}
-                            >
-                                <div className="relative w-full h-full flex items-center justify-center">
-                                    {/* SVG Circular Curved Text */}
-                                    <svg viewBox="0 0 100 100" className="w-full h-full">
-                                        <path
-                                            id="circlePath"
-                                            d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-                                            fill="none"
-                                        />
-                                        <text
-                                            fontSize="9"
-                                            fontFamily="monospace"
-                                            fontWeight="bold"
-                                            letterSpacing="2.2"
-                                            fill={darkMode ? '#E5A93C' : '#92400E'}
-                                        >
-                                            <textPath href="#circlePath" startOffset="0%">
-                                                • HIRE ME FOR YOUR DREAMED PROJECTS •
-                                            </textPath>
-                                        </text>
-                                    </svg>
+                                {/* Studio Ambient Spotlight directly behind head/torso */}
+                                <div className="absolute top-12 left-1/2 -translate-x-1/2 w-72 h-72 bg-gradient-to-b from-indigo-500/25 via-cyan-500/15 to-transparent rounded-full blur-[70px] pointer-events-none" />
+                                <div className="absolute inset-0 cyber-dot-matrix opacity-10 pointer-events-none" />
 
-                                    {/* Center Golden Arrow Circle Button */}
-                                    <div className="absolute w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#FBBF24] flex items-center justify-center shadow-lg shadow-[#D4AF37]/40 text-black">
-                                        <FaArrowRight className="text-xs -rotate-45" />
-                                    </div>
+                                {/* ── Seamless Portrait Area with Natural Bottom Fade ── */}
+                                <div className="relative w-full h-[440px] sm:h-[490px] lg:h-[530px] flex items-end justify-center overflow-hidden pt-6">
+                                    <motion.img
+                                        src={myImage}
+                                        alt="MD Mahabubur Rahman"
+                                        className="w-full h-full object-contain object-bottom filter contrast-[1.03] brightness-[0.98] select-none"
+                                        style={{
+                                            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 68%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%)',
+                                            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 68%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%)',
+                                        }}
+                                        initial={{ y: 25, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ duration: 0.9, ease: "easeOut" }}
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                        }}
+                                    />
+
+                                    {/* Subtle Bottom Ambient Shadow to guarantee 100% seamless blend with card base */}
+                                    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#020408] via-[#020408]/70 to-transparent pointer-events-none" />
                                 </div>
-                            </motion.div>
+
+                                {/* Floating Glass Badges */}
+                                {/* Top-right Badge: Security Specialist */}
+                                <motion.div
+                                    animate={{ y: [0, -5, 0] }}
+                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                    className="absolute top-5 right-5 px-3.5 py-1.5 rounded-full border border-white/20 bg-black/60 backdrop-blur-xl flex items-center gap-2 text-white shadow-xl text-[11px] font-mono font-semibold"
+                                >
+                                    <FaShieldAlt className="text-cyan-400 text-xs" />
+                                    <span>Security Specialist</span>
+                                </motion.div>
+
+                                {/* Bottom-left Badge: Full-Stack & ML */}
+                                <motion.div
+                                    animate={{ y: [0, 5, 0] }}
+                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                                    className="absolute bottom-5 left-5 px-3.5 py-1.5 rounded-full border border-white/20 bg-black/60 backdrop-blur-xl flex items-center gap-2 text-white shadow-xl text-[11px] font-mono font-semibold z-10"
+                                >
+                                    <FaCode className="text-indigo-400 text-xs" />
+                                    <span>Full-Stack & ML</span>
+                                </motion.div>
+                            </div>
                         </div>
                     </motion.div>
                 </div>

@@ -47,7 +47,7 @@ function Footer({ darkMode }) {
 
     const services = [
         { name: 'Web Development', icon: <FaCode />, desc: 'Full-stack MERN applications', color: 'text-cyan-400', borderHover: 'hover:border-cyan-500/30', bgHover: 'hover:bg-cyan-500/5' },
-        { name: 'Cybersecurity', icon: <FaShieldAlt />, desc: 'Security auditing & pentesting', color: 'text-orange-400', borderHover: 'hover:border-orange-500/30', bgHover: 'hover:bg-orange-500/5' },
+        { name: 'Cybersecurity', icon: <FaShieldAlt />, desc: 'Security auditing & pentesting', color: 'text-blue-400', borderHover: 'hover:border-blue-500/30', bgHover: 'hover:bg-blue-500/5' },
         { name: 'Machine Learning', icon: <FaBrain />, desc: 'ML-powered solutions', color: 'text-purple-400', borderHover: 'hover:border-purple-500/30', bgHover: 'hover:bg-purple-500/5' },
         { name: 'API Development', icon: <FaServer />, desc: 'FastAPI & REST APIs', color: 'text-emerald-400', borderHover: 'hover:border-emerald-500/30', bgHover: 'hover:bg-emerald-500/5' },
     ];
@@ -66,33 +66,32 @@ function Footer({ darkMode }) {
         textMuted: darkMode ? 'text-slate-300' : 'text-gray-600',
         textFaint: darkMode ? 'text-slate-400' : 'text-gray-400',
         textDimmer: darkMode ? 'text-slate-500' : 'text-gray-300',
-        cardBg: darkMode ? 'bg-[#080d1a]/70 backdrop-blur-2xl border-white/[0.08] shadow-lg shadow-black/40' : 'bg-white/60 border-gray-200/50',
+        cardBg: darkMode ? 'bg-[#080d1a]/80 backdrop-blur-2xl border-white/[0.08] shadow-lg shadow-black/40' : 'bg-white/60 border-gray-200/50',
         borderColor: darkMode ? 'border-white/[0.08]' : 'border-gray-200/60',
         socialBg: darkMode
-            ? 'bg-[#080d1a]/80 border-white/[0.08] text-slate-300 hover:text-white hover:border-orange-500/50 hover:bg-orange-500/10 shadow-md shadow-black/40'
-            : 'bg-white border-gray-200/50 text-gray-500 hover:text-purple-600 hover:border-purple-300/50 shadow-sm',
+            ? 'bg-[#0e1424] border-white/[0.08] text-slate-300 hover:text-white hover:border-white/30 hover:bg-white/10 shadow-md shadow-black/40'
+            : 'bg-white border-gray-200/50 text-gray-500 hover:text-gray-950 hover:border-gray-300 shadow-sm',
         sectionDot: darkMode ? 'bg-opacity-100' : 'bg-opacity-80',
     };
 
     return (
         <footer className={`relative overflow-hidden ${theme.footerBg} ${theme.text}`}>
             {/* ── Gradient Top Line ── */}
-            <div className="h-px w-full bg-gradient-to-r from-transparent via-orange-500/50 to-transparent" />
             <div
                 className="h-[1px] w-full"
                 style={{
-                    background: 'linear-gradient(90deg, transparent 0%, #f97316 20%, #ec4899 50%, #a855f7 80%, transparent 100%)',
-                    boxShadow: '0 0 15px rgba(249,115,22,0.3), 0 0 30px rgba(168,85,247,0.15)',
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 20%, #38bdf8 50%, #6366f1 80%, transparent 100%)',
+                    boxShadow: '0 0 15px rgba(56,189,248,0.3), 0 0 30px rgba(99,102,241,0.15)',
                 }}
             />
 
             {/* ── Background Ambiance ── */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
                 <div className={`absolute bottom-0 left-[20%] w-[500px] h-[300px] rounded-full blur-[100px] ${
-                    darkMode ? 'bg-gradient-to-t from-orange-500/5 to-transparent' : 'bg-gradient-to-t from-orange-500/3 to-transparent'
+                    darkMode ? 'bg-gradient-to-t from-cyan-500/5 to-transparent' : 'bg-gradient-to-t from-cyan-500/3 to-transparent'
                 }`} />
                 <div className={`absolute top-0 right-[20%] w-[500px] h-[300px] rounded-full blur-[100px] ${
-                    darkMode ? 'bg-gradient-to-b from-purple-500/5 to-transparent' : 'bg-gradient-to-b from-purple-500/3 to-transparent'
+                    darkMode ? 'bg-gradient-to-b from-indigo-500/5 to-transparent' : 'bg-gradient-to-b from-indigo-500/3 to-transparent'
                 }`} />
                 {/* Subtle Islamic girih pattern watermark */}
                 <div
@@ -118,15 +117,15 @@ function Footer({ darkMode }) {
                         {/* Logo */}
                         <div className="cursor-pointer inline-block group" onClick={scrollToTop}>
                             <div className="flex items-center gap-2.5">
-                                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-purple-600 flex items-center justify-center shadow-lg shadow-orange-500/15 group-hover:shadow-orange-500/30 transition-shadow">
+                                <div className="w-9 h-9 rounded-xl bg-white text-gray-950 flex items-center justify-center shadow-lg shadow-white/10 group-hover:scale-105 transition-all">
                                     <svg viewBox="0 0 40 40" className="w-6 h-6" aria-hidden="true">
-                                        <path d="M 13 16.5 L 19.5 20 L 13 23.5" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        <path d="M 21.5 25.5 H 28" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" />
+                                        <path d="M 13 16.5 L 19.5 20 L 13 23.5" fill="none" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M 21.5 25.5 H 28" fill="none" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
                                     </svg>
                                 </div>
                                 <div>
                                     <h2 className={`text-xl font-black tracking-tight ${theme.text}`}>
-                                        MAHABUB<span className="text-orange-500">.</span>
+                                        MAHABUB<span className="text-cyan-400">.</span>
                                     </h2>
                                     <p className={`text-[9px] font-mono uppercase tracking-[0.2em] -mt-0.5 ${theme.textFaint}`}>
                                         developer & security
@@ -175,7 +174,7 @@ function Footer({ darkMode }) {
                     {/* ── Navigation ── */}
                     <div className="lg:col-span-2">
                         <h3 className={`text-xs font-bold uppercase tracking-[0.15em] font-mono mb-5 flex items-center gap-2 ${theme.text}`}>
-                            <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                             Navigate
                         </h3>
                         <ul className="space-y-2.5">
@@ -184,7 +183,7 @@ function Footer({ darkMode }) {
                                     <motion.button
                                         whileHover={{ x: 5 }}
                                         onClick={() => scrollToSection(link.href)}
-                                        className={`text-[13px] font-medium flex items-center gap-2 transition-colors ${theme.textMuted} hover:text-orange-400`}
+                                        className={`text-[13px] font-medium flex items-center gap-2 transition-colors ${theme.textMuted} hover:text-white`}
                                     >
                                         <span className={`text-[8px] ${theme.textDimmer}`}>◆</span>
                                         {link.name}
@@ -197,7 +196,7 @@ function Footer({ darkMode }) {
                     {/* ── Services ── */}
                     <div className="lg:col-span-3">
                         <h3 className={`text-xs font-bold uppercase tracking-[0.15em] font-mono mb-5 flex items-center gap-2 ${theme.text}`}>
-                            <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
                             Services
                         </h3>
                         <div className="space-y-2">
@@ -224,21 +223,21 @@ function Footer({ darkMode }) {
                     {/* ── Contact Info ── */}
                     <div className="lg:col-span-3">
                         <h3 className={`text-xs font-bold uppercase tracking-[0.15em] font-mono mb-5 flex items-center gap-2 ${theme.text}`}>
-                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                             Get in Touch
                         </h3>
                         <div className="space-y-2.5">
                             <motion.a
                                 href="mailto:rahmanmdmahabubur666@gmail.com"
                                 whileHover={{ x: 3 }}
-                                className={`p-3 rounded-xl border flex items-center gap-3 transition-all group ${theme.cardBg} hover:border-orange-500/30`}
+                                className={`p-3 rounded-xl border flex items-center gap-3 transition-all group ${theme.cardBg} hover:border-cyan-500/30`}
                             >
-                                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500/15 to-orange-500/5 flex items-center justify-center flex-shrink-0 group-hover:from-orange-500/25 group-hover:to-orange-500/10 transition-all">
-                                    <FaEnvelope className="text-orange-400 text-xs" />
+                                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 transition-all">
+                                    <FaEnvelope className="text-cyan-400 text-xs" />
                                 </div>
                                 <div className="min-w-0">
                                     <p className={`text-[10px] font-mono ${theme.textFaint}`}>Email</p>
-                                    <p className={`text-[11px] font-medium ${theme.textMuted} group-hover:text-orange-400 truncate transition-colors`}>
+                                    <p className={`text-[11px] font-medium ${theme.textMuted} group-hover:text-cyan-400 truncate transition-colors`}>
                                         rahmanmdmahabubur666@gmail.com
                                     </p>
                                 </div>
@@ -247,22 +246,22 @@ function Footer({ darkMode }) {
                             <motion.a
                                 href="tel:+8801715044575"
                                 whileHover={{ x: 3 }}
-                                className={`p-3 rounded-xl border flex items-center gap-3 transition-all group ${theme.cardBg} hover:border-purple-500/30`}
+                                className={`p-3 rounded-xl border flex items-center gap-3 transition-all group ${theme.cardBg} hover:border-indigo-500/30`}
                             >
-                                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500/15 to-purple-500/5 flex items-center justify-center flex-shrink-0 group-hover:from-purple-500/25 group-hover:to-purple-500/10 transition-all">
-                                    <FaPhone className="text-purple-400 text-xs" />
+                                <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0 transition-all">
+                                    <FaPhone className="text-indigo-400 text-xs" />
                                 </div>
                                 <div>
                                     <p className={`text-[10px] font-mono ${theme.textFaint}`}>Phone</p>
-                                    <p className={`text-[11px] font-medium ${theme.textMuted} group-hover:text-purple-400 transition-colors`}>
+                                    <p className={`text-[11px] font-medium ${theme.textMuted} group-hover:text-indigo-400 transition-colors`}>
                                         +880 1715044575
                                     </p>
                                 </div>
                             </motion.a>
 
                             <div className={`p-3 rounded-xl border flex items-center gap-3 ${theme.cardBg}`}>
-                                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500/15 to-cyan-500/5 flex items-center justify-center flex-shrink-0">
-                                    <FaMapMarkerAlt className="text-cyan-400 text-xs" />
+                                <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                                    <FaMapMarkerAlt className="text-blue-400 text-xs" />
                                 </div>
                                 <div>
                                     <p className={`text-[10px] font-mono ${theme.textFaint}`}>Location</p>
@@ -286,7 +285,7 @@ function Footer({ darkMode }) {
                         {/* 8-pointed star ornament */}
                         <div className={`flex items-center gap-3 ${theme.textDimmer}`}>
                             <span className="h-px w-12 bg-gradient-to-r from-transparent to-current opacity-40" />
-                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-orange-500/70" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-cyan-400/70" aria-hidden="true">
                                 <polygon points="12,2 14.5,9.5 22,12 14.5,14.5 12,22 9.5,14.5 2,12 9.5,9.5" fill="currentColor" />
                                 <polygon points="12,6 13.5,10.5 18,12 13.5,13.5 12,18 10.5,13.5 6,12 10.5,10.5" fill="currentColor" opacity="0.5" />
                             </svg>
@@ -311,11 +310,7 @@ function Footer({ darkMode }) {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={scrollToTop}
-                        className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-xl flex items-center justify-center text-white transition-all border border-white/10"
-                        style={{
-                            background: 'linear-gradient(135deg, #f97316, #a855f7)',
-                            boxShadow: '0 4px 20px rgba(249,115,22,0.3), 0 2px 8px rgba(168,85,247,0.2)',
-                        }}
+                        className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-xl flex items-center justify-center text-gray-950 bg-white hover:bg-slate-200 transition-all border border-white/20 shadow-xl shadow-white/10"
                         title="Scroll to Top"
                     >
                         <FaArrowUp className="text-xs" />

@@ -53,16 +53,16 @@ function Projects({ darkMode }) {
         textSecondary: darkMode ? 'text-slate-300' : 'text-gray-700',
         textMuted: darkMode ? 'text-slate-400' : 'text-gray-500',
         cardBg: darkMode
-            ? 'bg-[#080d1a]/70 backdrop-blur-2xl border-white/[0.08] text-white shadow-xl shadow-black/60'
+            ? 'bg-[#080d1a]/80 backdrop-blur-2xl border-white/[0.08] text-white shadow-xl shadow-black/70 hover:border-white/20'
             : 'bg-white/90 backdrop-blur-xl border-gray-200/90 text-gray-900 shadow-lg shadow-gray-200/50',
         pillBg: darkMode
-            ? 'bg-[#0c0c10]/80 border-white/[0.08] text-slate-300 hover:text-white hover:border-[#E5A93C]/40'
+            ? 'bg-[#080d1a]/80 border-white/[0.08] text-slate-300 hover:text-white hover:border-white/30'
             : 'bg-white border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm',
-        pillActive: 'bg-gradient-to-r from-[#FBBF24] via-[#E5A93C] to-[#D4AF37] text-black shadow-md shadow-[#D4AF37]/30 border-transparent font-bold',
-        badgeBg: darkMode ? 'bg-[#121218] text-slate-300 border-white/[0.06]' : 'bg-gray-100 text-gray-700 border-gray-200',
-        modalBg: darkMode ? 'bg-[#0a0a0f] border-white/[0.1] text-white shadow-2xl shadow-black/90' : 'bg-white border-gray-200 text-gray-900',
-        searchBg: darkMode ? 'bg-[#0c0c10]/90 border-white/[0.08] text-white placeholder-slate-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 shadow-sm',
-        innerCard: darkMode ? 'bg-[#121218] border-white/[0.06]' : 'bg-gray-50 border-gray-200',
+        pillActive: 'bg-white text-gray-950 shadow-lg shadow-white/10 border-white font-bold',
+        badgeBg: darkMode ? 'bg-[#0e1424] text-slate-300 border-white/[0.06]' : 'bg-gray-100 text-gray-700 border-gray-200',
+        modalBg: darkMode ? 'bg-[#060a12] border-white/[0.1] text-white shadow-2xl shadow-black/90' : 'bg-white border-gray-200 text-gray-900',
+        searchBg: darkMode ? 'bg-[#080d1a]/90 border-white/[0.08] text-white placeholder-slate-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 shadow-sm',
+        innerCard: darkMode ? 'bg-[#0e1424] border-white/[0.06]' : 'bg-gray-50 border-gray-200',
     };
 
     const categories = [
@@ -91,24 +91,24 @@ function Projects({ darkMode }) {
 
     const getCategoryIcon = (category) => {
         const norm = normalizeCategory(category);
-        if (norm === 'security') return <FaShieldAlt className="text-[#E5A93C]" />;
-        if (norm === 'ml') return <FaBrain className="text-[#FBBF24]" />;
-        return <FaLaptopCode className="text-[#D4AF37]" />;
+        if (norm === 'security') return <FaShieldAlt className="text-blue-400" />;
+        if (norm === 'ml') return <FaBrain className="text-purple-400" />;
+        return <FaLaptopCode className="text-cyan-400" />;
     };
 
     const getCategoryColor = (category) => {
         const norm = normalizeCategory(category);
-        if (norm === 'security') return { text: 'text-[#E5A93C]', border: 'border-[#E5A93C]/40', bg: 'bg-[#E5A93C]/15' };
-        if (norm === 'ml') return { text: 'text-[#FBBF24]', border: 'border-[#FBBF24]/40', bg: 'bg-[#FBBF24]/15' };
-        return { text: 'text-[#D4AF37]', border: 'border-[#D4AF37]/40', bg: 'bg-[#D4AF37]/15' };
+        if (norm === 'security') return { text: 'text-blue-400', border: 'border-blue-500/30', bg: 'bg-blue-500/10' };
+        if (norm === 'ml') return { text: 'text-purple-400', border: 'border-purple-500/30', bg: 'bg-purple-500/10' };
+        return { text: 'text-cyan-400', border: 'border-cyan-500/30', bg: 'bg-cyan-500/10' };
     };
 
     return (
         <section id="projects" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 relative overflow-hidden">
             {/* Ambient Background */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                <div className="absolute top-1/4 -right-40 w-[550px] h-[550px] rounded-full bg-[#E5A93C]/[0.06] blur-[140px]" />
-                <div className="absolute bottom-10 -left-40 w-[600px] h-[600px] rounded-full bg-[#D4AF37]/[0.05] blur-[150px]" />
+                <div className="absolute top-1/4 -right-40 w-[550px] h-[550px] rounded-full bg-cyan-500/[0.03] blur-[140px]" />
+                <div className="absolute bottom-10 -left-40 w-[600px] h-[600px] rounded-full bg-indigo-500/[0.04] blur-[150px]" />
             </div>
 
             <div className="container mx-auto max-w-7xl relative z-10">
@@ -121,15 +121,15 @@ function Projects({ darkMode }) {
                     viewport={{ once: true }}
                     className="text-center mb-10 sm:mb-12"
                 >
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full backdrop-blur-md mb-3 border border-[#E5A93C]/30 bg-[#E5A93C]/10">
-                        <FaFolderOpen className="text-[#E5A93C] text-xs animate-pulse" />
-                        <span className="text-xs font-semibold tracking-wider uppercase text-[#E5A93C]">
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full backdrop-blur-md mb-3 border border-white/10 bg-white/[0.04]">
+                        <FaFolderOpen className="text-cyan-400 text-xs animate-pulse" />
+                        <span className="text-xs font-semibold tracking-wider uppercase text-slate-300">
                             PORTFOLIO SHOWCASE
                         </span>
                     </div>
 
                     <h2 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight ${theme.textPrimary} mb-3`}>
-                        Featured <span className="bg-gradient-to-r from-[#FBBF24] via-[#E5A93C] to-[#D4AF37] bg-clip-text text-transparent">Projects & Solutions</span>
+                        Featured <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Projects & Solutions</span>
                     </h2>
 
                     <p className={`${theme.textSecondary} max-w-2xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed`}>
@@ -283,44 +283,44 @@ function Projects({ darkMode }) {
                                         </div>
 
                                         {/* Footer Actions */}
-                                        <div className={`pt-3 mt-1 border-t ${darkMode ? 'border-gray-800/80' : 'border-gray-200'} flex items-center justify-between`}>
+                                        <div className={`pt-3 mt-1 border-t ${darkMode ? 'border-white/[0.08]' : 'border-gray-200'} flex items-center justify-between`}>
                                             <motion.button
-                                                whileHover={{ x: 3 }}
-                                                onClick={() => setSelectedProject(project)}
-                                                className="text-xs font-bold text-[#E5A93C] hover:text-[#FBBF24] flex items-center gap-1 transition-colors"
-                                            >
-                                                <span>View Details</span>
-                                                <FaArrowRight className="text-[9px]" />
-                                            </motion.button>
+                                                 whileHover={{ x: 3 }}
+                                                 onClick={() => setSelectedProject(project)}
+                                                 className="text-xs font-bold text-white hover:text-cyan-400 flex items-center gap-1 transition-colors"
+                                             >
+                                                 <span>View Details</span>
+                                                 <FaArrowRight className="text-[9px]" />
+                                             </motion.button>
 
-                                            <div className="flex items-center gap-2">
-                                                {project.github && (
-                                                    <motion.a
-                                                        href={project.github}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        whileHover={{ scale: 1.1, y: -1 }}
-                                                        className={`w-8 h-8 rounded-lg border flex items-center justify-center text-xs transition-all ${
-                                                            darkMode ? 'bg-[#121218] border-gray-800 text-gray-300 hover:text-[#E5A93C] hover:border-[#E5A93C]/40' : 'bg-gray-100 border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm'
-                                                        }`}
-                                                        title="GitHub Repository"
-                                                    >
-                                                        <FaGithub />
-                                                    </motion.a>
-                                                )}
-                                                {project.demo && project.demo !== '#' && (
-                                                    <motion.a
-                                                        href={project.demo}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        whileHover={{ scale: 1.1, y: -1 }}
-                                                        className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#D4AF37] to-[#FBBF24] text-black font-bold flex items-center justify-center text-xs shadow-sm hover:shadow-[#D4AF37]/30 transition-all"
-                                                        title="Live Demo"
-                                                    >
-                                                        <FaExternalLinkAlt />
-                                                    </motion.a>
-                                                )}
-                                            </div>
+                                             <div className="flex items-center gap-2">
+                                                 {project.github && (
+                                                     <motion.a
+                                                         href={project.github}
+                                                         target="_blank"
+                                                         rel="noopener noreferrer"
+                                                         whileHover={{ scale: 1.1, y: -1 }}
+                                                         className={`w-8 h-8 rounded-lg border flex items-center justify-center text-xs transition-all ${
+                                                             darkMode ? 'bg-[#0e1424] border-white/10 text-gray-300 hover:text-white hover:border-white/30' : 'bg-gray-100 border-gray-200 text-gray-700 hover:text-gray-900 shadow-sm'
+                                                         }`}
+                                                         title="GitHub Repository"
+                                                     >
+                                                         <FaGithub />
+                                                     </motion.a>
+                                                 )}
+                                                 {project.demo && project.demo !== '#' && (
+                                                     <motion.a
+                                                         href={project.demo}
+                                                         target="_blank"
+                                                         rel="noopener noreferrer"
+                                                         whileHover={{ scale: 1.1, y: -1 }}
+                                                         className="w-8 h-8 rounded-lg bg-white text-gray-950 font-bold flex items-center justify-center text-xs shadow-md hover:bg-slate-200 transition-all"
+                                                         title="Live Demo"
+                                                     >
+                                                         <FaExternalLinkAlt />
+                                                     </motion.a>
+                                                 )}
+                                             </div>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -415,7 +415,7 @@ function Projects({ darkMode }) {
                                                         transition={{ delay: i * 0.05 }}
                                                         className={`p-2.5 rounded-xl border ${theme.innerCard} flex items-center gap-2`}
                                                     >
-                                                        <FaCheckCircle className="text-orange-500 text-xs flex-shrink-0" />
+                                                        <FaCheckCircle className="text-cyan-400 text-xs flex-shrink-0" />
                                                         <span className={`text-xs font-medium ${theme.textPrimary}`}>{feature}</span>
                                                     </motion.div>
                                                 ))}
@@ -439,7 +439,7 @@ function Projects({ darkMode }) {
                                 </div>
 
                                 {/* Modal Footer */}
-                                <div className={`px-5 sm:px-6 py-4 border-t ${darkMode ? 'border-gray-800' : 'border-gray-200'} flex items-center justify-between gap-3`}>
+                                <div className={`px-5 sm:px-6 py-4 border-t ${darkMode ? 'border-white/10' : 'border-gray-200'} flex items-center justify-between gap-3`}>
                                     <div className="flex items-center gap-2.5">
                                         {selectedProject.github && (
                                             <motion.a
@@ -447,40 +447,40 @@ function Projects({ darkMode }) {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 whileHover={{ scale: 1.04 }}
-                                                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#FBBF24] text-black text-xs font-bold flex items-center gap-2 shadow-md hover:shadow-[#D4AF37]/30 transition-all"
+                                                className="px-4 py-2.5 rounded-xl bg-white text-gray-950 text-xs font-bold flex items-center gap-2 shadow-md hover:bg-slate-200 transition-all"
                                             >
                                                 <FaGithub /> View Repository
                                             </motion.a>
                                         )}
                                         {selectedProject.demo && selectedProject.demo !== '#' && (
-                                            <motion.a
-                                                href={selectedProject.demo}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                whileHover={{ scale: 1.04 }}
-                                                className={`px-4 py-2.5 rounded-xl text-white text-xs font-bold flex items-center gap-2 border border-[#E5A93C]/40 shadow-sm transition-all ${
-                                                    darkMode ? 'bg-[#181822] hover:bg-[#222230]' : 'bg-gray-900 hover:bg-gray-800'
-                                                }`}
-                                            >
-                                                <FaExternalLinkAlt /> Live Demo
-                                            </motion.a>
-                                        )}
-                                    </div>
-                                    <motion.button
-                                        whileHover={{ scale: 1.03 }}
-                                        whileTap={{ scale: 0.97 }}
-                                        onClick={() => setSelectedProject(null)}
-                                        className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                                            darkMode ? 'bg-gray-800 hover:bg-gray-700 text-gray-300' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                                        }`}
-                                    >
-                                        Close
-                                    </motion.button>
-                                </div>
-                            </motion.div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                                             <motion.a
+                                                 href={selectedProject.demo}
+                                                 target="_blank"
+                                                 rel="noopener noreferrer"
+                                                 whileHover={{ scale: 1.04 }}
+                                                 className={`px-4 py-2.5 rounded-xl text-white text-xs font-bold flex items-center gap-2 border border-white/20 shadow-sm transition-all ${
+                                                     darkMode ? 'bg-[#0e1424] hover:bg-[#151f38]' : 'bg-gray-900 hover:bg-gray-800'
+                                                 }`}
+                                             >
+                                                 <FaExternalLinkAlt /> Live Demo
+                                             </motion.a>
+                                         )}
+                                     </div>
+                                     <motion.button
+                                         whileHover={{ scale: 1.03 }}
+                                         whileTap={{ scale: 0.97 }}
+                                         onClick={() => setSelectedProject(null)}
+                                         className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                                             darkMode ? 'bg-white/10 hover:bg-white/20 text-gray-300' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                                         }`}
+                                     >
+                                         Close
+                                     </motion.button>
+                                 </div>
+                             </motion.div>
+                         </motion.div>
+                     )}
+                 </AnimatePresence>
             </div>
         </section>
     );

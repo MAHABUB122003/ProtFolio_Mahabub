@@ -95,18 +95,18 @@ function Contact({ darkMode }) {
         textSecondary: darkMode ? 'text-slate-300' : 'text-gray-700',
         textMuted: darkMode ? 'text-slate-400' : 'text-gray-500',
         cardBg: darkMode
-            ? 'bg-[#0c0c10]/80 backdrop-blur-2xl border-white/[0.08] hover:border-[#E5A93C]/40 text-white shadow-xl shadow-black/70'
-            : 'bg-white/95 backdrop-blur-xl border-gray-200/90 text-gray-900 shadow-xl shadow-gray-200/50 hover:border-[#E5A93C]/30',
+            ? 'bg-[#080d1a]/80 backdrop-blur-2xl border-white/[0.08] hover:border-white/20 text-white shadow-xl shadow-black/70'
+            : 'bg-white/95 backdrop-blur-xl border-gray-200/90 text-gray-900 shadow-xl shadow-gray-200/50 hover:border-gray-400',
         border: darkMode ? 'border-white/[0.08]' : 'border-gray-200',
         inputBg: darkMode
-            ? 'bg-[#121218] border-white/[0.08] text-white placeholder-slate-500'
+            ? 'bg-[#0e1424] border-white/[0.08] text-white placeholder-slate-500'
             : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 shadow-sm',
     };
 
     const contactInfo = [
-        { icon: <FaEnvelope className="text-[#E5A93C]" />, label: "Email", value: "rahmanmdmahabubur666@gmail.com", link: "mailto:rahmanmdmahabubur666@gmail.com", detail: "Send me an email anytime", color: "from-[#E5A93C]/10 to-[#E5A93C]/5" },
-        { icon: <FaPhone className="text-[#34d399]" />, label: "Phone", value: "+880 1715044575", link: "tel:+8801715044575", detail: "Available for calls & WhatsApp", color: "from-[#34d399]/10 to-[#34d399]/5" },
-        { icon: <FaMapMarkerAlt className="text-[#38bdf8]" />, label: "Location", value: "Dhaka, Bangladesh", link: null, detail: "Available for remote work worldwide", color: "from-[#38bdf8]/10 to-[#38bdf8]/5" }
+        { icon: <FaEnvelope className="text-cyan-400" />, label: "Email", value: "rahmanmdmahabubur666@gmail.com", link: "mailto:rahmanmdmahabubur666@gmail.com", detail: "Send me an email anytime", color: "from-cyan-500/10 to-transparent" },
+        { icon: <FaPhone className="text-emerald-400" />, label: "Phone", value: "+880 1715044575", link: "tel:+8801715044575", detail: "Available for calls & WhatsApp", color: "from-emerald-500/10 to-transparent" },
+        { icon: <FaMapMarkerAlt className="text-indigo-400" />, label: "Location", value: "Dhaka, Bangladesh", link: null, detail: "Available for remote work worldwide", color: "from-indigo-500/10 to-transparent" }
     ];
 
     const socialLinks = [
@@ -126,15 +126,15 @@ function Contact({ darkMode }) {
     ];
 
     const inputClass = `w-full px-4 py-3.5 sm:py-3 rounded-2xl border text-xs sm:text-sm outline-none transition-all duration-200 input-glow ${theme.inputBg} ${
-        darkMode ? 'focus:border-[#E5A93C]/50' : 'focus:border-[#E5A93C]/50'
+        darkMode ? 'focus:border-cyan-400/50' : 'focus:border-cyan-500/50'
     }`;
 
     return (
         <section id="contact" className="py-20 sm:py-24 md:py-28 px-4 sm:px-6 relative overflow-hidden">
             {/* Ambient Lights */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                <div className="absolute top-1/3 -right-40 w-[550px] h-[550px] rounded-full bg-[#E5A93C]/[0.05] blur-[140px]" />
-                <div className="absolute bottom-0 -left-40 w-[600px] h-[600px] rounded-full bg-[#D4AF37]/[0.04] blur-[150px]" />
+                <div className="absolute top-1/3 -right-40 w-[550px] h-[550px] rounded-full bg-cyan-500/[0.03] blur-[140px]" />
+                <div className="absolute bottom-0 -left-40 w-[600px] h-[600px] rounded-full bg-indigo-500/[0.04] blur-[150px]" />
             </div>
 
             <div className="container mx-auto max-w-7xl relative z-10">
@@ -148,14 +148,14 @@ function Contact({ darkMode }) {
                     className="text-center mb-12 sm:mb-16"
                 >
                     <div
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full backdrop-blur-md mb-4 border border-[#E5A93C]/30 bg-[#E5A93C]/10"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full backdrop-blur-md mb-4 border border-white/10 bg-white/[0.04]"
                     >
-                        <FaPaperPlane className="text-[#E5A93C] text-xs sm:text-sm animate-pulse" />
-                        <span className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#E5A93C]">GET IN TOUCH</span>
+                        <FaPaperPlane className="text-cyan-400 text-xs sm:text-sm animate-pulse" />
+                        <span className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-slate-300">GET IN TOUCH</span>
                     </div>
 
                     <h2 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight ${theme.textPrimary} mb-4`}>
-                        Let's Work <span className="bg-gradient-to-r from-[#FBBF24] via-[#E5A93C] to-[#D4AF37] bg-clip-text text-transparent">Together</span>
+                        Let's Work <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Together</span>
                     </h2>
 
                     <p className={`${theme.textSecondary} max-w-3xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed`}>
@@ -177,15 +177,15 @@ function Contact({ darkMode }) {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                                 viewport={{ once: true }}
-                                className={`p-5 rounded-3xl border ${theme.border} ${theme.cardBg} flex items-center gap-4 transition-all duration-300 card-hover-glow bg-gradient-to-br ${item.color}`}
+                                className={`p-5 rounded-3xl border ${theme.border} ${theme.cardBg} flex items-center gap-4 transition-all duration-300 bg-gradient-to-br ${item.color}`}
                             >
-                                <div className="w-12 h-12 rounded-2xl bg-white/10 dark:bg-white/5 border border-white/10 flex items-center justify-center text-xl flex-shrink-0 shadow-lg">
+                                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl flex-shrink-0 shadow-lg">
                                     {item.icon}
                                 </div>
                                 <div className="min-w-0 flex-1">
                                     <span className={`text-[11px] font-mono ${theme.textMuted} uppercase tracking-wider block mb-0.5`}>{item.label}</span>
                                     {item.link ? (
-                                        <a href={item.link} className={`text-sm sm:text-base font-bold ${theme.textPrimary} hover:text-orange-500 transition-colors truncate block`}>
+                                        <a href={item.link} className={`text-sm sm:text-base font-bold ${theme.textPrimary} hover:text-cyan-400 transition-colors truncate block`}>
                                             {item.value}
                                         </a>
                                     ) : (
@@ -205,7 +205,7 @@ function Contact({ darkMode }) {
                             className={`p-6 rounded-3xl border ${theme.border} ${theme.cardBg}`}
                         >
                             <h3 className={`text-sm font-bold ${theme.textPrimary} mb-4 uppercase tracking-wider font-mono flex items-center gap-2`}>
-                                <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+                                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                                 Connect Online
                             </h3>
                             <div className="flex flex-wrap gap-3">
@@ -219,8 +219,8 @@ function Contact({ darkMode }) {
                                         whileTap={{ scale: 0.92 }}
                                         className={`w-11 h-11 rounded-2xl border flex items-center justify-center text-lg transition-all duration-200 shadow-md ${
                                             darkMode
-                                                ? 'bg-gray-800/80 border-gray-700/60 text-gray-300 hover:bg-gradient-to-r hover:from-orange-500 hover:to-purple-600 hover:text-white hover:border-transparent hover:shadow-orange-500/30'
-                                                : 'bg-gray-100 border-gray-200 text-gray-700 hover:bg-gradient-to-r hover:from-orange-500 hover:to-purple-600 hover:text-white hover:border-transparent'
+                                                ? 'bg-[#0e1424] border-white/10 text-gray-300 hover:bg-white hover:text-gray-950 hover:border-white hover:shadow-white/10'
+                                                : 'bg-gray-100 border-gray-200 text-gray-700 hover:bg-gray-900 hover:text-white hover:border-transparent'
                                         }`}
                                         aria-label={social.label}
                                         title={social.label}
@@ -243,8 +243,8 @@ function Contact({ darkMode }) {
                                 <h4 className={`text-xs font-bold ${theme.textPrimary} uppercase font-mono tracking-wider`}>Project Availability</h4>
                                 <p className={`text-xs ${theme.textMuted} mt-1`}>Open to freelance & full-time roles</p>
                             </div>
-                            <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-500 text-xs font-bold">
-                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+                            <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+                                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
                                 <span>Available</span>
                             </div>
                         </motion.div>
@@ -259,8 +259,6 @@ function Contact({ darkMode }) {
                         className="lg:col-span-7"
                     >
                         <div className={`p-6 sm:p-8 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-2xl relative overflow-hidden`}>
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-orange-500/5 via-purple-500/5 to-transparent rounded-3xl pointer-events-none" />
-
                             <div className="mb-6 relative">
                                 <h3 className={`text-xl sm:text-2xl font-bold ${theme.textPrimary} mb-1`}>Send a Message</h3>
                                 <p className={`text-xs sm:text-sm ${theme.textMuted}`}>I typically respond within 24 hours.</p>
@@ -277,10 +275,10 @@ function Contact({ darkMode }) {
                                         onClick={() => setFormData(prev => ({ ...prev, title: res.label }))}
                                         className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all ${
                                             formData.title === res.label
-                                                ? 'bg-gradient-to-r from-[#FBBF24]/30 to-[#E5A93C]/30 border-[#E5A93C]/50 text-[#E5A93C]'
+                                                ? 'bg-white text-gray-950 border-white font-bold shadow-md'
                                                 : darkMode
-                                                    ? 'bg-[#121218] hover:bg-[#E5A93C]/10 text-gray-300 hover:text-[#E5A93C] border-gray-800 hover:border-[#E5A93C]/40'
-                                                    : 'bg-gray-100 hover:bg-[#E5A93C]/10 text-gray-700 hover:text-[#B8860B] border-gray-200 hover:border-[#E5A93C]/30'
+                                                    ? 'bg-[#0e1424] hover:bg-white/10 text-gray-300 hover:text-white border-white/10 hover:border-white/20'
+                                                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-200'
                                         }`}
                                     >
                                         {res.label}
@@ -308,7 +306,7 @@ function Contact({ darkMode }) {
                                 <div>
                                     <div className="flex items-center justify-between mb-2">
                                         <label className={`block text-xs font-bold ${theme.textMuted} uppercase tracking-wider font-mono`}>Message *</label>
-                                        <span className={`text-[11px] font-mono ${charCount > 400 ? 'text-[#E5A93C]' : theme.textMuted}`}>
+                                        <span className={`text-[11px] font-mono ${charCount > 400 ? 'text-cyan-400' : theme.textMuted}`}>
                                             {charCount}/500
                                         </span>
                                     </div>
@@ -333,7 +331,7 @@ function Contact({ darkMode }) {
                                             initial={{ opacity: 0, y: -8, scale: 0.97 }}
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
                                             exit={{ opacity: 0, y: -8, scale: 0.97 }}
-                                            className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs sm:text-sm font-semibold flex items-center gap-3"
+                                            className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-semibold flex items-center gap-3"
                                         >
                                             <FaCheckCircle className="text-xl flex-shrink-0" />
                                             <span>Message sent successfully! I'll respond within 24 hours.</span>
@@ -356,9 +354,9 @@ function Contact({ darkMode }) {
                                 <motion.button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    whileHover={!isSubmitting ? { scale: 1.02, boxShadow: '0 0 25px rgba(229,169,60,0.45)' } : {}}
+                                    whileHover={!isSubmitting ? { scale: 1.02 } : {}}
                                     whileTap={!isSubmitting ? { scale: 0.98 } : {}}
-                                    className={`w-full py-3.5 rounded-full font-bold text-xs sm:text-sm bg-gradient-to-r from-[#FBBF24] via-[#E5A93C] to-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/25 flex items-center justify-center gap-2 transition-all ${
+                                    className={`w-full py-3.5 rounded-full font-bold text-xs sm:text-sm bg-white text-gray-950 shadow-xl shadow-white/10 hover:bg-slate-200 flex items-center justify-center gap-2 transition-all ${
                                         isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
                                     }`}
                                 >
