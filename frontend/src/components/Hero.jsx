@@ -288,33 +288,38 @@ function Hero({ darkMode }) {
                         animate="show"
                         className="lg:col-span-6 flex justify-center items-center relative"
                     >
-                        <div className="relative w-full max-w-[420px] sm:max-w-[480px] aspect-[4/5] flex items-center justify-center">
+                        <div className="relative w-full max-w-[420px] sm:max-w-[480px] lg:max-w-[500px] h-[480px] sm:h-[540px] flex items-center justify-center">
 
                             {/* ── Geometric Rounded Golden Triangle Contour (Exact Match to Template) ── */}
-                            <div
-                                className="absolute inset-4 sm:inset-6 rounded-[42px] pointer-events-none transition-all duration-700"
-                                style={{
-                                    border: '2.5px solid #E5A93C',
-                                    transform: 'rotate(-7deg) scale(0.96)',
-                                    boxShadow: '0 0 35px rgba(229, 169, 60, 0.22), inset 0 0 25px rgba(229, 169, 60, 0.08)',
-                                }}
-                            />
+                            <svg 
+                                viewBox="0 0 500 560" 
+                                className="absolute inset-0 w-full h-full pointer-events-none drop-shadow-[0_0_25px_rgba(229,169,60,0.35)]"
+                                fill="none"
+                            >
+                                <path
+                                    d="M 230 40 Q 250 20 270 40 L 460 380 Q 480 415 450 435 L 70 470 Q 35 475 35 440 L 210 50 Z"
+                                    stroke="#E5A93C"
+                                    strokeWidth="3.5"
+                                    strokeLinejoin="round"
+                                    strokeLinecap="round"
+                                    fill="rgba(229, 169, 60, 0.02)"
+                                />
+                                <path
+                                    d="M 230 40 Q 250 20 270 40 L 460 380 Q 480 415 450 435 L 70 470 Q 35 475 35 440 L 210 50 Z"
+                                    stroke="#FBBF24"
+                                    strokeWidth="1"
+                                    strokeOpacity="0.4"
+                                    strokeLinejoin="round"
+                                    transform="translate(-6, -6) scale(1.02)"
+                                />
+                            </svg>
 
-                            {/* Second subtle offset contour for luxury depth */}
-                            <div
-                                className="absolute inset-4 sm:inset-6 rounded-[42px] pointer-events-none opacity-30"
-                                style={{
-                                    border: '1px solid #D4AF37',
-                                    transform: 'rotate(-2deg) scale(1.02)',
-                                }}
-                            />
-
-                            {/* ── Mahabub's Real Portrait (Dark studio background with golden rim lighting) ── */}
-                            <div className="relative z-10 w-full h-full flex items-end justify-center overflow-visible">
+                            {/* ── Mahabub's Real Portrait (Clean transparent cutout with golden rim lighting) ── */}
+                            <div className="relative z-10 w-full h-full flex items-end justify-center overflow-visible pb-2">
                                 <motion.img
                                     src={myImage}
                                     alt="MD Mahabubur Rahman"
-                                    className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_35px_rgba(0,0,0,0.8)] filter contrast-[1.05]"
+                                    className="w-auto h-[90%] sm:h-[95%] max-h-[500px] object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.9)] filter contrast-[1.05]"
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ duration: 0.8, ease: "easeOut" }}
@@ -328,7 +333,7 @@ function Hero({ darkMode }) {
                             <motion.div
                                 animate={{ rotate: 360 }}
                                 transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-                                className="absolute -bottom-4 right-0 sm:right-2 z-20 w-28 h-28 sm:w-32 sm:h-32 pointer-events-auto cursor-pointer"
+                                className="absolute -bottom-2 right-2 sm:right-4 z-20 w-28 h-28 sm:w-32 sm:h-32 pointer-events-auto cursor-pointer"
                                 onClick={() => scrollToSection('contact')}
                             >
                                 <div className="relative w-full h-full flex items-center justify-center">
@@ -353,7 +358,7 @@ function Hero({ darkMode }) {
                                     </svg>
 
                                     {/* Center Golden Arrow Circle Button */}
-                                    <div className="absolute w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#FBBF24] flex items-center justify-center shadow-lg shadow-[#D4AF37]/30 text-black">
+                                    <div className="absolute w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#FBBF24] flex items-center justify-center shadow-lg shadow-[#D4AF37]/40 text-black">
                                         <FaArrowRight className="text-xs -rotate-45" />
                                     </div>
                                 </div>

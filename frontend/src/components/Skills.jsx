@@ -36,67 +36,67 @@ function Skills({ darkMode }) {
         textPrimary: darkMode ? 'text-white' : 'text-gray-900',
         textSecondary: darkMode ? 'text-slate-300' : 'text-gray-600',
         textMuted: darkMode ? 'text-slate-400' : 'text-gray-500',
-        cardBg: darkMode ? 'bg-[#080d1a]/70 backdrop-blur-2xl border-white/[0.08] shadow-xl shadow-black/50' : 'bg-white/80 backdrop-blur-xl border-gray-200/60 shadow-lg shadow-gray-200/30',
+        cardBg: darkMode ? 'bg-[#0c0c10]/80 backdrop-blur-2xl border-white/[0.08] hover:border-[#E5A93C]/40 text-white shadow-xl shadow-black/70' : 'bg-white/95 backdrop-blur-xl border-gray-200/60 shadow-lg shadow-gray-200/30',
         border: darkMode ? 'border-white/[0.08]' : 'border-gray-200/50',
     };
 
     const categoryIcons = {
-        "Frontend": <FaReact className="text-xl text-cyan-400" />,
-        "Backend": <FaNodeJs className="text-xl text-green-500" />,
-        "Machine Learning": <FaBrain className="text-xl text-purple-500" />,
-        "Cybersecurity": <FaShieldAlt className="text-xl text-red-500" />,
-        "DevOps & Tools": <FaTools className="text-xl text-purple-500" />,
-        "Languages": <FaLanguage className="text-xl text-blue-500" />,
-        "Security Tools": <FaShieldAlt className="text-xl text-green-500" />
+        "Frontend": <FaReact className="text-xl text-[#38bdf8]" />,
+        "Backend": <FaNodeJs className="text-xl text-[#34d399]" />,
+        "Machine Learning": <FaBrain className="text-xl text-[#FBBF24]" />,
+        "Cybersecurity": <FaShieldAlt className="text-xl text-[#E5A93C]" />,
+        "DevOps & Tools": <FaTools className="text-xl text-[#D4AF37]" />,
+        "Languages": <FaLanguage className="text-xl text-[#60a5fa]" />,
+        "Security Tools": <FaShieldAlt className="text-xl text-[#E5A93C]" />
     };
 
     const skillIcons = {
-        "React.js": <FaReact className="text-cyan-400" />,
-        "JavaScript": <SiJavascript className="text-yellow-400" />,
-        "Tailwind CSS": <SiTailwindcss className="text-teal-400" />,
-        "HTML/CSS": <FaCode className="text-orange-400" />,
-        "Node.js": <FaNodeJs className="text-green-500" />,
-        "Express.js": <SiExpress className="text-gray-500" />,
-        "MongoDB": <SiMongodb className="text-green-600" />,
-        "FastAPI": <SiFastapi className="text-teal-500" />,
-        "XGBoost": <FaBrain className="text-purple-500" />,
-        "CatBoost": <FaBrain className="text-blue-500" />,
-        "LightGBM": <FaBrain className="text-green-500" />,
-        "Scikit-learn": <FaPython className="text-blue-400" />,
-        "Pen Testing": <FaShieldAlt className="text-red-500" />,
-        "SOC/SIEM": <SiSplunk className="text-green-500" />,
-        "Network Security": <SiWireshark className="text-blue-500" />,
-        "Digital Forensics": <FaShieldAlt className="text-purple-500" />,
-        "Git/GitHub": <FaGitAlt className="text-orange-600" />,
-        "Docker": <FaDocker className="text-blue-500" />,
-        "REST APIs": <FaDatabase className="text-purple-400" />,
-        "JWT Auth": <FaShieldAlt className="text-green-500" />,
-        "Python": <FaPython className="text-blue-500" />,
-        "Bash": <SiGnubash className="text-green-500" />,
-        "PowerShell": <FaCode className="text-blue-400" />,
-        "Metasploit": <FaShieldAlt className="text-red-500" />,
-        "Nmap": <FaTools className="text-green-500" />,
-        "YARA/Snort": <FaShieldAlt className="text-blue-500" />,
-        "OWASP Tools": <FaShieldAlt className="text-orange-500" />
+        "React.js": <FaReact className="text-[#38bdf8]" />,
+        "JavaScript": <SiJavascript className="text-[#FBBF24]" />,
+        "Tailwind CSS": <SiTailwindcss className="text-[#38bdf8]" />,
+        "HTML/CSS": <FaCode className="text-[#E5A93C]" />,
+        "Node.js": <FaNodeJs className="text-[#34d399]" />,
+        "Express.js": <SiExpress className="text-gray-400" />,
+        "MongoDB": <SiMongodb className="text-[#10b981]" />,
+        "FastAPI": <SiFastapi className="text-[#34d399]" />,
+        "XGBoost": <FaBrain className="text-[#FBBF24]" />,
+        "CatBoost": <FaBrain className="text-[#E5A93C]" />,
+        "LightGBM": <FaBrain className="text-[#34d399]" />,
+        "Scikit-learn": <FaPython className="text-[#60a5fa]" />,
+        "Pen Testing": <FaShieldAlt className="text-[#E5A93C]" />,
+        "SOC/SIEM": <SiSplunk className="text-[#34d399]" />,
+        "Network Security": <SiWireshark className="text-[#38bdf8]" />,
+        "Digital Forensics": <FaShieldAlt className="text-[#D4AF37]" />,
+        "Git/GitHub": <FaGitAlt className="text-[#E5A93C]" />,
+        "Docker": <FaDocker className="text-[#38bdf8]" />,
+        "REST APIs": <FaDatabase className="text-[#FBBF24]" />,
+        "JWT Auth": <FaShieldAlt className="text-[#34d399]" />,
+        "Python": <FaPython className="text-[#60a5fa]" />,
+        "Bash": <SiGnubash className="text-[#34d399]" />,
+        "PowerShell": <FaCode className="text-[#38bdf8]" />,
+        "Metasploit": <FaShieldAlt className="text-[#E5A93C]" />,
+        "Nmap": <FaTools className="text-[#34d399]" />,
+        "YARA/Snort": <FaShieldAlt className="text-[#38bdf8]" />,
+        "OWASP Tools": <FaShieldAlt className="text-[#E5A93C]" />
     };
 
     const categoryGradients = {
-        "Frontend": "from-cyan-500 to-blue-500",
-        "Backend": "from-green-500 to-emerald-500",
-        "Machine Learning": "from-purple-500 to-pink-500",
-        "Cybersecurity": "from-red-500 to-orange-500",
-        "DevOps & Tools": "from-purple-500 to-pink-500",
-        "Languages": "from-blue-500 to-cyan-500",
-        "Security Tools": "from-green-500 to-teal-500"
+        "Frontend": "from-[#38bdf8] to-[#60a5fa]",
+        "Backend": "from-[#34d399] to-[#10b981]",
+        "Machine Learning": "from-[#FBBF24] to-[#E5A93C]",
+        "Cybersecurity": "from-[#E5A93C] to-[#D4AF37]",
+        "DevOps & Tools": "from-[#D4AF37] to-[#F59E0B]",
+        "Languages": "from-[#60a5fa] to-[#38bdf8]",
+        "Security Tools": "from-[#34d399] to-[#E5A93C]"
     };
 
     const skillCategories = (skillsData?.categories || []).map(cat => ({
         ...cat,
-        icon: categoryIcons[cat.name] || <FaCode className="text-xl text-orange-400" />,
-        gradient: cat.gradient || categoryGradients[cat.name] || "from-orange-500 to-purple-500",
+        icon: categoryIcons[cat.name] || <FaCode className="text-xl text-[#E5A93C]" />,
+        gradient: cat.gradient || categoryGradients[cat.name] || "from-[#D4AF37] to-[#F59E0B]",
         skills: (cat.skills || []).map(s => ({
             ...s,
-            icon: skillIcons[s.name] || <FaCode className="text-orange-400" />
+            icon: skillIcons[s.name] || <FaCode className="text-[#E5A93C]" />
         }))
     }));
 
@@ -269,8 +269,8 @@ function Skills({ darkMode }) {
                 </svg>
                 <defs>
                     <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#f97316" />
-                        <stop offset="100%" stopColor="#a855f7" />
+                        <stop offset="0%" stopColor="#FBBF24" />
+                        <stop offset="100%" stopColor="#D4AF37" />
                     </linearGradient>
                 </defs>
                 <motion.div 
@@ -279,7 +279,7 @@ function Skills({ darkMode }) {
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.5, duration: 0.3, type: "spring", stiffness: 200 }}
                 >
-                    <span className="text-[10px] font-bold text-orange-500">{level}%</span>
+                    <span className="text-[10px] font-bold text-[#E5A93C]">{level}%</span>
                 </motion.div>
             </div>
         );
@@ -326,38 +326,8 @@ function Skills({ darkMode }) {
         <section id="skills" className="py-16 px-4 relative overflow-hidden">
             {/* Smooth Background Animations */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <motion.div 
-                    variants={floatingShapeVariants}
-                    animate="animate"
-                    className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-orange-500/5 to-purple-500/5 rounded-full blur-3xl"
-                />
-                <motion.div 
-                    variants={floatingShapeVariants}
-                    animate="animate"
-                    transition={{ delay: 2 }}
-                    className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-blue-500/5 to-cyan-500/5 rounded-full blur-3xl"
-                />
-                <motion.div
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.15, 0.05, 0.15],
-                    }}
-                    transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-orange-500/3 to-purple-500/3 rounded-full blur-3xl"
-                />
-                {/* Islamic girih pattern accent */}
-                <div
-                    className={`absolute top-0 right-0 w-80 h-80 ${darkMode ? 'text-white' : 'text-gray-900'}`}
-                    style={{ opacity: darkMode ? 0.04 : 0.05 }}
-                >
-                    <IslamicPattern strokeWidth={1} />
-                </div>
-                <div
-                    className={`absolute bottom-0 left-0 w-72 h-72 rotate-90 ${darkMode ? 'text-white' : 'text-gray-900'}`}
-                    style={{ opacity: darkMode ? 0.03 : 0.04 }}
-                >
-                    <IslamicPattern strokeWidth={1} />
-                </div>
+                <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#E5A93C]/[0.05] rounded-full blur-3xl" />
+                <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-[#D4AF37]/[0.04] rounded-full blur-3xl" />
             </div>
 
             <div className="container mx-auto max-w-6xl relative z-10">
@@ -376,13 +346,9 @@ function Skills({ darkMode }) {
                         viewport={{ once: true }}
                         className="inline-block mb-3"
                     >
-                        <div className="px-3 py-1 bg-gradient-to-r from-orange-500/10 to-purple-500/10 rounded-full">
+                        <div className="px-4 py-1.5 border border-[#E5A93C]/30 bg-[#E5A93C]/10 rounded-full">
                             <motion.span 
-                                className="text-xs font-semibold text-orange-500 tracking-wider"
-                                animate={{
-                                    letterSpacing: ["0.1em", "0.15em", "0.1em"]
-                                }}
-                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                                className="text-xs font-semibold text-[#E5A93C] tracking-wider uppercase"
                             >
                                 TECHNICAL SKILLS
                             </motion.span>
@@ -407,7 +373,7 @@ function Skills({ darkMode }) {
                                 </motion.span>
                             ))}
                         </span>
-                        <span className="bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent inline-block">
+                        <span className="bg-gradient-to-r from-[#FBBF24] via-[#E5A93C] to-[#D4AF37] bg-clip-text text-transparent inline-block">
                             {highlightPart.split("").map((char, index) => (
                                 <motion.span
                                     key={`highlight-${index}`}
@@ -422,7 +388,7 @@ function Skills({ darkMode }) {
                     </motion.h2>
                     
                     <motion.div 
-                        className="w-16 h-0.5 bg-gradient-to-r from-orange-500 to-purple-500 mx-auto rounded-full mb-4"
+                        className="w-16 h-0.5 bg-gradient-to-r from-[#FBBF24] to-[#D4AF37] mx-auto rounded-full mb-4"
                         initial={{ width: 0, opacity: 0 }}
                         whileInView={{ width: "4rem", opacity: 1 }}
                         transition={{ delay: 0.4, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}

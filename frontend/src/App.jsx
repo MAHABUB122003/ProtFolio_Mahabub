@@ -28,20 +28,18 @@ import { syncProjectsFromBackend } from './utils/projectStorage';
 
 function PortfolioSite({ darkMode, toggleDarkMode }) {
     return (
-        <div className={`${darkMode ? 'bg-[#030712] text-slate-100' : 'bg-gradient-to-br from-gray-50 via-white to-orange-50 text-gray-900'} min-h-screen transition-colors duration-500 relative overflow-hidden`}>
-            {/* Ambient Lighting Layers for World-Class Cyber-Obsidian Dark Mode */}
+        <div className={`${darkMode ? 'bg-[#060608] text-slate-100' : 'bg-[#fcfbf9] text-gray-900'} min-h-screen transition-colors duration-500 relative overflow-hidden`}>
+            {/* Ambient Lighting Layers for Executive Obsidian & Warm Gold Theme */}
             {darkMode && (
                 <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-                    {/* Ambient top radial gradient flare (Cyber Amber / Warm Gold) */}
-                    <div className="absolute -top-32 right-[-5%] w-[650px] h-[650px] bg-gradient-to-br from-orange-500/12 via-pink-500/6 to-transparent rounded-full blur-[140px]" />
-                    {/* Ambient middle radial gradient flare (Deep Violet / Purple) */}
-                    <div className="absolute top-[30%] left-[-10%] w-[600px] h-[600px] bg-gradient-to-tr from-purple-600/12 via-indigo-500/8 to-transparent rounded-full blur-[150px]" />
-                    {/* Ambient lower radial gradient flare (Cyber Cyan / Emerald) */}
-                    <div className="absolute top-[60%] right-[-10%] w-[700px] h-[700px] bg-gradient-to-tl from-cyan-500/10 via-blue-600/6 to-transparent rounded-full blur-[160px]" />
-                    {/* Ambient bottom footer flare */}
-                    <div className="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-gradient-to-t from-orange-500/8 via-purple-600/6 to-transparent rounded-full blur-[150px]" />
+                    {/* Ambient top-right warm gold flare */}
+                    <div className="absolute -top-32 right-[-5%] w-[650px] h-[650px] bg-gradient-to-br from-[#D4AF37]/[0.08] via-[#E5A93C]/[0.04] to-transparent rounded-full blur-[140px]" />
+                    {/* Ambient middle warm amber flare */}
+                    <div className="absolute top-[35%] left-[-10%] w-[600px] h-[600px] bg-gradient-to-tr from-[#E5A93C]/[0.06] via-[#F59E0B]/[0.03] to-transparent rounded-full blur-[150px]" />
+                    {/* Ambient lower warm champagne flare */}
+                    <div className="absolute top-[65%] right-[-10%] w-[700px] h-[700px] bg-gradient-to-tl from-[#D4AF37]/[0.05] via-[#B8860B]/[0.03] to-transparent rounded-full blur-[160px]" />
                     {/* Cyber dot matrix overlay */}
-                    <div className="absolute inset-0 cyber-dot-matrix opacity-40" />
+                    <div className="absolute inset-0 cyber-dot-matrix opacity-25" />
                 </div>
             )}
 
