@@ -38,9 +38,9 @@ function MinimalNetwork({ darkMode, count = 28 }) {
     const { nodes, nodeColors } = useMemo(() => {
         const nodes = [];
         const nodeColors = new Float32Array(count * 3);
-        const color1 = new THREE.Color(darkMode ? '#f97316' : '#ea580c');
-        const color2 = new THREE.Color(darkMode ? '#8b5cf6' : '#6d28d9');
-        const color3 = new THREE.Color(darkMode ? '#06b6d4' : '#0284c7');
+        const color1 = new THREE.Color(darkMode ? '#38bdf8' : '#0284c7');
+        const color2 = new THREE.Color(darkMode ? '#818cf8' : '#4f46e5');
+        const color3 = new THREE.Color(darkMode ? '#94a3b8' : '#64748b');
         const palette = [color1, color2, color3];
 
         for (let i = 0; i < count; i++) {
@@ -108,14 +108,14 @@ function MinimalNetwork({ darkMode, count = 28 }) {
                     linePositions[lPosIdx + 5] = nodes[j].z;
 
                     // Elegant soft fade based on distance
-                    const alpha = Math.max(0, 1 - dist / maxDist) * (darkMode ? 0.28 : 0.15);
-                    lineColors[lPosIdx] = 0.98 * alpha;
-                    lineColors[lPosIdx + 1] = 0.45 * alpha;
-                    lineColors[lPosIdx + 2] = 0.09 * alpha;
+                    const alpha = Math.max(0, 1 - dist / maxDist) * (darkMode ? 0.22 : 0.12);
+                    lineColors[lPosIdx] = 0.22 * alpha;
+                    lineColors[lPosIdx + 1] = 0.74 * alpha;
+                    lineColors[lPosIdx + 2] = 0.97 * alpha;
 
-                    lineColors[lPosIdx + 3] = 0.55 * alpha;
-                    lineColors[lPosIdx + 4] = 0.36 * alpha;
-                    lineColors[lPosIdx + 5] = 0.96 * alpha;
+                    lineColors[lPosIdx + 3] = 0.51 * alpha;
+                    lineColors[lPosIdx + 4] = 0.55 * alpha;
+                    lineColors[lPosIdx + 5] = 0.97 * alpha;
 
                     lineIdx++;
                 }
@@ -187,10 +187,10 @@ function AmbientMicroDust({ darkMode, count = 350 }) {
         const colors = new Float32Array(count * 3);
 
         const palette = [
-            new THREE.Color(darkMode ? '#f97316' : '#ea580c'),
-            new THREE.Color(darkMode ? '#a855f7' : '#7c3aed'),
-            new THREE.Color(darkMode ? '#06b6d4' : '#0891b2'),
-            new THREE.Color(darkMode ? '#94a3b8' : '#64748b'),
+            new THREE.Color(darkMode ? '#38bdf8' : '#0284c7'),
+            new THREE.Color(darkMode ? '#818cf8' : '#4f46e5'),
+            new THREE.Color(darkMode ? '#cbd5e1' : '#64748b'),
+            new THREE.Color(darkMode ? '#64748b' : '#94a3b8'),
         ];
 
         for (let i = 0; i < count; i++) {
@@ -244,8 +244,8 @@ function Scene({ darkMode, isMobile }) {
         <>
             {/* Soft Ambient Cinematic Lights */}
             <ambientLight intensity={0.2} />
-            <pointLight position={[12, 10, 8]} intensity={0.3} color="#f97316" distance={50} />
-            <pointLight position={[-12, -8, 6]} intensity={0.25} color="#8b5cf6" distance={50} />
+            <pointLight position={[12, 10, 8]} intensity={0.25} color="#38bdf8" distance={50} />
+            <pointLight position={[-12, -8, 6]} intensity={0.2} color="#818cf8" distance={50} />
 
             {/* Subtle, non-distracting camera parallax */}
             <SubtleCameraRig isMobile={isMobile} />

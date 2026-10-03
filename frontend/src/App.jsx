@@ -28,18 +28,14 @@ import { syncProjectsFromBackend } from './utils/projectStorage';
 
 function PortfolioSite({ darkMode, toggleDarkMode }) {
     return (
-        <div className={`${darkMode ? 'bg-[#060608] text-slate-100' : 'bg-[#fcfbf9] text-gray-900'} min-h-screen transition-colors duration-500 relative overflow-hidden`}>
-            {/* Ambient Lighting Layers for Executive Obsidian & Warm Gold Theme */}
+        <div className={`${darkMode ? 'bg-[#000000] text-slate-100' : 'bg-[#fcfbf9] text-gray-900'} min-h-screen transition-colors duration-500 relative overflow-hidden`}>
+            {/* Ambient Lighting Layers for Pure Obsidian Editorial Theme */}
             {darkMode && (
                 <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-                    {/* Ambient top-right warm gold flare */}
-                    <div className="absolute -top-32 right-[-5%] w-[650px] h-[650px] bg-gradient-to-br from-[#D4AF37]/[0.08] via-[#E5A93C]/[0.04] to-transparent rounded-full blur-[140px]" />
-                    {/* Ambient middle warm amber flare */}
-                    <div className="absolute top-[35%] left-[-10%] w-[600px] h-[600px] bg-gradient-to-tr from-[#E5A93C]/[0.06] via-[#F59E0B]/[0.03] to-transparent rounded-full blur-[150px]" />
-                    {/* Ambient lower warm champagne flare */}
-                    <div className="absolute top-[65%] right-[-10%] w-[700px] h-[700px] bg-gradient-to-tl from-[#D4AF37]/[0.05] via-[#B8860B]/[0.03] to-transparent rounded-full blur-[160px]" />
-                    {/* Cyber dot matrix overlay */}
-                    <div className="absolute inset-0 cyber-dot-matrix opacity-25" />
+                    {/* Ambient top-left soft crimson flare */}
+                    <div className="absolute -top-32 left-[-5%] w-[600px] h-[600px] bg-gradient-to-br from-rose-500/[0.03] via-transparent to-transparent rounded-full blur-[150px]" />
+                    {/* Ambient lower right slate flare */}
+                    <div className="absolute top-[60%] right-[-10%] w-[700px] h-[700px] bg-gradient-to-tl from-slate-800/[0.04] to-transparent rounded-full blur-[160px]" />
                 </div>
             )}
 

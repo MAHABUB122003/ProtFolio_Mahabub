@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, Moon, Sun, X } from 'lucide-react';
-import { FaPaperPlane } from 'react-icons/fa';
+import { FaGithub, FaLinkedinIn, FaFacebookF, FaInstagram } from 'react-icons/fa';
 
 function Navbar({ darkMode, toggleDarkMode }) {
     const [activeSection, setActiveSection] = useState('home');
@@ -13,11 +13,11 @@ function Navbar({ darkMode, toggleDarkMode }) {
     const menuRef = useRef(null);
 
     const navItems = [
-        { name: 'Home', link: '#home', icon: '⌂' },
-        { name: 'About', link: '#about', icon: '◉' },
-        { name: 'Skills', link: '#skills', icon: '◈' },
-        { name: 'Projects', link: '#projects', icon: '◇' },
-        { name: 'Contact', link: '#contact', icon: '✉' },
+        { name: 'Home', link: '#home' },
+        { name: 'About', link: '#about' },
+        { name: 'Skills', link: '#skills' },
+        { name: 'Projects', link: '#projects' },
+        { name: 'Contact', link: '#contact' },
     ];
 
     useEffect(() => {
@@ -28,7 +28,6 @@ function Navbar({ darkMode, toggleDarkMode }) {
             setScrollProgress(progress);
             setScrolled(winScroll > 20);
 
-            // Auto-hide navbar on scroll down, show on scroll up
             if (winScroll > lastScrollY.current && winScroll > 200) {
                 setIsVisible(false);
                 setIsMenuOpen(false);
@@ -54,7 +53,6 @@ function Navbar({ darkMode, toggleDarkMode }) {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Close mobile menu on outside click
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -82,41 +80,25 @@ function Navbar({ darkMode, toggleDarkMode }) {
         setTimeout(() => scrollToSection(sectionId), 100);
     };
 
-    const handleHireMeClick = () => {
-        setActiveSection('contact');
-        setIsMenuOpen(false);
-        setTimeout(() => scrollToSection('contact'), 100);
-    };
-
     const theme = {
         navBg: darkMode
             ? scrolled
-                ? 'bg-[#030712]/85 backdrop-blur-2xl border-white/[0.08] shadow-2xl shadow-black/80'
-                : 'bg-[#030712]/50 backdrop-blur-xl border-white/[0.05]'
+                ? 'bg-[#000000]/90 backdrop-blur-2xl border-white/[0.08] shadow-2xl shadow-black/90'
+                : 'bg-transparent border-transparent'
             : scrolled
-                ? 'bg-white/85 backdrop-blur-2xl border-gray-200/60 shadow-xl shadow-gray-300/30'
-                : 'bg-white/50 backdrop-blur-xl border-gray-200/40',
+                ? 'bg-white/90 backdrop-blur-2xl border-gray-200/60 shadow-xl'
+                : 'bg-transparent border-transparent',
         textPrimary: darkMode ? 'text-white' : 'text-gray-900',
-        navCapsuleBg: darkMode
-            ? 'bg-[#080d1a]/80 border-white/[0.08]'
-            : 'bg-gray-100/60 border-gray-200/60',
-        mobileDropdownBg: darkMode
-            ? 'bg-[#030712]/98 backdrop-blur-2xl border-white/[0.1] text-white shadow-2xl shadow-black/90'
-            : 'bg-white/98 backdrop-blur-2xl border-gray-200/60 text-gray-900',
-        mobileButtonBg: darkMode
-            ? 'bg-[#080d1a]/90 border-white/[0.08] text-slate-200'
-            : 'bg-gray-100/80 border-gray-200/60 text-gray-800',
     };
 
     return (
         <>
-            {/* Scroll Progress Bar — luxury silver/cyan glow */}
+            {/* Scroll Progress Bar — Coral/Crimson glow */}
             <div className="fixed top-0 left-0 z-[9999] h-[2px]" style={{ width: `${scrollProgress}%` }}>
                 <div
-                    className="w-full h-full"
+                    className="w-full h-full bg-gradient-to-r from-rose-500 via-red-500 to-white"
                     style={{
-                        background: 'linear-gradient(90deg, #6366f1, #38bdf8, #ffffff)',
-                        boxShadow: '0 0 12px rgba(56,189,248,0.8), 0 0 24px rgba(255,255,255,0.4)',
+                        boxShadow: '0 0 12px rgba(244,63,94,0.8)',
                     }}
                 />
             </div>
@@ -125,71 +107,103 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 initial={{ y: 0 }}
                 animate={{ y: isVisible ? 0 : -100 }}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6 pt-3 sm:pt-4"
+                className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 lg:px-16 pt-4"
             >
                 <div className="container mx-auto max-w-7xl">
                     <nav
                         ref={menuRef}
-                        className={`rounded-2xl sm:rounded-[20px] border px-4 sm:px-6 py-2.5 sm:py-3 transition-all duration-500 ${theme.navBg}`}
+                        className={`rounded-2xl px-4 sm:px-6 py-3 transition-all duration-300 border ${theme.navBg}`}
                     >
                         <div className="flex items-center justify-between">
 
-                            {/* Brand Logo */}
-                            <motion.div
-                                whileHover={{ scale: 1.03 }}
-                                whileTap={{ scale: 0.97 }}
-                                onClick={() => handleNavClick('Home')}
-                                className="cursor-pointer flex items-center gap-3 group"
-                                aria-label="Mahabub — Home"
-                            >
-                                <div className="leading-none">
-                                    <span className="text-xl sm:text-2xl font-black tracking-tight text-white">
-                                        Mahabub<span className="text-cyan-400">.</span>
-                                    </span>
-                                </div>
-                            </motion.div>
-
-                            {/* Desktop Navigation */}
-                            <div className="hidden md:flex items-center gap-1 px-4 py-1.5 rounded-full border border-white/[0.08] bg-[#0c0c10]/70 backdrop-blur-xl">
+                            {/* Left Navigation Links (Matching Template Layout) */}
+                            <div className="hidden md:flex items-center gap-6 lg:gap-8">
                                 {navItems.map((item) => {
                                     const isActive = activeSection === item.name.toLowerCase();
                                     return (
                                         <button
                                             key={item.name}
                                             onClick={() => handleNavClick(item.name)}
-                                            className={`relative px-4 py-1.5 rounded-full text-[13px] font-medium transition-all duration-200 ${
+                                            className={`text-sm font-medium transition-colors cursor-pointer ${
                                                 isActive
                                                     ? 'text-white font-semibold'
-                                                    : 'text-gray-400 hover:text-white'
+                                                    : 'text-slate-400 hover:text-white'
                                             }`}
                                         >
-                                            {isActive && (
-                                                <motion.div
-                                                    layoutId="activePill"
-                                                    className="absolute inset-0 rounded-full bg-white/10 border border-white/20"
-                                                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                                                />
-                                            )}
-                                            <span className="relative z-10">
-                                                {item.name}
-                                            </span>
+                                            {item.name}
                                         </button>
                                     );
                                 })}
                             </div>
 
-                            {/* Right Controls */}
-                            <div className="flex items-center gap-3">
+                            {/* Center Crimson Star Emblem (Matching Template Branding) */}
+                            <motion.div
+                                whileHover={{ scale: 1.15, rotate: 90 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => handleNavClick('Home')}
+                                className="cursor-pointer flex items-center justify-center"
+                                aria-label="Mahabub Home"
+                            >
+                                <svg
+                                    className="w-7 h-7 text-rose-500 transition-transform duration-300"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    {/* 8-point geometric star/asterisk */}
+                                    <path d="M12 2L13.5 8.5L20 7L15.5 12L20 17L13.5 15.5L12 22L10.5 15.5L4 17L8.5 12L4 7L10.5 8.5L12 2Z" />
+                                </svg>
+                            </motion.div>
+
+                            {/* Right Controls & Socials (Matching Template Style) */}
+                            <div className="flex items-center gap-3 sm:gap-4">
+                                {/* Social Icons */}
+                                <div className="hidden sm:flex items-center gap-2">
+                                    <a
+                                        href="https://github.com/MAHABUB122003"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs transition-colors"
+                                        aria-label="GitHub"
+                                    >
+                                        <FaGithub />
+                                    </a>
+                                    <a
+                                        href="https://linkedin.com"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs transition-colors"
+                                        aria-label="LinkedIn"
+                                    >
+                                        <FaLinkedinIn />
+                                    </a>
+                                    <a
+                                        href="https://facebook.com"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs transition-colors"
+                                        aria-label="Facebook"
+                                    >
+                                        <FaFacebookF />
+                                    </a>
+                                    <a
+                                        href="https://instagram.com"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs transition-colors"
+                                        aria-label="Instagram"
+                                    >
+                                        <FaInstagram />
+                                    </a>
+                                </div>
+
+                                <div className="hidden sm:block w-px h-4 bg-white/15" />
+
                                 {/* Theme Toggle */}
                                 <motion.button
                                     whileHover={{ scale: 1.08 }}
                                     whileTap={{ scale: 0.92 }}
                                     onClick={toggleDarkMode}
-                                    className={`p-2 rounded-full border transition-all duration-300 ${
-                                        darkMode
-                                            ? 'bg-[#121218] border-white/10 text-white hover:border-white/30'
-                                            : 'bg-white border-gray-300 text-gray-800 shadow-sm'
-                                    }`}
+                                    className="p-2 rounded-xl border border-white/10 bg-white/[0.04] text-slate-300 hover:text-white hover:border-white/25 transition-all"
                                     aria-label="Toggle theme"
                                 >
                                     <AnimatePresence mode="wait">
@@ -200,26 +214,16 @@ function Navbar({ darkMode, toggleDarkMode }) {
                                             exit={{ opacity: 0 }}
                                             transition={{ duration: 0.2 }}
                                         >
-                                            {darkMode ? <Sun className="w-4 h-4 text-cyan-400" /> : <Moon className="w-4 h-4" />}
+                                            {darkMode ? <Sun className="w-4 h-4 text-rose-400" /> : <Moon className="w-4 h-4" />}
                                         </motion.div>
                                     </AnimatePresence>
-                                </motion.button>
-
-                                {/* Contact Me Button (Luxury White Pill) */}
-                                <motion.button
-                                    whileHover={{ scale: 1.04 }}
-                                    whileTap={{ scale: 0.96 }}
-                                    onClick={handleHireMeClick}
-                                    className="hidden sm:flex items-center gap-2 px-6 py-2 rounded-full text-[13px] font-bold text-gray-950 bg-white hover:bg-slate-200 border border-white transition-all duration-300 shadow-lg shadow-white/10"
-                                >
-                                    <span>Contact Me</span>
                                 </motion.button>
 
                                 {/* Mobile Hamburger */}
                                 <motion.button
                                     whileTap={{ scale: 0.9 }}
                                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                    className={`md:hidden p-2 rounded-xl border transition-all ${theme.mobileButtonBg}`}
+                                    className="md:hidden p-2 rounded-xl border border-white/10 bg-white/[0.04] text-slate-300"
                                     aria-label="Toggle menu"
                                 >
                                     <AnimatePresence mode="wait">
@@ -238,48 +242,29 @@ function Navbar({ darkMode, toggleDarkMode }) {
                         </div>
                     </nav>
 
-                    {/* Mobile Dropdown — with staggered items */}
+                    {/* Mobile Dropdown */}
                     <AnimatePresence>
                         {isMenuOpen && (
                             <motion.div
-                                initial={{ opacity: 0, y: -10, scale: 0.97 }}
-                                animate={{ opacity: 1, y: 0, scale: 1 }}
-                                exit={{ opacity: 0, y: -10, scale: 0.97 }}
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className={`md:hidden mt-2 p-3 rounded-2xl border shadow-2xl space-y-1 ${theme.mobileDropdownBg}`}
+                                className="md:hidden mt-2 p-3 rounded-2xl border border-white/10 bg-[#050508]/98 backdrop-blur-2xl shadow-2xl space-y-1 text-white"
                             >
-                                {navItems.map((item, idx) => (
-                                    <motion.button
+                                {navItems.map((item) => (
+                                    <button
                                         key={item.name}
-                                        initial={{ opacity: 0, x: -15 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: idx * 0.05 }}
                                         onClick={() => handleNavClick(item.name)}
-                                        className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all flex items-center gap-3 ${
+                                        className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                                             activeSection === item.name.toLowerCase()
-                                                ? 'bg-white/10 text-white border border-white/20'
-                                                : darkMode ? 'text-gray-300 hover:bg-gray-900/60' : 'text-gray-700 hover:bg-gray-100/80'
+                                                ? 'bg-rose-500/15 text-rose-400 border border-rose-500/20'
+                                                : 'text-slate-300 hover:bg-white/5'
                                         }`}
                                     >
-                                        <span className="text-xs opacity-50">{item.icon}</span>
                                         {item.name}
-                                    </motion.button>
+                                    </button>
                                 ))}
-
-                                {/* Divider */}
-                                <div className={`h-px mx-2 my-1 ${darkMode ? 'bg-gray-800/60' : 'bg-gray-200/60'}`} />
-
-                                <motion.button
-                                    initial={{ opacity: 0, y: 5 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.3 }}
-                                    whileTap={{ scale: 0.97 }}
-                                    onClick={handleHireMeClick}
-                                    className="w-full py-3 rounded-xl text-sm font-bold bg-white text-gray-950 shadow-lg shadow-white/10 flex items-center justify-center gap-2"
-                                >
-                                    <FaPaperPlane className="text-xs" />
-                                    <span>Hire Me</span>
-                                </motion.button>
                             </motion.div>
                         )}
                     </AnimatePresence>
