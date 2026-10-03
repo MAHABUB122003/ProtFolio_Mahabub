@@ -118,24 +118,24 @@ function Hero({ darkMode }) {
     return (
         <section
             id="home"
-            className="relative min-h-[92vh] lg:min-h-screen flex items-center pt-24 sm:pt-28 pb-12 sm:pb-20 px-4 sm:px-8 md:px-12 lg:px-16 overflow-hidden bg-[#000000]"
+            className="relative min-h-[92vh] lg:min-h-screen flex items-center pt-24 sm:pt-28 pb-12 sm:pb-20 px-4 sm:px-6 md:px-10 lg:px-12 overflow-hidden bg-[#000000]"
         >
             {/* ── Soft Ambient Backlight ── */}
-            <div className="absolute top-[20%] left-[8%] w-[480px] h-[480px] rounded-full bg-rose-500/[0.03] blur-[150px] pointer-events-none" />
+            <div className="absolute top-[20%] left-[5%] w-[480px] h-[480px] rounded-full bg-rose-500/[0.03] blur-[150px] pointer-events-none" />
 
-            {/* ── Main Container ── */}
-            <div className="container mx-auto max-w-7xl relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* ── Widescreen Balanced Layout (Eliminating Left Void Gap) ── */}
+            <div className="w-full max-w-[1400px] mx-auto relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
 
                     {/* ════════════════════════════════════════════
-                        LEFT COLUMN: Clean Studio Portrait
-                        (Exact Artwork & Lighting Provided by User)
+                        LEFT COLUMN: Clean Left-Aligned Studio Portrait
+                        (Anchored properly to eliminate excess left gap)
                         ════════════════════════════════════════════ */}
                     <motion.div
                         variants={scaleIn}
                         initial="hidden"
                         animate="show"
-                        className="lg:col-span-6 flex justify-center lg:justify-start items-center relative"
+                        className="lg:col-span-6 xl:col-span-6 flex justify-center lg:justify-start items-center relative"
                     >
                         <motion.div
                             ref={containerRef}
@@ -146,13 +146,13 @@ function Hero({ darkMode }) {
                                 rotateY,
                                 transformStyle: 'preserve-3d',
                             }}
-                            className="relative w-full max-w-[500px] sm:max-w-[560px] lg:max-w-[620px] flex items-center justify-center cursor-pointer"
+                            className="relative w-full max-w-[480px] sm:max-w-[540px] lg:max-w-[620px] flex items-center justify-center lg:justify-start cursor-pointer"
                         >
-                            {/* The Exact Clean Studio Portrait */}
+                            {/* Studio Portrait with visible hair spotlight & seamless dark fade */}
                             <motion.img
                                 src={myImage}
                                 alt="MD Mahabubur Rahman"
-                                className="relative z-10 w-full h-auto object-contain object-center select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.95)]"
+                                className="relative z-10 w-full h-auto object-contain object-left select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.95)]"
                                 initial={{ opacity: 0, scale: 0.96 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -167,7 +167,7 @@ function Hero({ darkMode }) {
                         variants={staggerContainer}
                         initial="hidden"
                         animate="show"
-                        className="lg:col-span-6 text-center lg:text-left space-y-6 lg:space-y-7"
+                        className="lg:col-span-6 xl:col-span-6 text-center lg:text-left space-y-6 lg:space-y-7 pl-0 lg:pl-4"
                     >
                         {/* Bismillah & Availability Badge */}
                         <motion.div variants={fadeUp} className="space-y-2">
@@ -184,7 +184,7 @@ function Hero({ darkMode }) {
                             </div>
                         </motion.div>
 
-                        {/* Main Editorial Headline */}
+                        {/* Main Editorial Headline — "I'm MD Mahabubur Rahman" */}
                         <motion.div variants={fadeUp} className="space-y-2">
                             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-bold tracking-tight text-white leading-[1.08]">
                                 I'm <span className="font-extrabold text-white">MD Mahabubur Rahman</span>
