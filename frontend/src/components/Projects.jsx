@@ -335,7 +335,7 @@ function Projects({ darkMode }) {
 
                                             <h3
                                                 onClick={() => setSelectedProject(project)}
-                                                className={`text-lg font-bold transition-colors cursor-pointer leading-snug line-clamp-2 ${
+                                                className={`text-lg font-bold transition-colors cursor-pointer leading-snug line-clamp-2 text-3d-title ${
                                                     darkMode ? 'text-white group-hover:text-rose-200' : 'text-slate-900 group-hover:text-rose-600'
                                                 }`}
                                             >
@@ -355,7 +355,7 @@ function Projects({ darkMode }) {
                                                         key={tIdx}
                                                         className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all ${
                                                             darkMode
-                                                                ? 'bg-white/[0.03] border border-white/[0.08] text-slate-300 hover:border-white/20'
+                                                                ? 'bg-white/[0.03] border border-white/[0.08] text-slate-200 hover:border-white/20'
                                                                 : 'bg-slate-100/90 border border-slate-200/90 text-slate-800 font-medium hover:border-slate-300'
                                                         }`}
                                                     >
@@ -365,8 +365,8 @@ function Projects({ darkMode }) {
                                                 {project.tech && project.tech.length > 4 && (
                                                     <span className={`px-2 py-1 rounded-lg text-xs font-mono ${
                                                         darkMode
-                                                            ? 'bg-white/[0.02] border border-white/[0.06] text-slate-500'
-                                                            : 'bg-slate-100 border border-slate-200 text-slate-600 font-medium'
+                                                             ? 'bg-white/[0.02] border border-white/[0.06] text-slate-400'
+                                                             : 'bg-slate-100 border border-slate-200 text-slate-600 font-medium'
                                                     }`}>
                                                         +{project.tech.length - 4} more
                                                     </span>

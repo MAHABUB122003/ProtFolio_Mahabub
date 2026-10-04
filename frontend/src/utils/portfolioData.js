@@ -1,6 +1,6 @@
 import { api, getToken } from './api';
 
-const PORTFOLIO_KEY = 'portfolio_data_v3';
+const PORTFOLIO_KEY = 'portfolio_data_v4';
 
 const defaultData = {
     hero: {
@@ -13,7 +13,7 @@ const defaultData = {
         stats: [
             { value: '9+', label: 'Projects' },
             { value: '20+', label: 'Reports' },
-            { value: '3+', label: 'Years Exp' }
+            { value: '2+', label: 'Years Exp' }
         ],
         socials: [
             { platform: 'github', url: 'https://github.com/MAHABUB122003' },
@@ -54,7 +54,7 @@ const defaultData = {
         stats: [
             { number: '9+', label: 'Projects Completed', description: 'Full-stack & Security' },
             { number: '20+', label: 'Security Reports', description: 'Vulnerabilities Found' },
-            { number: '3+', label: 'Years Experience', description: 'Learning & Growing' },
+            { number: '2+', label: 'Years Experience', description: 'Learning & Growing' },
             { number: '100%', label: 'Commitment', description: 'Quality Assurance' }
         ],
         coreValues: [

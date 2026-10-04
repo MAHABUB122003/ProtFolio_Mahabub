@@ -116,7 +116,7 @@ function About({ darkMode }) {
             border: darkMode ? 'border-emerald-500/20' : 'border-emerald-200'
         },
         { 
-            number: '3+', 
+            number: '2+', 
             label: 'Years Experience', 
             description: 'Continuous Crafting',
             icon: FaClock,
@@ -221,7 +221,7 @@ function About({ darkMode }) {
                     </h2>
 
                     <p className={`text-base sm:text-lg max-w-2xl font-normal leading-relaxed ${
-                        darkMode ? 'text-slate-300' : 'text-slate-600'
+                        darkMode ? 'text-slate-200' : 'text-slate-600'
                     }`}>
                         {aboutData.tagline || 'Bridging the gap between intelligent systems, secure infrastructure, and modern web applications.'}
                     </p>
@@ -545,16 +545,16 @@ function About({ darkMode }) {
                                     </span>
                                 </div>
 
-                                <div className={`text-3xl sm:text-4xl font-black mb-1 tracking-tight ${
+                                <div className={`text-3xl sm:text-4xl font-black mb-1 tracking-tight text-3d-stat ${
                                     darkMode ? 'text-white' : 'text-slate-900'
                                 }`}>
                                     <AnimatedStat value={stat.number} visible={statsVisible} />
                                 </div>
-                                <div className={`text-xs sm:text-sm font-bold mb-0.5 ${
+                                <div className={`text-xs sm:text-sm font-bold mb-0.5 text-3d-sub ${
                                     darkMode ? 'text-slate-200' : 'text-slate-800'
                                 }`}>{stat.label}</div>
                                 <div className={`text-[11px] font-mono ${
-                                    darkMode ? 'text-slate-400' : 'text-slate-500'
+                                    darkMode ? 'text-slate-300' : 'text-slate-500'
                                 }`}>{stat.description}</div>
                             </motion.div>
                         );
@@ -582,7 +582,7 @@ function About({ darkMode }) {
                             What <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-rose-400 to-amber-500">Drives Me</span>
                         </h3>
                         <p className={`text-xs sm:text-sm font-normal leading-relaxed ${
-                            darkMode ? 'text-slate-400' : 'text-slate-600'
+                            darkMode ? 'text-slate-300' : 'text-slate-600'
                         }`}>
                             Guiding engineering principles for software craft, defensive cybersecurity, and intelligent workflows.
                         </p>
@@ -610,12 +610,12 @@ function About({ darkMode }) {
                                             <IconComp />
                                         </div>
                                         <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
-                                            darkMode ? 'bg-white/[0.04] border-white/10 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-600'
+                                            darkMode ? 'bg-white/[0.04] border-white/10 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-600'
                                         }`}>
                                             {val.tag}
                                         </span>
                                     </div>
-                                    <h4 className={`text-sm sm:text-base font-bold mb-2 group-hover:text-rose-500 transition-colors ${
+                                    <h4 className={`text-sm sm:text-base font-bold mb-2 group-hover:text-rose-500 transition-colors text-3d-title ${
                                         darkMode ? 'text-white' : 'text-slate-900'
                                     }`}>
                                         {val.title}

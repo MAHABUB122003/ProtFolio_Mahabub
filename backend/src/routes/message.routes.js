@@ -7,10 +7,11 @@ import {
     deleteMessage
 } from '../controllers/messageController.js';
 import { protect } from '../middleware/auth.js';
+import { messageRateLimiter } from '../middleware/security.js';
 
 const router = Router();
 
-router.post('/', createMessage);
+router.post('/', messageRateLimiter, createMessage);
 router.get('/', protect, getMessages);
 router.get('/:id', protect, getMessageById);
 router.patch('/:id/read', protect, markMessageRead);

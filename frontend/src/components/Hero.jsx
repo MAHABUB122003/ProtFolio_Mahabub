@@ -183,7 +183,6 @@ function Hero({ darkMode }) {
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.6, ease: "easeOut" }}
                                 />
-
                             </div>
                         </motion.div>
                     </motion.div>
@@ -221,14 +220,14 @@ function Hero({ darkMode }) {
                         {/* Main Headline */}
                         <motion.div variants={fadeUp} className="space-y-2">
                             <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-bold tracking-tight leading-[1.08] ${
-                                darkMode ? 'text-white' : 'text-slate-900'
+                                darkMode ? 'text-white text-3d-h1' : 'text-slate-900'
                             }`}>
-                                I'm <span className={`font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>MD Mahabubur Rahman</span>
+                                I'm <span className={`font-extrabold ${darkMode ? 'text-white text-3d-h1' : 'text-slate-900'}`}>MD Mahabubur Rahman</span>
                             </h1>
                             <h2 className={`text-xl sm:text-2xl md:text-[1.65rem] font-normal ${
-                                darkMode ? 'text-slate-300' : 'text-slate-700'
+                                darkMode ? 'text-slate-200 text-3d-h2' : 'text-slate-700'
                             }`}>
-                                a <span className={`font-semibold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Creative Full-Stack Developer</span> & <span className={`font-semibold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Security Specialist</span>
+                                a <span className={`font-semibold ${darkMode ? 'text-white text-3d-title' : 'text-slate-900'}`}>Creative Full-Stack Developer</span> & <span className={`font-semibold ${darkMode ? 'text-white text-3d-title' : 'text-slate-900'}`}>Security Specialist</span>
                             </h2>
                         </motion.div>
 
@@ -252,7 +251,7 @@ function Hero({ darkMode }) {
                                 </AnimatePresence>
                             </div>
                             <p className={`text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 font-normal ${
-                                darkMode ? 'text-slate-400' : 'text-slate-600'
+                                darkMode ? 'text-slate-300' : 'text-slate-600'
                             }`}>
                                 {heroData.description}
                             </p>
@@ -296,7 +295,7 @@ function Hero({ darkMode }) {
                             {/* Project Count Metric */}
                             <div>
                                 <h4 className={`text-2xl sm:text-3xl font-black ${
-                                    darkMode ? 'text-white' : 'text-slate-900'
+                                    darkMode ? 'text-white text-3d-stat' : 'text-slate-900'
                                 }`}>
                                     9+
                                 </h4>

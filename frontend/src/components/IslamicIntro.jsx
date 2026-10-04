@@ -106,7 +106,7 @@ function IslamicIntro({ onComplete, duration = 2.4 }) {
                             <span className="text-xs font-mono tracking-[0.3em] uppercase text-slate-400 block font-semibold">
                                 WELCOME TO THE PORTFOLIO OF
                             </span>
-                            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight uppercase">
+                            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight uppercase text-3d-h1">
                                 MD MAHABUBUR RAHMAN
                             </h2>
                             <p className="text-xs sm:text-sm font-mono tracking-[0.2em] text-slate-300 uppercase">
@@ -137,7 +137,7 @@ function IslamicIntro({ onComplete, duration = 2.4 }) {
 
                     {/* Massive Kinetic Percentage Counter */}
                     <div className="text-right">
-                        <span className="text-4xl sm:text-6xl md:text-7xl font-black font-mono tracking-tighter text-white">
+                        <span className="text-4xl sm:text-6xl md:text-7xl font-black font-mono tracking-tighter text-white text-3d-stat">
                             {counter < 10 ? `0${counter}` : counter}
                         </span>
                         <span className="text-xl sm:text-2xl font-mono text-slate-400 font-bold ml-1">%</span>

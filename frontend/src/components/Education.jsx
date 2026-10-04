@@ -185,7 +185,7 @@ function Education({ darkMode }) {
                                 <span className="w-2 h-2 rounded-full bg-rose-500" />
                                 <span>Degree & University Journey</span>
                             </h3>
-                            <span className="text-xs font-mono text-rose-500 font-bold">B.Sc. In CSE</span>
+                            <span className="text-xs font-mono text-rose-500 font-bold badge-3d">B.Sc. In CSE</span>
                         </div>
 
                         {educationList.map((edu, idx) => (
@@ -214,7 +214,7 @@ function Education({ darkMode }) {
                                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                                                 <span>Undergraduate Program</span>
                                             </div>
-                                            <h4 className={`text-xl sm:text-2xl font-bold transition-colors ${
+                                            <h4 className={`text-xl sm:text-2xl font-bold transition-colors text-3d-title ${
                                                 darkMode ? 'text-white group-hover:text-rose-200' : 'text-slate-900 group-hover:text-rose-600'
                                             }`}>
                                                 {edu.degree}

@@ -206,9 +206,9 @@ function Skills({ darkMode }) {
                             return (
                                 <div
                                     key={idx}
-                                    className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-mono shrink-0 transition-colors ${
+                                    className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-mono shrink-0 transition-colors tag-pill badge-3d ${
                                         darkMode 
-                                            ? 'border-white/[0.06] bg-white/[0.02] text-slate-300 hover:border-white/20' 
+                                            ? 'border-white/[0.06] bg-white/[0.02] text-slate-200 hover:border-white/20' 
                                             : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 shadow-sm'
                                     }`}
                                 >
@@ -256,7 +256,7 @@ function Skills({ darkMode }) {
                                             </div>
                                             <div>
                                                 <h3 className={`text-lg sm:text-xl font-bold transition-colors ${
-                                                    darkMode ? 'text-white group-hover:text-rose-200' : 'text-slate-900 group-hover:text-rose-600'
+                                                    darkMode ? 'text-white text-3d-title group-hover:text-rose-200' : 'text-slate-900 group-hover:text-rose-600'
                                                 }`}>
                                                     {pillar.title}
                                                 </h3>
@@ -285,7 +285,7 @@ function Skills({ darkMode }) {
                                                     }`}
                                                 >
                                                     <SkillIcon className={`${skill.color} text-sm group-hover/pill:scale-110 transition-transform`} />
-                                                    <span>{skill.name}</span>
+                                                    <span className="font-semibold">{skill.name}</span>
                                                 </div>
                                             );
                                         })}

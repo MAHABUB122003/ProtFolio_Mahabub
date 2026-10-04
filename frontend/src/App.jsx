@@ -18,6 +18,7 @@ import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminHero from './pages/admin/AdminHero';
 import AdminAbout from './pages/admin/AdminAbout';
+import AdminEducation from './pages/admin/AdminEducation';
 import AdminSkills from './pages/admin/AdminSkills';
 import AdminContact from './pages/admin/AdminContact';
 import AdminMessages from './pages/admin/AdminMessages';
@@ -64,6 +65,7 @@ function AdminRoutes() {
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="hero" element={<AdminHero />} />
                 <Route path="about" element={<AdminAbout />} />
+                <Route path="education" element={<AdminEducation />} />
                 <Route path="skills" element={<AdminSkills />} />
                 <Route path="projects" element={<AdminDashboard />} />
                 <Route path="projects/new" element={<ProjectForm />} />
