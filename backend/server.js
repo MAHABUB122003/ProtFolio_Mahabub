@@ -3,6 +3,7 @@ import { pathToFileURL } from 'node:url';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import mdefender from 'mdefender-pro';
 import { connectDB } from './src/config/db.js';
 import authRoutes from './src/routes/auth.routes.js';
 import sectionRoutes from './src/routes/section.routes.js';
@@ -14,14 +15,22 @@ import { generalApiLimiter, noSqlSanitizer } from './src/middleware/security.js'
 
 const app = express();
 
+app.use(express.json({ limit: '15mb' }));
+app.use(express.urlencoded({ extended: true, limit: '15mb' }));
+
+// 🛡️ MDefender-Pro AI Firewall Protection
+app.use(mdefender({
+    apiKey: process.env.MDEFENDER_API_KEY || 'OQ7hd6JZIAGgtfd5SkuaVT8UHhsGudJF0k2yToygelRo5KSgDVu1qOqq1hdcP8Tp',
+    domain: process.env.MDEFENDER_DOMAIN || 'localhost',
+    apiEndpoint: process.env.MDEFENDER_API_ENDPOINT || 'http://127.0.0.1:8000',
+    mode: process.env.MDEFENDER_MODE || 'block'
+}));
+
 // Security HTTP headers
 app.use(helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
     contentSecurityPolicy: false // Allows API to serve flexibly to SPA clients
 }));
-
-// NoSQL injection prevention
-app.use(noSqlSanitizer);
 
 // General API rate limiting
 app.use('/api', generalApiLimiter);
@@ -46,9 +55,6 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
-app.use(express.json({ limit: '15mb' }));
-app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
 app.get('/api/health', (req, res) => {
     res.json({
