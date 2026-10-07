@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 app.use(mdefender({
     apiKey: process.env.MDEFENDER_API_KEY || 'JjWx_Ue9pdCkR1K2BUXIb9nOfmGzN8FHhvzAPqXrI2YoKlkF9iEaq-GrINoq1hcC',
     domain: process.env.MDEFENDER_DOMAIN || 'mahabubur.vercel.app',
-    apiEndpoint: process.env.MDEFENDER_API_ENDPOINT || 'http://217.15.170.82',
+    apiEndpoint: process.env.MDEFENDER_API_ENDPOINT || 'https://217.15.170.82.sslip.io',
     mode: process.env.MDEFENDER_MODE || 'block'
 }));
 
