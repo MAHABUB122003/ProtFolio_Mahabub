@@ -20,9 +20,9 @@ app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
 // 🛡️ MDefender-Pro AI Firewall Protection
 app.use(mdefender({
-    apiKey: process.env.MDEFENDER_API_KEY || 'OQ7hd6JZIAGgtfd5SkuaVT8UHhsGudJF0k2yToygelRo5KSgDVu1qOqq1hdcP8Tp',
-    domain: process.env.MDEFENDER_DOMAIN || 'localhost',
-    apiEndpoint: process.env.MDEFENDER_API_ENDPOINT || 'http://127.0.0.1:8000',
+    apiKey: process.env.MDEFENDER_API_KEY || 'JjWx_Ue9pdCkR1K2BUXIb9nOfmGzN8FHhvzAPqXrI2YoKlkF9iEaq-GrINoq1hcC',
+    domain: process.env.MDEFENDER_DOMAIN || 'mahabubur.vercel.app',
+    apiEndpoint: process.env.MDEFENDER_API_ENDPOINT || 'http://217.15.170.82',
     mode: process.env.MDEFENDER_MODE || 'block'
 }));
 

@@ -6,9 +6,9 @@ import { initWaf } from 'mdefender-pro/client'
 
 // 🛡️ Initialize MDefender-Pro Client & SPA Shield
 initWaf({
-  apiKey: 'OQ7hd6JZIAGgtfd5SkuaVT8UHhsGudJF0k2yToygelRo5KSgDVu1qOqq1hdcP8Tp',
-  domain: window.location.hostname || 'localhost',
-  apiEndpoint: 'http://127.0.0.1:8000'
+  apiKey: 'JjWx_Ue9pdCkR1K2BUXIb9nOfmGzN8FHhvzAPqXrI2YoKlkF9iEaq-GrINoq1hcC',
+  domain: window.location.hostname || 'mahabubur.vercel.app',
+  apiEndpoint: 'http://217.15.170.82'
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
